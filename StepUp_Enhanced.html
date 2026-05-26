@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepUp: AI That Teaches AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=OpenDyslexic&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0f172a;--primaryLight:#f1f5f9;--accent:#3b82f6;--accentHover:#2563eb;
+  --accent2:#8b5cf6;--tertiary:#14b8a6;--highlight:#f97316;--bgMain:#ffffff;
+  --bgSec:#f8fafc;--textMain:#334155;--textLight:#64748b;--border:#e2e8f0;
+  --success:#10b981;--successLight:#d1fae5;--warning:#f59e0b;--danger:#ef4444;
+  --vark-v:#10b981;--vark-a:#3b82f6;--vark-r:#f97316;--vark-k:#8b5cf6;
+  --shadow-sm:0 1px 2px 0 rgb(0 0 0/.05);
+  --shadow-md:0 4px 6px -1px rgb(0 0 0/.1),0 2px 4px -2px rgb(0 0 0/.1);
+  --shadow-lg:0 10px 15px -3px rgb(0 0 0/.1),0 4px 6px -4px rgb(0 0 0/.1);
+  --shadow-xl:0 20px 25px -5px rgb(0 0 0/.1),0 8px 10px -6px rgb(0 0 0/.1);
+  --glass-bg:rgba(255,255,255,0.85);
+  --focus-ring:0 0 0 3px rgba(59,130,246,0.5);
+  --transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* HIGH CONTRAST MODE */
+body.hc-mode{
+  --bgMain:#000;--bgSec:#111;--textMain:#fff;--textLight:#eee;--border:#555;
+  --primaryLight:#1a1a1a;--glass-bg:rgba(0,0,0,0.95);--accent:#60a5fa;--accent2:#a78bfa;
+}
+body.hc-mode .featureCard,body.hc-mode .setupSection,body.hc-mode .weekCard,body.hc-mode .metricCard,body.hc-mode .sidebar,body.hc-mode .contentArea{background:#111;border-color:#444;}
+body.hc-mode .messageBubble{background:#222!important;color:#fff!important;}
+body.hc-mode .pricingTable,body.hc-mode .tierTable{background:#111;}
+body.hc-mode .pricingTable td,body.hc-mode .pricingTable th{color:#fff;border-color:#444;}
+body.hc-mode nav{background:#000;border-color:#444;}
+body.hc-mode .vark-card{background:#1a1a1a;border-color:#555;}
+body.hc-mode .vark-why-card{background:#1a1a1a;border-color:#555;}
+
+/* DYSLEXIA MODE */
+body.dyslexia-mode *{font-family:'OpenDyslexic',sans-serif!important;letter-spacing:0.1em;word-spacing:0.2em;line-height:1.8!important;}
+
+/* LARGE TEXT MODE */
+body.large-text{font-size:1.18rem;}
+body.large-text h1{font-size:2.8rem;}body.large-text h2{font-size:2.3rem;}
+body.large-text h3{font-size:1.9rem;}body.large-text p,body.large-text li{font-size:1.18rem;}
+body.large-text .btnAction,body.large-text .navLinks a{font-size:1.1rem;}
+
+/* SKIP LINK */
+.skip-link{position:absolute;top:-50px;left:20px;background:var(--accent);color:white;padding:10px 20px;border-radius:8px;font-weight:700;z-index:9999;text-decoration:none;transition:top .3s;}
+.skip-link:focus{top:10px;}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.6;color:var(--textMain);background:var(--bgSec);scroll-behavior:smooth;display:flex;flex-direction:column;min-height:100vh;}
+h1,h2,h3,h4{color:var(--primary);font-weight:700;line-height:1.2;}
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+
+/* FOCUS STYLES */
+*:focus-visible{outline:none;box-shadow:var(--focus-ring)!important;border-radius:6px;}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+@keyframes pulseWave{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,.4)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardPop{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+.animated-view{animation:fadeIn .5s cubic-bezier(.16,1,.3,1) forwards;}
+.delay-1{animation-delay:.1s;opacity:0;}.delay-2{animation-delay:.2s;opacity:0;}.delay-3{animation-delay:.3s;opacity:0;}
+.skeleton{background:#f6f7f8;background-image:linear-gradient(90deg,#f6f7f8 0px,#edeef1 160px,#f6f7f8 320px);background-size:1000px 100%;animation:shimmer 2s infinite linear;border-radius:8px;}
+.skeleton-text{height:20px;width:100%;margin-bottom:10px;}.skeleton-title{height:32px;width:60%;margin-bottom:20px;}.skeleton-card{height:150px;width:100%;margin-bottom:20px;border-radius:16px;}
+.error-msg{color:var(--danger);font-size:.85rem;margin-top:4px;display:none;font-weight:600;}
+
+/* NAV */
+nav{background:var(--glass-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);}
+.navContainer{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:16px;}
+.navBrand{font-weight:800;color:var(--primary);font-size:1.7rem;text-decoration:none;cursor:pointer;display:flex;align-items:center;gap:8px;letter-spacing:-.5px;transition:transform .2s;flex-shrink:0;}
+.navBrand:hover{transform:scale(1.03);}
+.navLinks{display:flex;list-style:none;gap:24px;align-items:center;flex-wrap:wrap;}
+.navLinks a{text-decoration:none;color:var(--textLight);font-weight:600;font-size:.92rem;transition:all .2s;cursor:pointer;position:relative;white-space:nowrap;}
+.navLinks a::after{content:'';position:absolute;width:0;height:3px;bottom:-6px;left:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s ease;border-radius:3px;}
+.navLinks a:hover{color:var(--primary);}.navLinks a:hover::after,.navLinks a.active::after{width:100%;}.navLinks a.active{color:var(--primary);}
+.navRight{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.iconBtn{background:transparent;color:var(--textLight);border:none;cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:var(--transition);font-family:inherit;}
+.iconBtn:hover{background:var(--primaryLight);color:var(--accent);}
+
+/* LANGUAGE SELECTOR */
+.langSelector{position:relative;}
+.langBtn{display:flex;align-items:center;gap:6px;background:var(--bgSec);border:1px solid var(--border);color:var(--textMain);padding:7px 12px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;transition:var(--transition);font-family:inherit;}
+.langBtn:hover{border-color:var(--accent);color:var(--accent);}
+.langBtn svg{width:16px;height:16px;}
+.langDropdown{display:none;position:absolute;right:0;top:calc(100% + 8px);background:var(--bgMain);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg);z-index:200;min-width:160px;overflow:hidden;}
+.langDropdown.open{display:block;animation:slideDown .2s ease;}
+.langItem{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:.9rem;font-weight:600;color:var(--textMain);cursor:pointer;border:none;background:none;width:100%;font-family:inherit;transition:background .15s;}
+.langItem:hover{background:var(--primaryLight);color:var(--accent);}
+.langItem.active{color:var(--accent2);background:#f5f3ff;}
+.langFlag{font-size:1.1rem;}
+
+/* ACCESSIBILITY PANEL */
+.accessDropdown{position:relative;}
+.accessPanel{display:none;position:absolute;right:0;top:calc(100% + 8px);background:var(--bgMain);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xl);z-index:200;width:260px;padding:12px;overflow:hidden;}
+.accessPanel.open{display:block;animation:slideDown .2s ease;}
+.accessPanelTitle{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--textLight);padding:4px 8px 8px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.accessItem{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s;}
+.accessItem:hover{background:var(--bgSec);}
+.accessItemLabel{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:600;color:var(--textMain);}
+.accessItemLabel svg{width:18px;height:18px;color:var(--accent2);}
+/* Toggle switch */
+.toggle{width:40px;height:22px;background:#cbd5e1;border-radius:11px;position:relative;transition:background .2s;cursor:pointer;flex-shrink:0;}
+.toggle.on{background:var(--accent2);}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:var(--shadow-sm);}
+.toggle.on::after{left:21px;}
+
+.userProfile{display:flex;align-items:center;gap:10px;padding-left:12px;border-left:1px solid var(--border);}
+.avatar{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;overflow:hidden;flex-shrink:0;}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.userName{font-weight:700;font-size:.9rem;color:var(--primary);}
+
+.btnAction{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;padding:11px 22px;border-radius:12px;font-weight:700;font-size:.95rem;cursor:pointer;transition:var(--transition);box-shadow:0 4px 15px rgba(139,92,246,.3);display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;white-space:nowrap;}
+.btnAction:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(139,92,246,.4);}
+.btnAction:active{transform:scale(.97);}
+.btnSecondary{background:var(--bgMain);color:var(--textMain);border:1px solid var(--border);padding:11px 22px;border-radius:12px;font-weight:600;cursor:pointer;transition:var(--transition);font-family:inherit;}
+.btnSecondary:hover{background:var(--primaryLight);color:var(--accent);transform:translateY(-2px);}
+
+main.pageWrapper{flex:1;position:relative;}
+#publicContainer{max-width:1200px;margin:0 auto;padding:50px 20px;}
+.publicSection{background:var(--glass-bg);box-shadow:var(--shadow-xl);border-radius:24px;padding:55px;margin-bottom:40px;display:none;border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(10px);}
+
+/* HERO */
+.heroGraphic{background:radial-gradient(circle at top left,#f0f9ff 0%,#ede9fe 100%);border-radius:24px;padding:70px 40px;text-align:center;overflow:hidden;border:1px solid rgba(255,255,255,.8);}
+.heroGraphic h2{font-size:3.8rem;margin-bottom:15px;letter-spacing:-1.5px;}
+.heroGraphic h3{font-size:1.5rem;color:var(--textMain);font-weight:500;}
+.heroGraphic p{font-size:1.1rem;max-width:750px;margin:20px auto;color:var(--textLight);}
+.heroImage{width:100%;max-width:900px;height:380px;object-fit:cover;border-radius:20px;box-shadow:var(--shadow-xl);animation:float 6s ease-in-out infinite;margin-top:40px;border:4px solid white;}
+
+.featureGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin:36px 0;}
+.featureCard{background:var(--bgMain);padding:32px;border-radius:20px;border:1px solid var(--border);transition:var(--transition);box-shadow:var(--shadow-sm);}
+.featureCard:hover{transform:translateY(-6px);box-shadow:var(--shadow-xl);border-color:var(--accent2);}
+.iconWrapper{width:52px;height:52px;background:linear-gradient(135deg,var(--primaryLight),#ede9fe);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--accent2);margin-bottom:18px;font-size:22px;}
+
+/* FLOATING CHAT */
+.floatingChatBtn{position:fixed;bottom:28px;right:28px;width:62px;height:62px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px rgba(139,92,246,.4);cursor:pointer;z-index:1000;transition:var(--transition);border:none;}
+.floatingChatBtn:hover{transform:scale(1.1) rotate(5deg);}
+.floatingChatWindow{position:fixed;bottom:105px;right:28px;width:360px;height:510px;background:#fff;border-radius:20px;box-shadow:var(--shadow-xl);z-index:999;display:none;flex-direction:column;border:1px solid var(--border);overflow:hidden;}
+.floatingChatWindow.active{display:flex;animation:scaleIn .3s cubic-bezier(.16,1,.3,1);transform-origin:bottom right;}
+.chatChips{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:var(--bgSec);}
+.chatChips::-webkit-scrollbar{display:none;}
+.chipBtn{background:#fff;border:1px solid var(--accent);color:var(--accentHover);padding:6px 12px;border-radius:20px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:inherit;}
+.chipBtn:hover{background:var(--accent);color:white;}
+
+/* AUTH */
+.authTabs{display:flex;background:var(--bgSec);border-bottom:1px solid var(--border);}
+.authTabBtn{flex:1;padding:18px;border:none;background:none;font-family:inherit;font-size:1rem;font-weight:700;color:var(--textLight);cursor:pointer;text-align:center;}
+.authTabBtn.active{background:var(--bgMain);color:var(--primary);border-bottom:3px solid var(--accent2);}
+.authContent{padding:36px;display:none;}.authContent.active{display:block;animation:fadeIn .3s ease;}
+.authForm .formGroup{display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
+.authForm label{font-weight:600;font-size:.88rem;color:var(--textMain);}
+.authForm input,.authForm textarea,.authForm select{padding:13px 15px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:.97rem;background:var(--bgSec);transition:border-color .2s;}
+.authForm input:focus,.authForm textarea:focus,.authForm select:focus{outline:none;border-color:var(--accent2);background:var(--bgMain);box-shadow:0 0 0 4px rgba(139,92,246,.1);}
+
+/* DASHBOARD */
+#dashboardContainer{max-width:1600px;margin:25px auto;padding:0 20px;display:none;grid-template-columns:270px 1fr;gap:26px;height:calc(100vh - 100px);}
+.sidebar{background:var(--bgMain);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px 18px;display:flex;flex-direction:column;gap:26px;overflow-y:auto;border:1px solid var(--border);}
+.menuList{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.menuList li a{display:flex;align-items:center;gap:11px;padding:13px 15px;text-decoration:none;color:var(--textLight);font-weight:600;border-radius:12px;cursor:pointer;transition:all .2s;}
+.menuList li a svg{width:22px;height:22px;flex-shrink:0;}
+.menuList li a:hover{background:var(--bgSec);color:var(--accent2);padding-left:18px;}
+.menuList li a.active{background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;box-shadow:0 4px 12px rgba(139,92,246,.3);}
+.statCard{background:var(--bgSec);padding:18px;border-radius:14px;border:1px solid var(--border);}
+.statCard h3{margin:0 0 8px 0;font-size:.95rem;color:var(--textLight);font-weight:600;}
+.progressBar{width:100%;background:var(--border);border-radius:10px;height:8px;overflow:hidden;}
+.progressFill{height:100%;background:var(--accent);width:0%;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
+.statValue{font-weight:800;font-size:1.7rem;color:var(--primary);margin-top:6px;display:block;}
+.contentArea{background:var(--bgMain);border-radius:22px;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border);}
+.contentHeader{padding:22px 32px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);}
+.contentHeader h2{margin:0;font-size:1.5rem;color:var(--primary);}
+.viewScrollArea{flex:1;padding:32px;overflow-y:auto;background:var(--bgSec);position:relative;}
+.dashView{display:none;flex-direction:column;height:100%;}
+
+/* =================== VARK REDESIGN =================== */
+.vark-intro-section{margin-bottom:32px;}
+.vark-why-box{background:linear-gradient(135deg,#f0f9ff,#ede9fe);border-radius:20px;padding:32px;border:1px solid rgba(139,92,246,.15);margin-bottom:28px;}
+.vark-why-box h3{margin:0 0 10px 0;font-size:1.25rem;color:var(--primary);}
+.vark-why-box p{color:var(--textLight);font-size:.97rem;margin:0 0 20px 0;line-height:1.7;}
+.vark-why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px;}
+.vark-why-card{background:white;border-radius:14px;padding:18px;border:1px solid var(--border);display:flex;align-items:flex-start;gap:14px;transition:var(--transition);box-shadow:var(--shadow-sm);}
+.vark-why-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.vark-why-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.vark-why-card p{font-size:.85rem;color:var(--textLight);margin:4px 0 0 0;line-height:1.5;}
+.vark-why-card h5{margin:0;font-size:.93rem;color:var(--primary);}
+
+/* VARK CARD GRID */
+.vark-step-label{font-weight:800;font-size:1.1rem;color:var(--accent2);margin:0 0 6px 0;}
+.vark-step-sub{color:var(--textLight);font-size:.93rem;margin:0 0 20px 0;}
+.vark-cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.vark-card{background:white;border:2px solid var(--border);border-radius:18px;padding:22px 18px;cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-sm);position:relative;text-align:left;}
+.vark-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.vark-card.selected{border-color:currentColor;box-shadow:0 0 0 3px rgba(139,92,246,.2);}
+.vark-card.selected-v{border-color:var(--vark-v);box-shadow:0 0 0 3px rgba(16,185,129,.15);}
+.vark-card.selected-a{border-color:var(--vark-a);box-shadow:0 0 0 3px rgba(59,130,246,.15);}
+.vark-card.selected-r{border-color:var(--vark-r);box-shadow:0 0 0 3px rgba(249,115,22,.15);}
+.vark-card.selected-k{border-color:var(--vark-k);box-shadow:0 0 0 3px rgba(139,92,246,.15);}
+.vark-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.vark-badge{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;color:white;flex-shrink:0;}
+.vark-badge.v{background:var(--vark-v);}
+.vark-badge.a{background:var(--vark-a);}
+.vark-badge.r{background:var(--vark-r);}
+.vark-badge.k{background:var(--vark-k);}
+.vark-card-title{font-weight:800;font-size:1.05rem;color:var(--primary);}
+.vark-card-desc{font-size:.85rem;color:var(--textLight);line-height:1.5;}
+.vark-check{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;background:var(--success);color:white;display:none;align-items:center;justify-content:center;font-size:.75rem;}
+.vark-card.selected-v .vark-check,.vark-card.selected-a .vark-check,.vark-card.selected-r .vark-check,.vark-card.selected-k .vark-check{display:flex;}
+
+/* VARK LANGUAGE PREFERENCE */
+.vark-lang-row{display:flex;align-items:center;gap:16px;background:white;border-radius:14px;padding:16px 20px;border:1px solid var(--border);margin-bottom:24px;}
+.vark-lang-row label{font-weight:700;font-size:.95rem;color:var(--primary);flex-shrink:0;}
+.vark-lang-row select{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:.93rem;background:var(--bgSec);cursor:pointer;transition:border-color .2s;}
+.vark-lang-row select:focus{outline:none;border-color:var(--accent2);}
+
+/* VARK RESULT */
+.vark-result-card{background:white;border-radius:20px;padding:32px;border:1px solid var(--border);box-shadow:var(--shadow-md);}
+.vark-result-badge-wrap{display:flex;align-items:center;gap:18px;margin-bottom:20px;}
+.vark-result-big-badge{width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:white;}
+.vark-result-title{font-size:1.6rem;font-weight:800;color:var(--primary);}
+.vark-result-subtitle{font-size:.9rem;color:var(--textLight);margin-top:4px;}
+.vark-result-desc{color:var(--textMain);line-height:1.7;margin-bottom:24px;padding:16px;background:var(--bgSec);border-radius:12px;font-size:.95rem;}
+.vark-tips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.vark-tip{background:var(--bgSec);border-radius:12px;padding:14px;font-size:.85rem;color:var(--textMain);display:flex;gap:10px;align-items:flex-start;}
+.vark-tip-icon{font-size:1.1rem;flex-shrink:0;}
+
+/* =================== COURSES =================== */
+.courseCategoryContainer{margin:16px 0;}
+.categoryLabel{font-weight:700;font-size:1.05rem;color:var(--primary);margin-bottom:14px;margin-top:24px;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.courseSelectionGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:22px;}
+.courseTabBtn{background:var(--bgMain);border:1.5px solid var(--border);padding:13px;border-radius:12px;text-align:left;font-family:inherit;font-size:.9rem;font-weight:600;color:var(--textMain);cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-sm);}
+.courseTabBtn:hover{border-color:var(--accent2);background:var(--primaryLight);transform:translateY(-2px);}
+.courseTabBtn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border-color:transparent;box-shadow:0 4px 12px rgba(139,92,246,.3);}
+.phaseBlock{background:var(--bgMain);padding:28px;border-radius:16px;box-shadow:var(--shadow-sm);margin-bottom:28px;border:1px solid var(--border);}
+.weekGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;}
+.weekCard{background:var(--bgSec);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform .2s,box-shadow .2s;}
+.weekCard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);background:#fff;}
+.weekCard.completed{border-top:4px solid var(--success);}.weekCard.active{border-top:4px solid var(--accent2);box-shadow:0 4px 20px rgba(139,92,246,.1);background:#fff;}
+.statusBadge{align-self:flex-start;padding:5px 11px;border-radius:20px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
+.statusBadge.completed{background:var(--successLight);color:var(--success);}.statusBadge.active{background:#ede9fe;color:var(--accent2);animation:pulseWave 2s infinite;}
+
+/* =================== ANALYTICS =================== */
+.analyticsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-bottom:28px;}
+.metricCard{background:#fff;padding:22px;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:transform .2s;}
+.metricCard:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.metricCard h4{margin:0 0 8px 0;color:var(--textLight);font-size:.9rem;font-weight:600;}.metricCard .value{font-size:2rem;font-weight:800;color:var(--primary);}
+.metricCard .trend{font-size:.82rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;margin-top:8px;}
+.trend.up{background:var(--successLight);color:var(--success);}.trend.neutral{background:#fef3c7;color:var(--warning);}
+.compareChartContainer{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;margin-top:18px;box-shadow:var(--shadow-sm);}
+.compareHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.compareLegend{display:flex;gap:18px;font-size:.88rem;font-weight:600;}
+.legendItem{display:flex;align-items:center;gap:7px;}.legendDot{width:12px;height:12px;border-radius:4px;}
+.legendDot.pre{background:#cbd5e1;}.legendDot.post{background:var(--accent2);}
+.compareChart{display:flex;justify-content:space-around;align-items:flex-end;height:260px;position:relative;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.compareGroup{display:flex;gap:10px;align-items:flex-end;height:100%;position:relative;flex:1;justify-content:center;}
+.compareBarTrack{width:46px;height:100%;background:rgba(0,0,0,.02);border-radius:8px 8px 0 0;display:flex;align-items:flex-end;position:relative;}
+.compareBar{width:100%;border-radius:8px 8px 0 0;transition:height 1.2s cubic-bezier(.34,1.56,.64,1);height:0;box-shadow:var(--shadow-sm);}
+.compareBar.pre{background:linear-gradient(to top,#94a3b8,#cbd5e1);}.compareBar.post{background:linear-gradient(to top,var(--accent2),var(--accent));}
+.compareLabel{position:absolute;bottom:-34px;left:50%;transform:translateX(-50%);font-weight:700;font-size:.88rem;white-space:nowrap;color:var(--textMain);}
+.compareValue{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-weight:800;font-size:.88rem;color:var(--primary);opacity:0;transition:opacity .5s 1s;}
+.showValues .compareValue{opacity:1;}
+
+/* =================== SIMULATOR =================== */
+.setupSection{background:#fff;padding:28px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:28px;}
+.quizQuestion{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border);}.quizQuestion:last-child{border-bottom:none;}
+.quizQuestion h4{margin:0 0 14px 0;font-size:1rem;color:var(--primary);}
+.quizOption{display:flex;align-items:center;gap:11px;margin-bottom:8px;cursor:pointer;}
+.quizOption input[type="radio"]{cursor:pointer;width:17px;height:17px;accent-color:var(--accent2);}
+.quizOption label{cursor:pointer;font-size:.93rem;color:var(--textMain);}
+.interviewContainer{display:grid;grid-template-columns:3fr 2fr;gap:22px;}
+.videoFrame{background:linear-gradient(145deg,#0f172a,#1e293b);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;min-height:480px;position:relative;overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,.6);transition:all .3s;}
+.videoFrame.active-recording{border:2px solid var(--accent2);box-shadow:inset 0 0 80px rgba(139,92,246,.2),0 0 20px rgba(139,92,246,.2);}
+.aiAvatar{font-size:3.5rem;margin-bottom:18px;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.02));padding:32px;border-radius:50%;border:1px solid rgba(255,255,255,.1);transition:all .3s;}
+.active-recording .aiAvatar{animation:pulseWave 2s infinite;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(59,130,246,.2));border-color:var(--accent2);}
+.recordBtn{background:linear-gradient(135deg,var(--danger),#be123c);color:white;border:none;padding:13px 28px;border-radius:30px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:9px;transition:all .3s;box-shadow:0 4px 20px rgba(239,68,68,.4);font-size:1rem;font-family:inherit;}
+.recordBtn:hover{transform:scale(1.05);}.recordBtn.stop{background:var(--textMain);box-shadow:0 4px 15px rgba(0,0,0,.3);}
+.recordIndicator{width:11px;height:11px;background-color:white;border-radius:50%;display:inline-block;}.recordBtn.stop .recordIndicator{border-radius:2px;}
+
+/* =================== JOBS / CV =================== */
+.jobCard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;transition:all .2s;}
+.jobCard:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.jobCardHeader{display:flex;justify-content:space-between;align-items:flex-start;}
+.matchBadge .score{padding:7px 15px;border-radius:20px;font-weight:800;font-size:.88rem;background:var(--successLight);color:var(--success);}
+.aiInsight{background:var(--primaryLight);padding:14px;border-radius:12px;font-size:.92rem;border-left:4px solid var(--accent);}
+.uploadZone{border:2px dashed #cbd5e1;border-radius:16px;padding:55px 20px;text-align:center;background:#fff;cursor:pointer;transition:all .3s;margin-bottom:28px;}
+.uploadZone:hover{border-color:var(--accent2);background:#f5f3ff;}
+.uploadIcon svg{width:55px;height:55px;color:var(--accent2);margin-bottom:14px;}
+.diagnosticResults{display:none;background:#fff;border-radius:16px;border:1px solid var(--border);padding:36px;box-shadow:var(--shadow-sm);}
+.scoreCircle{width:115px;height:115px;border-radius:50%;background:conic-gradient(var(--warning) 72%,var(--border) 0);display:flex;align-items:center;justify-content:center;font-size:1.9rem;font-weight:800;color:var(--primary);margin:0 auto 28px;position:relative;}
+.scoreCircle::after{content:"";position:absolute;width:97px;height:97px;background:#fff;border-radius:50%;}.scoreCircle span{position:relative;z-index:1;}
+.feedbackGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+.feedbackCard{padding:18px;border-radius:12px;border-left:4px solid var(--border);background:var(--bgSec);}
+.feedbackCard.good{border-left-color:var(--success);}.feedbackCard.warning{border-left-color:var(--warning);}.feedbackCard.danger{border-left-color:var(--danger);}
+
+/* =================== CHAT / MESSAGES =================== */
+.chatStatus{font-size:.88rem;color:var(--success);font-weight:600;display:flex;align-items:center;gap:7px;}
+.chatStatus::before{content:'';display:inline-block;width:8px;height:8px;background:var(--success);border-radius:50%;box-shadow:0 0 8px var(--success);}
+.messageList{flex:1;padding:28px;overflow-y:auto;display:flex;flex-direction:column;gap:22px;}
+.message{max-width:78%;display:flex;flex-direction:column;animation:fadeIn .3s ease;}
+.message.ai,.message.contact{align-self:flex-start;}.message.user{align-self:flex-end;}
+.messageBubble{padding:14px 18px;border-radius:16px;font-size:.97rem;line-height:1.5;box-shadow:var(--shadow-sm);}
+.message.ai .messageBubble,.message.contact .messageBubble{background:#fff;color:var(--textMain);border-bottom-left-radius:4px;border:1px solid var(--border);}
+.message.user .messageBubble{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border-bottom-right-radius:4px;}
+.chatInputArea{padding:18px 28px;border-top:1px solid var(--border);display:flex;gap:13px;background:#fff;}
+.chatInputArea input{flex:1;padding:14px 18px;border:1.5px solid var(--border);border-radius:12px;font-family:inherit;font-size:.97rem;background:var(--bgSec);transition:all .2s;}
+.chatInputArea input:focus{outline:none;border-color:var(--accent2);background:#fff;box-shadow:0 0 0 4px rgba(139,92,246,.1);}
+
+/* =================== PRICING =================== */
+#pricingPage{padding:55px 40px;text-align:center;}
+.pricingToggleWrapper{display:flex;justify-content:center;margin:28px 0 46px;}
+.pricingToggle{display:flex;background:var(--bgSec);border:1.5px solid var(--border);border-radius:50px;padding:5px;gap:4px;}
+.pricingToggleBtn{padding:9px 30px;border-radius:40px;border:none;font-family:inherit;font-size:.97rem;font-weight:700;cursor:pointer;transition:var(--transition);color:var(--textLight);background:transparent;}
+.pricingToggleBtn.active{background:var(--primary);color:white;box-shadow:var(--shadow-md);}
+.pricingPanel{display:none;}.pricingPanel.active{display:block;animation:fadeIn .4s ease;}
+.pricingTable{width:100%;border-collapse:collapse;background:var(--bgMain);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--border);}
+.pricingTable thead tr{background:var(--bgSec);border-bottom:2px solid var(--border);}
+.pricingTable th{padding:22px 28px;text-align:center;font-size:1rem;font-weight:700;color:var(--primary);}
+.pricingTable th:first-child{text-align:left;color:var(--textLight);font-size:.88rem;text-transform:uppercase;letter-spacing:.5px;}
+.pricingTable th.hcol{background:linear-gradient(180deg,#f5f3ff 0%,transparent 100%);border-left:2px solid rgba(139,92,246,.2);border-right:2px solid rgba(139,92,246,.2);color:var(--accent2);}
+.pricingTable td{padding:18px 28px;text-align:center;border-bottom:1px solid var(--border);font-size:.93rem;color:var(--textMain);font-weight:500;}
+.pricingTable td:first-child{text-align:left;font-weight:600;color:var(--primary);}
+.pricingTable td.hcol{background:linear-gradient(180deg,rgba(139,92,246,.04) 0%,rgba(139,92,246,.02) 100%);border-left:2px solid rgba(139,92,246,.12);border-right:2px solid rgba(139,92,246,.12);}
+.pricingTable tbody tr:last-child td{border-bottom:none;}
+.pricingTable tbody tr:hover td{background:var(--bgSec);}.pricingTable tbody tr:hover td.hcol{background:rgba(139,92,246,.08);}
+.planBadge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;margin-left:7px;vertical-align:middle;}
+.pricingCTA{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.teamNudge{margin-top:28px;font-size:.92rem;color:var(--textLight);}
+.teamNudge a{color:var(--accent2);font-weight:700;cursor:pointer;text-decoration:none;}.teamNudge a:hover{text-decoration:underline;}
+.teamTierSection{margin-top:44px;text-align:left;}.teamTierSection h3{font-size:1.25rem;font-weight:700;color:var(--primary);margin-bottom:18px;}
+.tierTable{width:100%;border-collapse:collapse;background:var(--bgMain);border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-md);}
+.tierTable thead tr{background:var(--primary);color:white;}
+.tierTable th{padding:16px 28px;text-align:left;font-weight:700;font-size:.93rem;}.tierTable th:last-child{text-align:right;}
+.tierTable td{padding:16px 28px;border-bottom:1px solid var(--border);font-weight:600;color:var(--primary);font-size:.93rem;}.tierTable td:last-child{text-align:right;}
+.tierTable tbody tr:last-child td{border-bottom:none;}.tierTable tbody tr:hover td{background:var(--bgSec);}
+.tierPrice{color:var(--accent2);font-size:1.08rem;font-weight:800;}
+.contactSalesBtn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;padding:7px 18px;border-radius:20px;font-weight:700;font-size:.88rem;border:none;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 4px 12px rgba(139,92,246,.3);}
+.contactSalesBtn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(139,92,246,.4);}
+
+/* =================== PROFILE FORM =================== */
+.profileGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}.fullWidth{grid-column:1/-1;}
+
+/* =================== FOOTER =================== */
+footer{background:var(--bgMain);border-top:1px solid var(--border);padding:28px 20px;text-align:center;color:var(--textLight);font-size:.88rem;font-weight:500;margin-top:auto;}
+.footerLinks{margin-top:10px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;}
+.footerLinks a{color:var(--accent);text-decoration:none;font-weight:600;cursor:pointer;}.footerLinks a:hover{text-decoration:underline;}
+
+/* =================== GOOGLE TRANSLATE OVERRIDE =================== */
+#google_translate_element{display:inline-flex;align-items:center;}
+.goog-te-gadget{font-family:'Plus Jakarta Sans',sans-serif!important;font-size:0!important;}
+.goog-te-gadget select{padding:7px 10px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:.83rem;font-weight:600;background:var(--bgSec);color:var(--textMain);cursor:pointer;outline:none;transition:border-color .2s;}
+.goog-te-gadget select:focus{border-color:var(--accent2);}
+.goog-te-gadget img,.goog-logo-link,.goog-te-gadget>span{display:none!important;}
+.goog-te-banner-frame{display:none!important;}
+body{top:0!important;}
+
+/* =================== RESPONSIVE =================== */
+@media(max-width:1100px){
+  #dashboardContainer{grid-template-columns:230px 1fr;}
+  .vark-cards-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:900px){
+  .interviewContainer{grid-template-columns:1fr;}
+  .videoFrame{min-height:360px;}
+  .profileGrid{grid-template-columns:1fr;}
+  #pricingPage{padding:40px 20px;}
+  .pricingTable th,.pricingTable td{padding:13px 14px;font-size:.82rem;}
+  .publicSection{padding:36px 24px;}
+}
+@media(max-width:768px){
+  #dashboardContainer{display:flex;flex-direction:column;height:auto;padding:8px;padding-bottom:86px;}
+  .sidebar{position:fixed;bottom:0;left:0;width:100%;flex-direction:row;overflow-x:auto;padding:8px 12px;border-radius:20px 20px 0 0;align-items:center;gap:12px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.1);background:var(--glass-bg);backdrop-filter:blur(12px);}
+  .menuList{flex-direction:row;}
+  .menuList li a{white-space:nowrap;padding:9px 13px;flex-direction:column;gap:4px;font-size:.76rem;}
+  .statCard{display:none;}.contentArea{min-height:70vh;}
+  .heroGraphic h2{font-size:2.4rem;}
+  .navLinks{display:none;}
+  .navRight{justify-content:flex-end;width:100%;}
+  .floatingChatBtn{bottom:90px;}
+  .vark-cards-grid{grid-template-columns:1fr 1fr;}
+  .vark-why-grid{grid-template-columns:1fr;}
+  .vark-tips{grid-template-columns:1fr;}
+  .langSelector{display:none;}
+}
+@media(max-width:480px){
+  .vark-cards-grid{grid-template-columns:1fr;}
+  #publicContainer{padding:30px 14px;}
+  .publicSection{padding:28px 18px;}
+  .heroGraphic h2{font-size:2rem;}
+  .pricingToggle{flex-direction:column;border-radius:16px;}
+}
+</style>
+</head>
+<body id="bodyRoot">
+<a href="#mainContent" class="skip-link">Skip to main content</a>
+<nav aria-label="Main Navigation" role="navigation">
+  <div class="navContainer">
+    <a onclick="navigateTo('home')" class="navBrand" aria-label="StepUp Home">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      StepUp
+    </a>
+    <ul class="navLinks" role="list">
+      <li><a onclick="navigateTo('home')" class="nav-home active" role="menuitem">Home</a></li>
+      <li><a onclick="navigateTo('howitworks')" class="nav-howitworks" role="menuitem">How It Works</a></li>
+      <li><a onclick="navigateTo('pricing')" class="nav-pricing" role="menuitem">Pricing</a></li>
+      <li><a onclick="navigateTo('about')" class="nav-about" role="menuitem">About</a></li>
+      <li><a onclick="navigateTo('contact')" class="nav-contact" role="menuitem">Contact</a></li>
+      <li id="authNavBtn"><a onclick="navigateTo('auth')" class="nav-auth btnAction" style="color:white;padding:8px 16px" role="menuitem">Get Started</a></li>
+      <li id="dashboardNavBtn" style="display:none"><a onclick="navigateTo('dashboard')" class="nav-dashboard" role="menuitem">Dashboard</a></li>
+    </ul>
+    <div class="navRight">
+
+      <!-- GOOGLE TRANSLATE -->
+      <div class="langSelector" aria-label="Language selection">
+        <div id="google_translate_element"></div>
+      </div>
+
+      <!-- ACCESSIBILITY PANEL -->
+      <div class="accessDropdown" role="region" aria-label="Accessibility options">
+        <button id="accessBtn" class="iconBtn" aria-label="Accessibility Tools" aria-haspopup="true" aria-expanded="false" title="Accessibility Tools">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+        </button>
+        <div id="accessPanel" class="accessPanel" role="menu" aria-label="Accessibility options">
+          <div class="accessPanelTitle">Accessibility Tools</div>
+
+          <div class="accessItem" onclick="toggleLargeText()" role="menuitem" tabindex="0" onkeydown="if(event.key==='Enter')toggleLargeText()">
+            <div class="accessItemLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+              Large Text
+            </div>
+            <div class="toggle" id="toggleLargeTextSwitch" aria-checked="false" role="switch"></div>
+          </div>
+
+          <div class="accessItem" onclick="toggleHighContrast()" role="menuitem" tabindex="0" onkeydown="if(event.key==='Enter')toggleHighContrast()">
+            <div class="accessItemLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-width="1.5"/></svg>
+              High Contrast
+            </div>
+            <div class="toggle" id="toggleHCSwitch" aria-checked="false" role="switch"></div>
+          </div>
+
+          <div class="accessItem" onclick="toggleDyslexia()" role="menuitem" tabindex="0" onkeydown="if(event.key==='Enter')toggleDyslexia()">
+            <div class="accessItemLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h12"/></svg>
+              Dyslexia Font
+            </div>
+            <div class="toggle" id="toggleDyslexiaSwitch" aria-checked="false" role="switch"></div>
+          </div>
+
+          <div class="accessItem" onclick="readAloud()" role="menuitem" tabindex="0" onkeydown="if(event.key==='Enter')readAloud()">
+            <div class="accessItemLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              Read Page Aloud
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--textLight)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="accessItem" onclick="stopSpeech()" role="menuitem" tabindex="0" onkeydown="if(event.key==='Enter')stopSpeech()">
+            <div class="accessItemLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              Stop Reading
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="userProfile" id="userProfileControls" style="display:none">
+        <div class="avatar" id="navProfileAvatar" aria-label="User avatar">JD</div>
+        <span class="userName" id="navProfileName">John Doe</span>
+        <button class="iconBtn" onclick="logOut()" title="Log Out" aria-label="Log out">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--danger)" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="pageWrapper" id="mainContent" role="main">
+
+  <!-- FLOATING CHAT -->
+  <button class="floatingChatBtn" onclick="toggleFloatingChat()" title="Get Help Navigating" aria-label="Open chat assistant">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
+  <div class="floatingChatWindow" id="floatingChatWindow" role="dialog" aria-label="Chat assistant">
+    <div style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;font-weight:700">
+      StepUp Navigator AI
+      <button style="background:none;border:none;color:white;cursor:pointer;font-size:1.2rem;padding:4px" onclick="toggleFloatingChat()" aria-label="Close chat">×</button>
+    </div>
+    <div style="flex:1;padding:18px;overflow-y:auto;background:var(--bgSec);display:flex;flex-direction:column;gap:13px" id="floatingChatBox" role="log" aria-live="polite">
+      <div style="align-self:flex-start;background:white;padding:11px 15px;border-radius:12px;border-bottom-left-radius:4px;border:1px solid var(--border);max-width:85%;font-size:.92rem">Hi! I am here to help you navigate StepUp. Type a question or select a quick action below.</div>
+    </div>
+    <div class="chatChips" role="group" aria-label="Quick actions">
+      <button class="chipBtn" onclick="document.getElementById('floatingUserInput').value='Where are my courses?';sendFloatingMessage()">📚 Find Courses</button>
+      <button class="chipBtn" onclick="document.getElementById('floatingUserInput').value='I want to practice interviewing';sendFloatingMessage()">🎤 Simulator</button>
+      <button class="chipBtn" onclick="document.getElementById('floatingUserInput').value='Show me pricing';sendFloatingMessage()">💳 Pricing</button>
+      <button class="chipBtn" onclick="document.getElementById('floatingUserInput').value='Upload my CV';sendFloatingMessage()">📄 CV Tool</button>
+    </div>
+    <form style="border-top:1px solid var(--border);padding:13px;display:flex;gap:9px;background:white" onsubmit="event.preventDefault();sendFloatingMessage()" role="search">
+      <input type="text" id="floatingUserInput" placeholder="Ask me anything..." autocomplete="off" required aria-label="Chat message input" style="flex:1;padding:11px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:.92rem">
+      <button type="submit" class="btnAction" style="padding:10px" aria-label="Send message"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </form>
+  </div>
+
+  <div id="publicContainer">
+
+    <!-- HOME -->
+    <section id="homePage" class="publicSection animated-view" style="display:block" aria-label="Home">
+      <div style="text-align:center">
+        <div class="heroGraphic">
+          <h2 class="gradient-text">AI That Teaches AI</h2>
+          <h3>By Doing Your Actual Work With You</h3>
+          <p>Not tutorials. Not courses. A platform that bridges the gap between having AI and knowing what to do with it. Bring your actual tasks and your AI coach will walk you through doing it faster.</p>
+          <button class="btnAction" style="margin-top:20px;font-size:1.05rem;padding:14px 28px" onclick="navigateTo('auth')">Get Started For Free <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Diverse group of people collaborating together on laptops" class="heroImage">
+        </div>
+      </div>
+      <h3 style="margin-top:48px;text-align:center;font-size:1.9rem" class="gradient-text">Why it works for everyone</h3>
+      <div class="featureGrid">
+        <div class="featureCard delay-1 animated-view">
+          <div class="iconWrapper"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h4 style="font-size:1.2rem">Job Seekers</h4>
+          <p style="color:var(--textLight)">Bring a CV or job description. StepUp coaches you through improving it and teaches you how AI assisted job searching works, completely independent of tutorials.</p>
+        </div>
+        <div class="featureCard delay-2 animated-view">
+          <div class="iconWrapper" style="color:var(--tertiary);background:#ccfbf1"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2l3 6 6 1-4 4 1 6-6-3-6 3 1-6-4-4 6-1 3-6z"/></svg></div>
+          <h4 style="font-size:1.2rem">SME Owners</h4>
+          <p style="color:var(--textLight)">Bring a coaching proposal you need to write. StepUp shows you how to prompt AI with session notes, getting you a draft in minutes while teaching a reusable skill.</p>
+        </div>
+        <div class="featureCard delay-3 animated-view">
+          <div class="iconWrapper" style="color:var(--accent);background:#dbeafe"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+          <h4 style="font-size:1.2rem">Office Workers</h4>
+          <p style="color:var(--textLight)">Bring a spreadsheet you spend hours formatting. StepUp walks you through automating it so you never have to do it manually again.</p>
+        </div>
+      </div>
+      <div style="margin-top:52px;text-align:center;background:linear-gradient(135deg,#f0f9ff,#ede9fe);border-radius:22px;padding:46px 36px;border:1px solid rgba(139,92,246,.2)">
+        <h3 style="font-size:1.7rem;margin-top:0" class="gradient-text">Start Free. Grow When Ready.</h3>
+        <p style="color:var(--textLight);max-width:480px;margin:10px auto 28px">No credit card required to get started. Upgrade to Pro for £25/mo or explore team plans from £79/mo.</p>
+        <button class="btnAction" onclick="navigateTo('pricing')">View Pricing Plans</button>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="howitworksPage" class="publicSection animated-view" aria-label="How StepUp works">
+      <div style="text-align:center;margin-bottom:36px">
+        <h2 class="gradient-text" style="font-size:2.4rem;margin-bottom:8px">How StepUp Works</h2>
+        <p style="font-size:1.05rem;color:var(--textLight);max-width:580px;margin:0 auto">Integration with your actual tasks rather than hypothetical scenarios.</p>
+      </div>
+      <div style="display:grid;gap:24px;margin-top:28px">
+        <div class="featureCard delay-1 animated-view" style="display:flex;gap:22px;align-items:flex-start">
+          <div class="iconWrapper" style="flex-shrink:0;font-size:1.4rem;font-weight:bold;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white" aria-hidden="true">1</div>
+          <div><h3 style="margin-top:0;color:var(--primary)">Assess Your Learning Style</h3><p style="color:var(--textLight);margin-bottom:0">Upon registration, you complete the VARK assessment. This ensures the AI Agent adapts its coaching strategies and feedback formats exactly to how you learn best.</p></div>
+        </div>
+        <div class="featureCard delay-2 animated-view" style="display:flex;gap:22px;align-items:flex-start">
+          <div class="iconWrapper" style="flex-shrink:0;font-size:1.4rem;font-weight:bold;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white" aria-hidden="true">2</div>
+          <div><h3 style="margin-top:0;color:var(--primary)">Select a Specialized Track</h3><p style="color:var(--textLight);margin-bottom:0">Choose from dozens of modules ranging from wellbeing to technical tools like Python and Excel. The AI coach prepares the curriculum tailored to your goals.</p></div>
+        </div>
+        <div class="featureCard delay-3 animated-view" style="display:flex;gap:22px;align-items:flex-start;border-color:var(--accent2);box-shadow:0 10px 25px rgba(139,92,246,.1)">
+          <div class="iconWrapper" style="flex-shrink:0;font-size:1.4rem;font-weight:bold;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white" aria-hidden="true">3</div>
+          <div><h3 style="margin-top:0;color:var(--accent2)">Video Simulation AI Coaching</h3><p style="color:var(--textLight);margin-bottom:0">StepUp features a video simulation environment where the AI literally teaches you how to complete courses and practical tasks. You speak directly to the AI, and it provides real time visual, auditory, and practical feedback to guide you to success.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricingPage" class="publicSection animated-view" aria-label="Pricing plans">
+      <h2 class="gradient-text" style="font-size:2.8rem;margin-top:0;margin-bottom:8px">Simple, Transparent Pricing</h2>
+      <p style="color:var(--textLight);font-size:1.05rem;margin-bottom:0">Select the plan that matches your goals.</p>
+      <div class="pricingToggleWrapper">
+        <div class="pricingToggle" role="tablist" aria-label="Pricing plan type">
+          <button class="pricingToggleBtn active" id="toggleIndividual" onclick="switchPricingTab('individual')" role="tab" aria-selected="true" aria-controls="pricingIndividual">Individual</button>
+          <button class="pricingToggleBtn" id="toggleTeam" onclick="switchPricingTab('team')" role="tab" aria-selected="false" aria-controls="pricingTeam">Team</button>
+        </div>
+      </div>
+      <div id="pricingIndividual" class="pricingPanel active" role="tabpanel">
+        <table class="pricingTable" aria-label="Individual pricing comparison">
+          <thead><tr><th scope="col">Feature</th><th scope="col">Starter (Free)</th><th class="hcol" scope="col">Pro (£25/mo) <span class="planBadge">Popular</span></th></tr></thead>
+          <tbody>
+            <tr><td>AI Coach Access</td><td>Limited</td><td class="hcol">Unlimited</td></tr>
+            <tr><td>CV Diagnostics</td><td>1 per month</td><td class="hcol">Unlimited</td></tr>
+            <tr><td>Interview Sim</td><td>1 session/mo</td><td class="hcol">10 sessions/mo</td></tr>
+            <tr><td>Growth Analytics</td><td>Basic</td><td class="hcol">Advanced</td></tr>
+            <tr><td>Peer Chat / Forum</td><td>Public</td><td class="hcol">Public</td></tr>
+            <tr><td>Human Support</td><td>Community</td><td class="hcol">Priority</td></tr>
+          </tbody>
+        </table>
+        <div class="pricingCTA">
+          <button class="btnSecondary" onclick="navigateTo('auth')">Get Started Free</button>
+          <button class="btnAction" onclick="navigateTo('auth')">Upgrade to Pro — £25/mo <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+        <p class="teamNudge">Need to grow a team? <a onclick="switchPricingTab('team')" role="button" tabindex="0">View Team Plans →</a></p>
+      </div>
+      <div id="pricingTeam" class="pricingPanel" role="tabpanel">
+        <table class="pricingTable" aria-label="Team pricing features">
+          <thead><tr><th scope="col">Feature</th><th class="hcol" scope="col" style="text-align:center">Organisation <span style="font-weight:500;font-size:.88rem">(Starts at £79/mo)</span></th></tr></thead>
+          <tbody>
+            <tr><td>AI Coach Access</td><td class="hcol">Unlimited</td></tr>
+            <tr><td>CV / Interview Sim</td><td class="hcol">Unlimited</td></tr>
+            <tr><td>Growth Analytics</td><td class="hcol">Collective Team Insights</td></tr>
+            <tr><td>Peer Chat</td><td class="hcol">Private Team Hub</td></tr>
+            <tr><td>Human Support</td><td class="hcol">Dedicated Manager</td></tr>
+            <tr><td>Team Management</td><td class="hcol">Shared Progress Dashboard</td></tr>
+          </tbody>
+        </table>
+        <div class="teamTierSection">
+          <h3>Team Tier Variable Pricing</h3>
+          <table class="tierTable" aria-label="Team tier pricing">
+            <thead><tr><th scope="col">Organisation Size (Seats)</th><th scope="col">Monthly Price (GBP £)</th></tr></thead>
+            <tbody>
+              <tr><td>Small (1–5)</td><td><span class="tierPrice">£79</span></td></tr>
+              <tr><td>Growth (6–15)</td><td><span class="tierPrice">£149</span></td></tr>
+              <tr><td>Scale (16–30)</td><td><span class="tierPrice">£249</span></td></tr>
+              <tr><td>Enterprise (30+)</td><td><button class="contactSalesBtn" onclick="navigateTo('contact')">Contact Sales</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pricingCTA"><button class="btnAction" onclick="navigateTo('contact')">Get a Team Quote <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        <p class="teamNudge">Just looking for yourself? <a onclick="switchPricingTab('individual')" role="button" tabindex="0">View Individual Plans →</a></p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="aboutPage" class="publicSection animated-view" aria-label="About StepUp">
+      <h2 style="font-size:2.4rem;text-align:center;margin-bottom:36px" class="gradient-text">About StepUp</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center">
+        <div class="delay-1 animated-view">
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:18px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><h3 style="margin:0">The Core Problem</h3></div>
+          <p style="color:var(--textLight)">The problem with AI adoption is not the technology. It is that nobody teaches people how to use it with their own work. StepUp does not give you another AI tool. It gives you a coach that sits beside you and teaches you how to use the AI tools you already have.</p>
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:18px;margin-top:28px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><h3 style="margin:0">Fear &amp; Reluctance</h3></div>
+          <p style="color:var(--textLight)">StepUp is "learn by doing", not "learn then do". There is no course to complete before you start. You bring a real task, you do it with AI coaching, and you learn the skill in the process.</p>
+        </div>
+        <div class="featureCard delay-2 animated-view" style="background:var(--primaryLight);border-left:4px solid var(--accent2);padding:36px">
+          <div style="background:var(--bgMain);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;box-shadow:var(--shadow-sm)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <h4 style="margin-top:0;color:var(--primary);font-size:1.4rem">Our Mission</h4>
+          <p style="font-size:1.05rem;line-height:1.8;color:var(--textMain)">To eliminate the intimidation factor of modern technology and make AI accessible, understandable, and practically useful for everyone, regardless of their starting technical proficiency.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contactPage" class="publicSection animated-view" aria-label="Contact us">
+      <div style="text-align:center;margin-bottom:36px">
+        <h2 style="font-size:2.4rem;margin-bottom:8px" class="gradient-text">Get in Touch</h2>
+        <p style="font-size:1.05rem;color:var(--textLight)">Interested in learning more or enrolling in a local program? Reach out.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:36px">
+        <div class="delay-1 animated-view" style="display:flex;flex-direction:column;gap:26px">
+          <div class="featureCard" style="padding:22px;text-align:center"><div class="iconWrapper" style="margin:0 auto 14px auto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h4 style="margin:0 0 4px 0">Email Us</h4><p style="color:var(--textLight);margin:0">support@stepup.ai</p></div>
+          <div class="featureCard" style="padding:22px;text-align:center"><div class="iconWrapper" style="margin:0 auto 14px auto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h4 style="margin:0 0 4px 0">Headquarters</h4><p style="color:var(--textLight);margin:0">London, United Kingdom</p></div>
+        </div>
+        <div class="featureCard delay-2 animated-view">
+          <form class="authForm" onsubmit="performContact(event)" novalidate>
+            <div class="formGroup"><label for="contactName">Full Name</label><input type="text" id="contactName" required autocomplete="name" aria-required="true"></div>
+            <div class="formGroup"><label for="contactEmail">Email Address</label><input type="email" id="contactEmail" required autocomplete="email" aria-required="true"></div>
+            <div class="formGroup"><label for="contactMessage">Your Message</label><textarea id="contactMessage" rows="5" required style="resize:vertical" aria-required="true"></textarea></div>
+            <button type="submit" class="btnAction" style="width:100%">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacyPage" class="publicSection animated-view" aria-label="Privacy and guidelines">
+      <h2 style="font-size:2.4rem;text-align:center;margin-bottom:36px" class="gradient-text">Guidelines &amp; Privacy Policies</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px">
+        <div class="featureCard delay-1 animated-view"><div class="iconWrapper"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h4>Terms &amp; Conditions</h4><p style="color:var(--textLight)">By using StepUp, you agree to treat the software as an educational mentor platform. Content generated is for optimization assistance and should be verified independently.</p></div>
+        <div class="featureCard delay-2 animated-view"><div class="iconWrapper"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h4>Privacy Policy</h4><p style="color:var(--textLight)">We respect data minimisation principles. No permanent text strings uploaded to temporary buffers are transferred to external LLM public training parameters without explicit local confirmation flags.</p></div>
+        <div class="featureCard delay-3 animated-view"><div class="iconWrapper"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4>Platform Guidelines</h4><p style="color:var(--textLight)">Always practice responsible generation. Do not use automated prompting vectors for deceptive, harmful, or identity obscuring pipelines. Maintain transparency with physical work coaches.</p></div>
+      </div>
+    </section>
+
+    <!-- AUTH -->
+    <section id="authPage" style="display:none;padding:36px 0" aria-label="Login or sign up">
+      <div style="max-width:440px;margin:0 auto;background:var(--bgMain);border-radius:22px;box-shadow:var(--shadow-xl);overflow:hidden;border:1px solid var(--border)" class="animated-view">
+        <div class="authTabs" role="tablist">
+          <button class="authTabBtn active" id="tabLogin" onclick="switchAuthTab('login')" role="tab" aria-selected="true" aria-controls="loginFormSection">Log In</button>
+          <button class="authTabBtn" id="tabSignup" onclick="switchAuthTab('signup')" role="tab" aria-selected="false" aria-controls="signupFormSection">Sign Up</button>
+        </div>
+        <div id="loginFormSection" class="authContent active" role="tabpanel">
+          <h2 style="margin-top:0" class="gradient-text">Welcome Back</h2>
+          <p style="color:var(--textLight);margin-bottom:22px">Log in to access StepUp.</p>
+          <form class="authForm" onsubmit="event.preventDefault();performLogin()" novalidate>
+            <div class="formGroup"><label for="loginEmail">Email Address</label><input type="email" id="loginEmail" placeholder="name@example.com" required autocomplete="email"></div>
+            <div class="formGroup"><label for="loginPassword">Password</label><input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password"></div>
+            <div style="text-align:right;margin-top:-8px;margin-bottom:14px"><a href="#" style="font-size:.83rem;color:var(--accent);text-decoration:none;font-weight:600" onclick="alert('Password reset link sent to your email.')">Forgot Password?</a></div>
+            <button type="submit" class="btnAction" style="width:100%;margin-top:4px">Log In</button>
+          </form>
+        </div>
+        <div id="signupFormSection" class="authContent" role="tabpanel">
+          <h2 style="margin-top:0" class="gradient-text">Create Account</h2>
+          <p style="color:var(--textLight);margin-bottom:22px">Join StepUp today to start.</p>
+          <form class="authForm" id="signupForm" onsubmit="performSignup(event)" novalidate>
+            <div class="formGroup"><label for="signupEmail">Email Address</label><input type="text" id="signupEmail" placeholder="name@example.com" required autocomplete="email"></div>
+            <div class="formGroup"><label for="signupPassword">Create Password</label><input type="password" id="signupPassword" placeholder="Minimum 8 characters" required autocomplete="new-password"></div>
+            <div id="signupError" class="error-msg" role="alert"></div>
+            <button type="submit" class="btnAction" style="width:100%;margin-top:8px">Continue to Profile</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONBOARDING -->
+    <section id="onboardingPage" class="publicSection animated-view" style="display:none" aria-label="Complete your profile">
+      <h2 style="font-size:2.4rem;text-align:center;margin-bottom:8px" class="gradient-text">Complete Your Profile</h2>
+      <p style="text-align:center;color:var(--textLight);margin-bottom:36px">Tell us about yourself so we can customize your AI coaching experience.</p>
+      <form class="authForm" onsubmit="submitOnboarding(event)" novalidate>
+        <div class="profileGrid">
+          <div class="formGroup"><label for="profName">Full Name</label><input type="text" id="profName" required autocomplete="name"></div>
+          <div class="formGroup"><label for="profAge">Age</label><input type="number" id="profAge" required min="13" max="120"></div>
+          <div class="formGroup"><label for="profGender">Gender</label><select id="profGender" required><option value="" disabled selected>Select Gender</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select></div>
+          <div class="formGroup"><label for="profEthnicity">Ethnicity</label><input type="text" id="profEthnicity" required></div>
+          <div class="formGroup"><label for="profLocation">City / Location</label><input type="text" id="profLocation" required autocomplete="address-level2"></div>
+          <div class="formGroup"><label for="profCountry">Country</label><input type="text" id="profCountry" required autocomplete="country-name"></div>
+          <div class="formGroup"><label>Do you have a disability?</label><div style="display:flex;gap:14px;margin-top:9px"><div class="quizOption"><input type="radio" name="disability" value="yes" required id="disYes"><label for="disYes">Yes</label></div><div class="quizOption"><input type="radio" name="disability" value="no" id="disNo"><label for="disNo">No</label></div></div></div>
+          <div class="formGroup"><label>Do you speak another language?</label><div style="display:flex;gap:14px;margin-top:9px"><div class="quizOption"><input type="radio" name="otherLang" value="yes" required id="langYes"><label for="langYes">Yes</label></div><div class="quizOption"><input type="radio" name="otherLang" value="no" id="langNo"><label for="langNo">No</label></div></div></div>
+          <div class="formGroup"><label for="profEducation">Education Level</label><select id="profEducation" required><option value="" disabled selected>Select Level</option><option>High School / Secondary</option><option>Bachelor's Degree</option><option>Master's Degree</option><option>Doctorate / PhD</option><option>Other</option></select></div>
+          <div class="formGroup"><label>Have you used AI before?</label><div style="display:flex;gap:14px;margin-top:9px"><div class="quizOption"><input type="radio" name="usedAI" value="yes" required id="aiYes"><label for="aiYes">Yes</label></div><div class="quizOption"><input type="radio" name="usedAI" value="no" id="aiNo"><label for="aiNo">No</label></div></div></div>
+          <div class="formGroup fullWidth"><label for="profFeelAI">How do you feel about AI?</label><textarea id="profFeelAI" rows="2" placeholder="Excited? Nervous? Unsure?" required></textarea></div>
+          <div class="formGroup fullWidth"><label for="profLearn">What do you want to learn?</label><textarea id="profLearn" rows="2" required></textarea></div>
+          <div class="formGroup fullWidth"><label for="profSkills">What skills do you want to improve?</label><textarea id="profSkills" rows="2" required></textarea></div>
+          <div class="formGroup"><label for="profStruggles">What do you struggle with?</label><textarea id="profStruggles" rows="3" required></textarea></div>
+          <div class="formGroup"><label for="profStrengths">What are your strengths?</label><textarea id="profStrengths" rows="3" required></textarea></div>
+          <div class="formGroup fullWidth"><label for="profWeakness">What are your weaknesses?</label><textarea id="profWeakness" rows="3" required></textarea></div>
+          <div class="formGroup fullWidth"><label for="profPhoto">Upload a Profile Photo (optional)</label><input type="file" id="profPhoto" accept="image/*" onchange="previewAvatar(event)"></div>
+        </div>
+        <div style="text-align:center;margin-top:28px"><button type="submit" class="btnAction" style="width:100%;max-width:300px">Save &amp; Continue</button></div>
+      </form>
+    </section>
+  </div>
+  <!-- DASHBOARD -->
+  <div id="dashboardContainer">
+    <aside class="sidebar" role="navigation" aria-label="Dashboard navigation">
+      <ul class="menuList" role="list">
+        <li><a id="navVark" onclick="switchDashboardView('varkView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>VARK</span></a></li>
+        <li><a id="navPlan" onclick="switchDashboardView('planView',this)" class="dashLink active" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Modules</span></a></li>
+        <li><a id="navAnalytics" onclick="switchDashboardView('analyticsView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Analytics</span></a></li>
+        <li><a id="navChat" onclick="switchDashboardView('chatView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Coach</span></a></li>
+        <li><a id="navMessages" onclick="switchDashboardView('messagesView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Peers</span></a></li>
+        <li><a id="navJobs" onclick="switchDashboardView('jobsView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Jobs</span></a></li>
+        <li><a id="navApplied" onclick="switchDashboardView('appliedView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Tracking</span></a></li>
+        <li><a id="navCv" onclick="switchDashboardView('cvView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>CV Tool</span></a></li>
+        <li><a id="navSim" onclick="switchDashboardView('simulatorView',this)" class="dashLink" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Simulator</span></a></li>
+      </ul>
+      <div style="flex:1"></div>
+      <div class="statCard"><h3>CV Match Score</h3><div class="progressBar" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="CV match score 72%"><div class="progressFill" id="scoreFill" style="width:0%;background:var(--warning)"></div></div><span class="statValue" style="color:var(--warning)">72%</span></div>
+      <div class="statCard" style="border-left:4px solid var(--accent2)"><h3>Digital Confidence</h3><div class="progressBar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" aria-label="Digital confidence 45%"><div class="progressFill" id="confFill" style="background:var(--accent2);width:0%"></div></div><span class="statValue" style="font-size:1.15rem">Intermediate</span><p style="font-size:.78rem;margin:4px 0 0;color:var(--textLight)">Week 4 of 12 completed</p></div>
+    </aside>
+
+    <main class="contentArea" role="main">
+
+      <!-- ============ REDESIGNED VARK VIEW ============ -->
+      <div id="varkView" class="dashView animated-view" style="display:flex" aria-label="Learning style assessment">
+        <div class="contentHeader">
+          <h2>Learning Style Assessment</h2>
+          <span style="font-size:.85rem;color:var(--textLight);font-weight:600">Step 1 of 2</span>
+        </div>
+        <div class="viewScrollArea">
+
+          <!-- WHY VARK MATTERS -->
+          <div class="vark-why-box animated-view">
+            <h3>📘 Step 1: How do you learn best? (VARK)</h3>
+            <p>Select your primary learning style so the AI Coach can tailor its feedback format to you.</p>
+            <p style="margin:0;font-size:.9rem;font-weight:600;color:var(--primary)">Why does knowing your learning style matter?</p>
+            <div class="vark-why-grid" style="margin-top:14px">
+              <div class="vark-why-card">
+                <div class="vark-why-icon" style="background:#d1fae5"><span role="img" aria-label="brain">🧠</span></div>
+                <div><h5>Faster Learning</h5><p>When content matches how your brain processes information, you absorb it up to 3× faster with less frustration.</p></div>
+              </div>
+              <div class="vark-why-card">
+                <div class="vark-why-icon" style="background:#dbeafe"><span role="img" aria-label="target">🎯</span></div>
+                <div><h5>Personalized Feedback</h5><p>Your AI Coach adapts its feedback format — visual charts, spoken tips, text summaries, or hands-on tasks — to suit you.</p></div>
+              </div>
+              <div class="vark-why-card">
+                <div class="vark-why-icon" style="background:#ede9fe"><span role="img" aria-label="chart">📈</span></div>
+                <div><h5>Better Retention</h5><p>Research shows aligned learning reduces cognitive load and significantly boosts long-term skill retention.</p></div>
+              </div>
+              <div class="vark-why-card">
+                <div class="vark-why-icon" style="background:#fef3c7"><span role="img" aria-label="trophy">🏆</span></div>
+                <div><h5>Confidence Boost</h5><p>Learning in your natural style reduces anxiety and builds genuine confidence faster than a one-size-fits-all approach.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VARK CARD SELECTOR -->
+          <div id="varkCardSection">
+            <p class="vark-step-label">Select your learning style</p>
+            <p class="vark-step-sub">Choose the style that resonates most with how you naturally learn and absorb new information.</p>
+
+            <div class="vark-cards-grid" role="group" aria-label="Learning style selection">
+              <div class="vark-card" id="vcard-v" onclick="selectVark('v')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectVark('v')" role="radio" aria-checked="false" aria-label="Visual learner">
+                <div class="vark-check" aria-hidden="true">✓</div>
+                <div class="vark-card-header">
+                  <div class="vark-badge v" aria-hidden="true">V</div>
+                  <div class="vark-card-title">Visual</div>
+                </div>
+                <p class="vark-card-desc">I learn best through charts, diagrams, and seeing visual feedback of my performance.</p>
+              </div>
+              <div class="vark-card" id="vcard-a" onclick="selectVark('a')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectVark('a')" role="radio" aria-checked="false" aria-label="Aural learner">
+                <div class="vark-check" aria-hidden="true">✓</div>
+                <div class="vark-card-header">
+                  <div class="vark-badge a" aria-hidden="true">A</div>
+                  <div class="vark-card-title">Aural</div>
+                </div>
+                <p class="vark-card-desc">I learn best by listening, speaking, and engaging in spoken dialogue.</p>
+              </div>
+              <div class="vark-card" id="vcard-r" onclick="selectVark('r')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectVark('r')" role="radio" aria-checked="false" aria-label="Read/Write learner">
+                <div class="vark-check" aria-hidden="true">✓</div>
+                <div class="vark-card-header">
+                  <div class="vark-badge r" aria-hidden="true">R</div>
+                  <div class="vark-card-title">Read/Write</div>
+                </div>
+                <p class="vark-card-desc">I prefer reading detailed text logs, lists, and written feedback summaries.</p>
+              </div>
+              <div class="vark-card" id="vcard-k" onclick="selectVark('k')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')selectVark('k')" role="radio" aria-checked="false" aria-label="Kinesthetic learner">
+                <div class="vark-check" aria-hidden="true">✓</div>
+                <div class="vark-card-header">
+                  <div class="vark-badge k" aria-hidden="true">K</div>
+                  <div class="vark-card-title">Kinesthetic</div>
+                </div>
+                <p class="vark-card-desc">I learn by doing. I want to jump straight into the roleplay and figure it out.</p>
+              </div>
+            </div>
+
+            <!-- LANGUAGE PREFERENCE -->
+            <div class="vark-lang-row">
+              <label for="userLanguage">🌐 AI Coach Language:</label>
+              <select id="userLanguage" onchange="updateAILanguage(this.value)" aria-label="Select AI coach language">
+                <option value="en-US">🇬🇧 English</option>
+                <option value="es-ES">🇪🇸 Spanish</option>
+                <option value="fr-FR">🇫🇷 French</option>
+                <option value="de-DE">🇩🇪 German</option>
+                <option value="zh-CN">🇨🇳 Mandarin</option>
+                <option value="ar-SA">🇸🇦 Arabic</option>
+                <option value="pt-BR">🇧🇷 Portuguese</option>
+                <option value="hi-IN">🇮🇳 Hindi</option>
+              </select>
+            </div>
+
+            <div id="varkSelectionError" style="display:none;color:var(--danger);font-weight:700;margin-bottom:16px;font-size:.9rem" role="alert">⚠️ Please select your learning style before continuing.</div>
+
+            <button class="btnAction" onclick="confirmVark()" style="min-width:220px" aria-label="Confirm learning style and continue">
+              Confirm &amp; Continue
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- VARK RESULT -->
+          <div id="varkResultSection" style="display:none" class="animated-view" aria-live="polite">
+            <div class="vark-result-card">
+              <div class="vark-result-badge-wrap">
+                <div class="vark-result-big-badge" id="varkResultBadge" aria-hidden="true"></div>
+                <div>
+                  <div class="vark-result-title" id="varkResultTitle"></div>
+                  <div class="vark-result-subtitle">Your primary learning style</div>
+                </div>
+              </div>
+              <div class="vark-result-desc" id="varkResultDesc"></div>
+              <div class="vark-tips" id="varkResultTips"></div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap">
+                <button class="btnAction" onclick="switchDashboardView('planView',document.getElementById('navPlan'))">
+                  Proceed to Training Modules
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+                <button class="btnSecondary" onclick="resetVark()">Change Selection</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULES VIEW -->
+      <div id="planView" class="dashView animated-view" aria-label="Training modules">
+        <div class="contentHeader"><h2>Select Your Educational Plan</h2></div>
+        <div class="viewScrollArea">
+          <div class="courseCategoryContainer">
+            <div class="categoryLabel">Well-being &amp; Mental Health</div>
+            <div class="courseSelectionGrid">
+              <button class="courseTabBtn" onclick="loadCoursePlan('mindfulness',this)">Mindfulness Basics</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('stress_management',this)">Stress Management</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('nutrition',this)">Exercise &amp; Nutrition</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('wellbeing_prof',this)">Wellbeing for Professionals</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('meditation',this)">Meditation Practices</button>
+            </div>
+            <div class="categoryLabel">Life &amp; Employment Skills</div>
+            <div class="courseSelectionGrid">
+              <button class="courseTabBtn active" onclick="loadCoursePlan('assertiveness',this)">Assertiveness &amp; Confidence</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('digital_skills',this)">Digital Skills</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('confidence',this)">Building Confidence</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('budgeting',this)">Money Budgeting</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('self_branding',this)">Self-Branding</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('linkedin',this)">How to Use LinkedIn</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('social_media',this)">Social Media</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('grammar',this)">Grammar Training</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('languages',this)">Languages</button>
+            </div>
+            <div class="categoryLabel">Workplace &amp; Upskilling</div>
+            <div class="courseSelectionGrid">
+              <button class="courseTabBtn" onclick="loadCoursePlan('interview_prep',this)">Job Interview Prep</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('use_ai',this)">How to Use AI</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('python',this)">Python</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('office',this)">Microsoft Office</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('excel',this)">Excel Automation</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('power_bi',this)">Power BI</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('gdpr',this)">GDPR &amp; Data Protection</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('safeguarding',this)">Safeguarding</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('time_management',this)">Time Management</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('critical_thinking',this)">Critical Thinking</button>
+              <button class="courseTabBtn" onclick="loadCoursePlan('soft_skills',this)">Soft Skills</button>
+            </div>
+          </div>
+          <div id="dynamicCourseContent"></div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS VIEW -->
+      <div id="analyticsView" class="dashView animated-view" aria-label="Performance analytics">
+        <div class="contentHeader"><h2>Course Performance &amp; Growth Analytics</h2></div>
+        <div class="viewScrollArea">
+          <p style="color:var(--textLight);margin-bottom:26px">Tracking your transformations from day one pre-course baselines to current operational capabilities.</p>
+          <div class="analyticsGrid">
+            <div class="metricCard"><h4>Total Time Saved</h4><div class="value">14 hrs</div><div class="trend up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+4 hrs this week</div></div>
+            <div class="metricCard"><h4>System Confidence</h4><div class="value">85%</div><div class="trend up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+55% from Baseline</div></div>
+            <div class="metricCard"><h4>Task Accuracy</h4><div class="value">96%</div><div class="trend up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+24% vs Pre-Course</div></div>
+            <div class="metricCard"><h4>Automation Level</h4><div class="value">Advanced</div><div class="trend neutral"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Target Reached</div></div>
+          </div>
+          <div class="compareChartContainer">
+            <div class="compareHeader">
+              <h3 style="margin:0;color:var(--primary)">Pre-Course vs. Current Performance</h3>
+              <div class="compareLegend"><div class="legendItem"><div class="legendDot pre" aria-hidden="true"></div>Pre-Analytic Baseline</div><div class="legendItem"><div class="legendDot post" aria-hidden="true"></div>Current (Post-Module)</div></div>
+            </div>
+            <div class="compareChart" id="analyticsCompareChart" role="img" aria-label="Bar chart comparing pre-course and current performance across 4 metrics">
+              <div class="compareGroup"><div class="compareBarTrack"><div class="compareBar pre" data-target="30"><span class="compareValue" aria-hidden="true">30%</span></div></div><div class="compareBarTrack"><div class="compareBar post" data-target="85"><span class="compareValue" aria-hidden="true">85%</span></div></div><div class="compareLabel">Digital Literacy</div></div>
+              <div class="compareGroup"><div class="compareBarTrack"><div class="compareBar pre" data-target="40"><span class="compareValue" aria-hidden="true">40%</span></div></div><div class="compareBarTrack"><div class="compareBar post" data-target="95"><span class="compareValue" aria-hidden="true">95%</span></div></div><div class="compareLabel">Task Efficiency</div></div>
+              <div class="compareGroup"><div class="compareBarTrack"><div class="compareBar pre" data-target="20"><span class="compareValue" aria-hidden="true">20%</span></div></div><div class="compareBarTrack"><div class="compareBar post" data-target="90"><span class="compareValue" aria-hidden="true">90%</span></div></div><div class="compareLabel">AI Autonomy</div></div>
+              <div class="compareGroup"><div class="compareBarTrack"><div class="compareBar pre" data-target="45"><span class="compareValue" aria-hidden="true">45%</span></div></div><div class="compareBarTrack"><div class="compareBar post" data-target="88"><span class="compareValue" aria-hidden="true">88%</span></div></div><div class="compareLabel">Problem Solving</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COACH VIEW -->
+      <div id="chatView" class="dashView animated-view" aria-label="AI Coach chat">
+        <div class="contentHeader"><h2>Your Personal AI Coach</h2><div class="chatStatus" aria-live="polite">Online &amp; Ready</div></div>
+        <div class="messageList" id="chatBox" role="log" aria-live="polite" aria-label="Chat messages"><div class="message ai"><div class="messageBubble">Hello! I noticed you are looking at Retail Manager roles. Your current CV match is 72%. Let us work on adding more keywords related to "Inventory Management". Do you have experience with that?</div></div></div>
+        <form class="chatInputArea" onsubmit="event.preventDefault();sendMessage()" aria-label="Send message to AI coach"><input type="text" id="userInput" placeholder="Type your response here..." autocomplete="off" required aria-label="Message input"><button type="submit" class="btnAction" aria-label="Send"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></form>
+      </div>
+
+      <!-- PEERS VIEW -->
+      <div id="messagesView" class="dashView animated-view" aria-label="Peer messages">
+        <div class="contentHeader"><h2>Peer &amp; Mentor Messages</h2></div>
+        <div style="display:flex;height:100%">
+          <div style="width:240px;border-right:1px solid var(--border);padding:18px;background:#fff" role="navigation" aria-label="Conversations"><h4 style="margin-top:0">Conversations</h4><div style="padding:13px;background:var(--primaryLight);border-radius:8px;font-weight:600;cursor:pointer;color:var(--accent2)" role="button" tabindex="0">Mentor Sarah</div><div style="padding:13px;margin-top:9px;cursor:pointer" role="button" tabindex="0">Study Group A</div></div>
+          <div style="flex:1;display:flex;flex-direction:column">
+            <div class="messageList" id="dmBox" style="background:var(--bgSec)" role="log" aria-live="polite"><div class="message contact"><div class="messageBubble">Hi! I saw you are taking the Confidence module. Let me know if you want to practice the elevator pitch together on a quick call.</div></div></div>
+            <form class="chatInputArea" onsubmit="event.preventDefault();sendDM()" aria-label="Send message to Sarah"><input type="text" id="dmInput" placeholder="Message Sarah..." autocomplete="off" required aria-label="Message Sarah"><button type="submit" class="btnAction" aria-label="Send message">Send</button></form>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOBS VIEW -->
+      <div id="jobsView" class="dashView animated-view" aria-label="Job search">
+        <div class="contentHeader"><h2>AI Job Search &amp; Match</h2></div>
+        <div class="viewScrollArea" style="display:flex;flex-direction:column;gap:18px">
+          <form style="display:flex;gap:13px;flex-wrap:wrap" onsubmit="event.preventDefault();alert('Connecting to live job database...')" aria-label="Job search form">
+            <input type="text" placeholder="Job title, keywords..." required aria-label="Job title or keywords" style="flex:1;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit">
+            <input type="text" placeholder="Location..." required aria-label="Location" style="flex:1;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit">
+            <button type="submit" class="btnAction">Search Jobs</button>
+          </form>
+          <div class="jobCard" id="job-1">
+            <div class="jobCardHeader"><div><h3 style="margin:0 0 4px;font-size:1.25rem">Retail Store Manager</h3><p style="margin:0;color:var(--textLight)">Next plc • London, UK • Full Time</p><p style="margin-top:4px;font-weight:700">£32,000 to £38,000 per year</p></div><div class="matchBadge"><span class="score">92% Match</span></div></div>
+            <div class="aiInsight"><strong>AI Insight:</strong> Strong match. Your newly updated CV highlights Team Scheduling and Inventory Management perfectly.</div>
+            <div style="display:flex;gap:13px;margin-top:8px"><button class="btnAction applyBtn" onclick="applyForJob('job-1','Retail Store Manager','Next plc')" aria-label="Apply for Retail Store Manager">Apply Now</button><button class="btnSecondary" onclick="switchDashboardView('chatView',document.getElementById('navChat'))">Ask Coach to Prepare</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACKING VIEW -->
+      <div id="appliedView" class="dashView animated-view" aria-label="Application tracking">
+        <div class="contentHeader"><h2>My Applications</h2></div>
+        <div class="viewScrollArea" id="appliedJobsList" style="display:flex;flex-direction:column;gap:18px">
+          <div class="jobCard"><div class="jobCardHeader"><div><h3 style="margin:0 0 4px;font-size:1.25rem">Customer Service Supervisor</h3><p style="margin:0;color:var(--textLight)">Sainsbury's • London, UK • Full Time</p><p style="margin-top:4px;font-weight:600">Applied on: Oct 12, 2023</p></div><div><span style="background:var(--successLight);color:var(--success);padding:6px 14px;border-radius:20px;font-weight:700;font-size:.83rem">Interview Scheduled</span></div></div><div style="margin-top:9px"><button class="btnSecondary" onclick="launchSimulator('interview_prep')">Practice Interview</button></div></div>
+        </div>
+      </div>
+
+      <!-- CV VIEW -->
+      <div id="cvView" class="dashView animated-view" aria-label="CV diagnostic tool">
+        <div class="contentHeader"><h2>CV Diagnostic Tool</h2></div>
+        <div class="viewScrollArea">
+          <p style="margin-bottom:26px">Upload your current CV. The AI will scan it for formatting errors, readability, and tracking system compatibility.</p>
+          <div class="uploadZone" onclick="runDiagnostics()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')runDiagnostics()" aria-label="Upload CV for diagnosis">
+            <div class="uploadIcon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+            <h3 style="margin:0 0 8px">Drag and drop your CV here</h3>
+            <p style="color:var(--textLight);margin:0">Supports PDF, DOCX, or TXT. Click to browse files.</p>
+          </div>
+          <div id="diagnosticResults" class="diagnosticResults" aria-live="polite">
+            <h3 style="text-align:center;margin-top:0;margin-bottom:26px">Diagnostic Scan Complete</h3>
+            <div class="scoreCircle" role="img" aria-label="CV match score 72%"><span>72%</span></div>
+            <div class="feedbackGrid">
+              <div class="feedbackCard good"><h4 style="margin:0 0 7px;display:flex;align-items:center;gap:7px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Formatting</h4><p style="margin:0;font-size:.88rem;color:var(--textLight)">Excellent. Standard fonts used, clear headings.</p></div>
+              <div class="feedbackCard warning"><h4 style="margin:0 0 7px;display:flex;align-items:center;gap:7px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Missing Keywords</h4><p style="margin:0;font-size:.88rem;color:var(--textLight)">Missing crucial retail terms: "Inventory", "KPIs".</p></div>
+              <div class="feedbackCard danger"><h4 style="margin:0 0 7px;display:flex;align-items:center;gap:7px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Action Verbs</h4><p style="margin:0;font-size:.88rem;color:var(--textLight)">Try changing "Responsible for" to "Managed" or "Led".</p></div>
+            </div>
+            <div style="margin-top:26px;text-align:center"><button class="btnAction" onclick="switchDashboardView('chatView',document.getElementById('navChat'))">Fix with AI Coach</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULATOR VIEW -->
+      <div id="simulatorView" class="dashView" aria-label="Interview simulator">
+        <div class="contentHeader"><h2 id="simulatorTitle">Interview Practice Simulator</h2></div>
+        <div class="viewScrollArea">
+          <div id="simSetupStep" class="setupSection animated-view">
+            <h3 style="margin-top:0">Step 1: Choose your Scenario</h3>
+            <div style="display:flex;gap:13px;margin-bottom:9px;flex-wrap:wrap">
+              <select id="scenarioSelect" style="padding:13px;border-radius:12px;border:1.5px solid var(--border);font-family:inherit;font-size:.95rem;flex:1;min-width:190px" aria-label="Select scenario"></select>
+              <select id="difficultySelect" style="padding:13px;border-radius:12px;border:1.5px solid var(--border);font-family:inherit;font-size:.95rem;flex:1;min-width:190px" aria-label="Select difficulty"><option>Difficulty: Standard</option><option>Difficulty: Challenging</option></select>
+              <button class="btnAction" onclick="startSimulation()">Begin Simulation</button>
+            </div>
+          </div>
+          <div class="interviewContainer" id="interviewContainer" style="display:none">
+            <div class="videoFrame" id="videoFrame" role="region" aria-label="AI coach video frame">
+              <div class="aiAvatar" aria-hidden="true"><svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg></div>
+              <h3 style="margin:0;color:white;font-weight:500" id="aiStatusText" aria-live="polite">AI Coach Ready</h3>
+              <div style="position:absolute;bottom:36px;display:flex;gap:13px">
+                <button class="recordBtn" id="recordBtn" onclick="toggleRecording()" aria-label="Start recording"><span class="recordIndicator" aria-hidden="true"></span> <span id="recordBtnText">Start Interaction</span></button>
+                <button class="btnSecondary" style="background:rgba(255,255,255,.1);color:white;border:1px solid rgba(255,255,255,.2)" onclick="endSimulation()">End Session</button>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:20px;border:1px solid var(--border);display:flex;flex-direction:column;box-shadow:var(--shadow-md)">
+              <div style="padding:22px;border-bottom:1px solid var(--border);background:var(--bgSec);border-radius:20px 20px 0 0">
+                <h4 style="margin:0 0 8px;color:var(--accent2)">Active Scenario:</h4>
+                <p id="currentQuestionText" style="font-size:1rem;margin:0;font-weight:600;color:var(--textMain)">...</p>
+                <div id="varkNotice" style="margin-top:9px;font-size:.83rem;color:var(--tertiary);font-weight:700" aria-live="polite"></div>
+              </div>
+              <div style="padding:22px;flex:1;overflow-y:auto;background:white;border-radius:0 0 20px 20px" id="interviewFeedback" role="log" aria-live="polite">
+                <div id="feedbackPlaceholder" style="color:var(--textLight);text-align:center;margin-top:18px;font-style:italic">Real time contextual feedback will appear here as you interact.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div>&copy; 2026 StepUp. All rights reserved.</div>
+  <div class="footerLinks">
+    <a onclick="navigateTo('howitworks')" role="link" tabindex="0">How It Works</a>
+    <a onclick="navigateTo('pricing')" role="link" tabindex="0">Pricing</a>
+    <a onclick="navigateTo('privacy')" role="link" tabindex="0">Privacy Policy</a>
+    <a onclick="navigateTo('privacy')" role="link" tabindex="0">Platform Guidelines</a>
+  </div>
+</footer>
+
+<!-- GOOGLE TRANSLATE SCRIPT -->
+<script type="text/javascript">
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({
+    pageLanguage:'en',
+    includedLanguages:'en,es,fr,de,zh-CN,ar,pt,hi,it,ja,ko,ru,nl,pl,sv',
+    layout:google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay:false
+  },'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+<script>
+// ============ SPEECH & LANGUAGE ============
+if('speechSynthesis' in window){window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+let selectedAILanguage='en-US';
+function updateAILanguage(l){selectedAILanguage=l;}
+function speakText(text){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  const voices=window.speechSynthesis.getVoices();
+  let pv=voices.find(v=>v.lang.startsWith(selectedAILanguage.split('-')[0]))||voices.find(v=>v.lang==='en-US');
+  if(pv)utt.voice=pv;
+  utt.rate=1.0;utt.pitch=1.05;
+  window.speechSynthesis.speak(utt);
+}
+function readAloud(){
+  const visible=Array.from(document.querySelectorAll('.publicSection,.dashView')).find(el=>el.style.display==='block'||el.style.display==='flex');
+  if(visible)speakText(visible.innerText.substring(0,2000));
+}
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();}
+
+// ============ ACCESSIBILITY TOGGLES ============
+let largeTextOn=false,hcOn=false,dyslexiaOn=false;
+
+function toggleLargeText(){
+  largeTextOn=!largeTextOn;
+  document.body.classList.toggle('large-text',largeTextOn);
+  document.getElementById('toggleLargeTextSwitch').classList.toggle('on',largeTextOn);
+  document.getElementById('toggleLargeTextSwitch').setAttribute('aria-checked',largeTextOn);
+  try{localStorage.setItem('su_largeText',largeTextOn);}catch(e){}
+}
+function toggleHighContrast(){
+  hcOn=!hcOn;
+  document.body.classList.toggle('hc-mode',hcOn);
+  document.getElementById('toggleHCSwitch').classList.toggle('on',hcOn);
+  document.getElementById('toggleHCSwitch').setAttribute('aria-checked',hcOn);
+  try{localStorage.setItem('su_hc',hcOn);}catch(e){}
+}
+function toggleDyslexia(){
+  dyslexiaOn=!dyslexiaOn;
+  document.body.classList.toggle('dyslexia-mode',dyslexiaOn);
+  document.getElementById('toggleDyslexiaSwitch').classList.toggle('on',dyslexiaOn);
+  document.getElementById('toggleDyslexiaSwitch').setAttribute('aria-checked',dyslexiaOn);
+  try{localStorage.setItem('su_dyslexia',dyslexiaOn);}catch(e){}
+}
+function loadAccessibilityPrefs(){
+  try{
+    if(localStorage.getItem('su_largeText')==='true')toggleLargeText();
+    if(localStorage.getItem('su_hc')==='true')toggleHighContrast();
+    if(localStorage.getItem('su_dyslexia')==='true')toggleDyslexia();
+  }catch(e){}
+}
+
+// ============ ACCESSIBILITY PANEL ============
+const accessBtn=document.getElementById('accessBtn');
+const accessPanel=document.getElementById('accessPanel');
+accessBtn.addEventListener('click',(e)=>{
+  e.stopPropagation();
+  const open=accessPanel.classList.toggle('open');
+  accessBtn.setAttribute('aria-expanded',open);
+});
+document.addEventListener('click',(e)=>{
+  if(!accessBtn.contains(e.target)&&!accessPanel.contains(e.target)){
+    accessPanel.classList.remove('open');
+    accessBtn.setAttribute('aria-expanded','false');
+  }
+});
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){accessPanel.classList.remove('open');accessBtn.setAttribute('aria-expanded','false');}
+});
+
+// ============ PRICING TABS ============
+function switchPricingTab(tab){
+  const isInd=tab==='individual';
+  document.getElementById('toggleIndividual').classList.toggle('active',isInd);
+  document.getElementById('toggleTeam').classList.toggle('active',!isInd);
+  document.getElementById('toggleIndividual').setAttribute('aria-selected',isInd);
+  document.getElementById('toggleTeam').setAttribute('aria-selected',!isInd);
+  document.getElementById('pricingIndividual').classList.toggle('active',isInd);
+  document.getElementById('pricingTeam').classList.toggle('active',!isInd);
+}
+
+// ============ REDESIGNED VARK CARD SYSTEM ============
+let selectedVarkKey=null;
+let userAssessedVark=null;
+
+const varkData={
+  v:{
+    title:'Visual',
+    color:'var(--vark-v)',
+    bgClass:'#d1fae5',
+    letter:'V',
+    selClass:'selected-v',
+    desc:'You process information best through visual formats. You thrive when ideas are expressed through diagrams, charts, colour-coded content, and spatial layouts. When your AI coach knows you are a Visual learner, it will provide feedback through progress graphs, annotated comparisons, and visual score cards.',
+    tips:[
+      {icon:'📊',tip:'Your feedback will use progress bars and chart-based scoring.'},
+      {icon:'🗺️',tip:'Complex concepts will be broken into visual flow diagrams.'},
+      {icon:'🎨',tip:'Colour coding is used to highlight strengths vs. gaps.'},
+      {icon:'📸',tip:'Before/after visual comparisons will guide your improvement.'}
+    ]
+  },
+  a:{
+    title:'Aural',
+    color:'var(--vark-a)',
+    bgClass:'#dbeafe',
+    letter:'A',
+    selClass:'selected-a',
+    desc:'You learn best through spoken communication. Listening, discussing, and verbal explanation are your most powerful learning channels. Your AI Coach will deliver feedback verbally, explain concepts out loud, and encourage you to respond by speaking — turning every session into a dialogue rather than a lesson.',
+    tips:[
+      {icon:'🎙️',tip:'The AI Coach will narrate feedback aloud in your chosen language.'},
+      {icon:'🗣️',tip:'You will be prompted to respond verbally to questions.'},
+      {icon:'👂',tip:'Tone, pacing, and pitch cues will be part of your coaching.'},
+      {icon:'🎵',tip:'Rhythm-based memory techniques will reinforce key concepts.'}
+    ]
+  },
+  r:{
+    title:'Read/Write',
+    color:'var(--vark-r)',
+    bgClass:'#ffedd5',
+    letter:'R',
+    selClass:'selected-r',
+    desc:'You excel through reading and writing. Detailed written notes, structured lists, and text-based summaries are your preferred way to absorb and reflect on information. Your AI Coach will produce written transcript analyses, annotated corrections, and detailed written breakdowns of every interaction for your review.',
+    tips:[
+      {icon:'📝',tip:'Feedback is delivered as annotated written transcripts.'},
+      {icon:'📋',tip:'Structured bullet-point summaries follow each session.'},
+      {icon:'✏️',tip:'Side-by-side text comparisons show before/after rewrites.'},
+      {icon:'📚',tip:'Reading lists and written references are provided per topic.'}
+    ]
+  },
+  k:{
+    title:'Kinesthetic',
+    color:'var(--vark-k)',
+    bgClass:'#ede9fe',
+    letter:'K',
+    selClass:'selected-k',
+    desc:'You learn through direct experience and practice. You want to jump in and do — not read about it or watch someone else. Your AI Coach will prioritise immersive simulation tasks, real-world scenario roleplay, and actionable step-by-step challenges that keep you moving and doing throughout every session.',
+    tips:[
+      {icon:'🎭',tip:'Every session starts with live roleplay — no preamble.'},
+      {icon:'⚡',tip:'Action-first tasks before any theory or explanation.'},
+      {icon:'🔁',tip:'Repeat-and-refine drills build muscle memory fast.'},
+      {icon:'🏆',tip:'Challenge milestones replace traditional lesson plans.'}
+    ]
+  }
+};
+
+function selectVark(key){
+  selectedVarkKey=key;
+  ['v','a','r','k'].forEach(k=>{
+    const card=document.getElementById('vcard-'+k);
+    card.classList.remove('selected-v','selected-a','selected-r','selected-k');
+    card.setAttribute('aria-checked','false');
+  });
+  document.getElementById('vcard-'+key).classList.add(varkData[key].selClass);
+  document.getElementById('vcard-'+key).setAttribute('aria-checked','true');
+  document.getElementById('varkSelectionError').style.display='none';
+}
+
+function confirmVark(){
+  if(!selectedVarkKey){
+    document.getElementById('varkSelectionError').style.display='block';
+    document.getElementById('varkSelectionError').focus();
+    return;
+  }
+  const d=varkData[selectedVarkKey];
+  userAssessedVark=d.title;
+  document.getElementById('varkCardSection').style.display='none';
+  // Build result
+  const badge=document.getElementById('varkResultBadge');
+  badge.textContent=d.letter;
+  badge.style.background=d.color;
+  document.getElementById('varkResultTitle').textContent=d.title+' Learner';
+  document.getElementById('varkResultDesc').textContent=d.desc;
+  // Build tips
+  const tipsEl=document.getElementById('varkResultTips');
+  tipsEl.innerHTML=d.tips.map(t=>`<div class="vark-tip"><span class="vark-tip-icon" aria-hidden="true">${t.icon}</span><span>${t.tip}</span></div>`).join('');
+  document.getElementById('varkResultSection').style.display='block';
+  speakText(`Great! You have selected ${d.title}. ${d.desc.substring(0,120)}`);
+}
+
+function resetVark(){
+  selectedVarkKey=null;
+  userAssessedVark=null;
+  ['v','a','r','k'].forEach(k=>{
+    document.getElementById('vcard-'+k).classList.remove('selected-v','selected-a','selected-r','selected-k');
+    document.getElementById('vcard-'+k).setAttribute('aria-checked','false');
+  });
+  document.getElementById('varkResultSection').style.display='none';
+  document.getElementById('varkCardSection').style.display='block';
+}
+
+// ============ COURSE DATA ============
+const courseData={
+  mindfulness:{title:"Mindfulness Basics",intro:"Focus: Developing awareness, regulating emotions, and staying present in stressful work environments.",w1_title:"Introduction to Breathwork",w1_desc:"Basic physiological anchoring techniques to handle immediate stress spikes.",w2_title:"Observing Thoughts",w2_desc:"Learning to detach from negative spirals during challenging projects.",w3_title:"Mindful Communication",w3_desc:"Responding rather than reacting to difficult feedback.",w4_title:"Building a Routine",w4_desc:"Integrating 5 minute practical resets into your daily working calendar.",w5_title:"Deepening Focus",w5_desc:"Extending session times and maintaining attention spans.",w6_title:"Body Scan Techniques",w6_desc:"Progressive muscle relaxation during long desk work sessions.",w7_title:"Mindful Eating",w7_desc:"Taking conscious breaks for proper nutrition and mental reset.",w8_title:"Interpersonal Friction",w8_desc:"Applying mindfulness to team conflicts and workplace disagreements.",w9_title:"Cultivating Gratitude",w9_desc:"Reframing daily workplace challenges into growth opportunities.",w10_title:"Advanced Breathwork",w10_desc:"Rapid deployment techniques for high anxiety moments.",w11_title:"Flow State Integration",w11_desc:"Using mindfulness cues to achieve deep work and productivity.",w12_title:"Long Term Maintenance",w12_desc:"Creating a sustainable yearly practice and personal tracking system."},
+  stress_management:{title:"Workplace Stress Management",intro:"Focus: Identifying triggers, establishing recovery protocols, and preventing burnout.",w1_title:"Identifying Stressors",w1_desc:"Mapping out environmental, task based, and interpersonal stress triggers.",w2_title:"Cognitive Reframing",w2_desc:"Techniques for restructuring catastrophic thinking into actionable steps.",w3_title:"Physical Reset Tactics",w3_desc:"Understanding the importance of micro breaks and physical movement.",w4_title:"Burnout Prevention",w4_desc:"Creating sustainable boundaries and effective delegation practices.",w5_title:"Energy Auditing",w5_desc:"Tracking personal energy peaks and scheduling tasks accordingly.",w6_title:"Sleep Hygiene",w6_desc:"Optimising rest and recovery for cognitive performance.",w7_title:"Delegation Skills",w7_desc:"Learning to trust colleagues and release micromanagement habits.",w8_title:"The Art of Saying No",w8_desc:"Politely declining additional work when capacity is reached.",w9_title:"Crisis Management",w9_desc:"Maintaining composure during unexpected organisational pivots.",w10_title:"Resiliency Building",w10_desc:"Bouncing back from professional setbacks quickly.",w11_title:"Peer Support Systems",w11_desc:"Building a network of trusted colleagues for mutual venting.",w12_title:"Mastery & Reflection",w12_desc:"Creating a personalised workplace stress response playbook."},
+  assertiveness:{title:"Assertiveness & Confidence Building",intro:"Focus: Overcoming communications anxiety and building professional boundaries.",w1_title:"Introduction to Confidence",w1_desc:"Understanding defensive vs assertive body language and tone metrics.",w2_title:"Active Boundary Setting",w2_desc:"Learning how to navigate standard workplace rejections.",w3_title:"The Assertive Toolkit",w3_desc:"Simulating live scenario applications with speech pacing guidance.",w4_title:"Advanced Presentation",w4_desc:"Mastering conversational leadership skills during filter testing.",w5_title:"Tone Control",w5_desc:"Keeping emotional responses out of professional disagreements.",w6_title:"Physical Presence",w6_desc:"Occupying space in meetings and commanding attention respectfully.",w7_title:"Negotiation Basics",w7_desc:"Asking for resources, time, or compensation confidently.",w8_title:"Managing Up",w8_desc:"Communicating needs directly to senior leadership without fear.",w9_title:"Deflecting Aggression",w9_desc:"Handling hostile colleagues with calm, neutral responses.",w10_title:"Constructive Criticism",w10_desc:"Giving feedback that is direct but empathetic.",w11_title:"Public Advocacy",w11_desc:"Standing up for team members in wider company forums.",w12_title:"Leadership Confidence",w12_desc:"Transitioning from individual contributor to thought leader."},
+  interview_prep:{title:"Job Interview Mastery",intro:"Focus: Mastering behavioural questions, technical explanations, and confident body language.",w1_title:"The STAR Method",w1_desc:"Structuring answers to highlight Situation, Task, Action, and Result.",w2_title:"Common Pitfalls",w2_desc:"How to handle the biggest weakness question without self sabotage.",w3_title:"Technical Explanations",w3_desc:"Practising how to explain complex workflows to non technical recruiters.",w4_title:"Salary Negotiation",w4_desc:"Knowing your market value and communicating it firmly.",w5_title:"Researching the Company",w5_desc:"Finding deep insights to ask highly intelligent counter questions.",w6_title:"Body Language Optimisation",w6_desc:"Mastering posture, eye contact, and hand gestures on video calls.",w7_title:"Handling Curveballs",w7_desc:"Buying time and structuring thoughts when asked bizarre questions.",w8_title:"Explaining Career Gaps",w8_desc:"Framing periods of unemployment positively and proactively.",w9_title:"Panel Interviews",w9_desc:"Managing eye contact and attention across multiple stakeholders.",w10_title:"Mock Interview Drills",w10_desc:"Rapid fire practice sessions with unexpected interruptions.",w11_title:"Post Interview Follow Up",w11_desc:"Crafting the perfect thank you note to solidify your candidacy.",w12_title:"Offer Evaluation",w12_desc:"Reading the fine print and deciding between competing job offers."}
+};
+['nutrition','wellbeing_prof','meditation','digital_skills','confidence','budgeting','self_branding','linkedin','social_media','grammar','languages','use_ai','python','office','excel','power_bi','gdpr','safeguarding','time_management','critical_thinking','soft_skills'].forEach(k=>{
+  if(!courseData[k])courseData[k]=Object.assign({},courseData.assertiveness,{title:k.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),intro:"Focus: Building practical skills through AI-powered coaching and real-world scenario practice."});
+});
+
+function loadCoursePlan(courseKey,btnEl){
+  if(btnEl){document.querySelectorAll('.courseTabBtn').forEach(b=>b.classList.remove('active'));btnEl.classList.add('active');}
+  const data=courseData[courseKey]||courseData.assertiveness;
+  const target=document.getElementById('dynamicCourseContent');
+  let weeksHTML='';
+  for(let i=1;i<=12;i++){
+    const t=data['w'+i+'_title'],d=data['w'+i+'_desc'];
+    const cc=i<=3?'completed':(i===4?'active':'');
+    const badge=i<=3?'<span class="statusBadge completed">Completed</span>':(i===4?'<span class="statusBadge active">In Progress</span>':'<span class="statusBadge" style="background:#e2e8f0;color:#64748b">Upcoming</span>');
+    weeksHTML+=`<div class="weekCard ${cc}"><h4 style="margin:0">Week ${i}: ${t}</h4><p style="margin:0;color:var(--textLight)">${d}</p>${badge}</div>`;
+  }
+  target.innerHTML=`<div class="phaseBlock animated-view"><h3 class="gradient-text" style="font-size:1.7rem">${data.title}</h3><p style="font-size:1.05rem">${data.intro}</p><div class="weekGrid">${weeksHTML}</div><div style="margin-top:36px;padding:28px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:16px;text-align:center;border:1px solid rgba(139,92,246,.3)"><h3 style="margin-top:0;color:var(--accent2)">Ready to practise?</h3><p style="margin-bottom:22px">Test your skills in real time with our adaptive AI roleplay simulator tailored for this module.</p><button class="btnAction" onclick="launchSimulator('${courseKey}')">Launch ${data.title} Simulator</button></div></div>`;
+  setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+// ============ SIMULATOR ============
+let isRecording=false;
+function launchSimulator(courseKey){
+  switchDashboardView('simulatorView',document.getElementById('navSim'));
+  const sel=document.getElementById('scenarioSelect');sel.innerHTML='';
+  const scenarios={mindfulness:["Leading a 2-Minute Breathing Drill","Regaining Focus After Distraction"],stress_management:["Setting Boundaries with a Manager","Identifying Burnout Triggers"],assertiveness:["Boundary Setting Practice","Handling Unfair Criticism"],interview_prep:["Behavioural STAR Question","The Weakness Question","Salary Negotiation Roleplay","Explaining an Employment Gap"]};
+  (scenarios[courseKey]||["Standard Practice Scenario","Advanced Application Scenario"]).forEach(s=>{const o=document.createElement('option');o.value=o.innerText=s;sel.appendChild(o);});
+  document.getElementById('interviewContainer').style.display='none';
+  document.getElementById('simSetupStep').style.display='block';
+}
+
+function startSimulation(){
+  document.getElementById('simSetupStep').style.display='none';
+  const scenario=document.getElementById('scenarioSelect').value;
+  document.getElementById('currentQuestionText').innerText=`Simulation Active: [${scenario}]`;
+  document.getElementById('varkNotice').innerText=`Feedback adapted for a ${userAssessedVark||'Kinesthetic'} learner. Language: ${selectedAILanguage}.`;
+  speakText("Simulation Active. Please respond to the prompt.");
+  document.getElementById('interviewFeedback').innerHTML='<div id="feedbackPlaceholder" style="color:var(--textLight);text-align:center;margin-top:18px;font-style:italic">Real time feedback will appear here as you interact.</div>';
+  const c=document.getElementById('interviewContainer');c.style.display='grid';
+  isRecording=false;
+  document.getElementById('videoFrame').classList.remove('active-recording');
+  document.getElementById('aiStatusText').innerText="AI Coach Listening...";
+  document.getElementById('recordBtn').classList.remove('stop');
+  document.getElementById('recordBtnText').innerText='Tap to Speak';
+}
+
+function endSimulation(){
+  stopSpeech();
+  document.getElementById('interviewContainer').style.display='none';
+  document.getElementById('simSetupStep').style.display='block';
+}
+
+function toggleRecording(){
+  const btn=document.getElementById('recordBtn'),frame=document.getElementById('videoFrame'),fb=document.getElementById('interviewFeedback');
+  const ph=document.getElementById('feedbackPlaceholder');if(ph)ph.style.display='none';
+  isRecording=!isRecording;
+  if(isRecording){
+    btn.classList.add('stop');document.getElementById('recordBtnText').innerText='Stop Recording';
+    frame.classList.add('active-recording');document.getElementById('aiStatusText').innerText="Analysing your response...";
+  } else {
+    btn.classList.remove('stop');document.getElementById('recordBtnText').innerText='Tap to Speak';
+    frame.classList.remove('active-recording');document.getElementById('aiStatusText').innerText="AI Coach Ready";
+    const style=userAssessedVark||'Kinesthetic';
+    let html='',spoken='';
+    if(style==='Visual'){html=`<div style="background:#f8fafc;padding:14px;border-radius:12px;margin-bottom:11px;border:1px solid var(--border)" class="animated-view"><div style="display:flex;justify-content:space-between;margin-bottom:7px"><strong>Tone Match Score</strong><span style="color:var(--success);font-weight:700">85%</span></div><div style="width:100%;background:#e2e8f0;height:8px;border-radius:4px"><div style="width:85%;background:var(--success);height:100%;border-radius:4px"></div></div><p style="margin:9px 0 0;font-size:.88rem">Your pacing aligns well with confident boundary setting. Great delivery.</p></div>`;spoken="Your tone match score is 85 percent. Strong delivery and pacing.";}
+    else if(style==='Aural'){html=`<div style="background:#f0f9ff;padding:15px;border-radius:12px;margin-bottom:11px;border-left:4px solid var(--accent);font-size:.92rem" class="animated-view"><strong>Audio Note:</strong> Your inflection rose at the sentence end. Try a flat, steady tone when asserting a boundary — it communicates authority.</div>`;spoken="Your inflection rose at the end of the sentence. Try keeping a flat, steady tone to sound more authoritative.";}
+    else if(style==='Read/Write'){html=`<div style="background:#fff;padding:15px;border-radius:12px;margin-bottom:11px;border:1px solid var(--border)" class="animated-view"><strong>Transcript Correction:</strong><div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:.9rem"><div style="padding:8px 12px;background:#fef2f2;border-radius:8px;color:var(--danger)">✕ "I'm sorry but I can't do that today."</div><div style="padding:8px 12px;background:var(--successLight);border-radius:8px;color:var(--success)">✓ "My capacity is full today. I can prioritise this tomorrow."</div></div></div>`;spoken="Your revised phrasing removes the apology and sounds significantly more professional.";}
+    else{html=`<div style="background:#f5f3ff;padding:15px;border-radius:12px;margin-bottom:11px;border-left:4px solid var(--accent2);font-size:.92rem" class="animated-view"><strong>Action Step:</strong> Run that sentence again right now — but this time, sit up straight, breathe in, and tap Record. One more rep builds the muscle memory.</div>`;spoken="Run that exact line one more time. Sit up straight before you tap record. Repetition builds the habit.";}
+    fb.innerHTML+=html;speakText(spoken);fb.scrollTop=fb.scrollHeight;
+  }
+}
+
+// ============ ANALYTICS ANIMATION ============
+function triggerAnalyticsAnimation(){
+  const chart=document.getElementById('analyticsCompareChart');if(!chart)return;
+  chart.classList.remove('showValues');
+  const bars=chart.querySelectorAll('.compareBar');
+  bars.forEach(b=>{b.style.transition='none';b.style.height='0%';});
+  void chart.offsetWidth;
+  bars.forEach(b=>{b.style.transition='height 1.2s cubic-bezier(.34,1.56,.64,1)';const t=b.getAttribute('data-target');setTimeout(()=>{b.style.height=t+'%';},100);});
+  setTimeout(()=>chart.classList.add('showValues'),1200);
+}
+
+// ============ FLOATING CHAT ============
+function toggleFloatingChat(){
+  const win=document.getElementById('floatingChatWindow');
+  const isOpen=win.style.display==='flex';
+  win.style.display=isOpen?'none':'flex';
+  win.classList.toggle('active',!isOpen);
+}
+
+function sendFloatingMessage(){
+  const input=document.getElementById('floatingUserInput'),box=document.getElementById('floatingChatBox'),text=input.value.toLowerCase().trim();
+  if(!text)return;
+  const ud=document.createElement('div');
+  ud.style.cssText="align-self:flex-end;background:var(--accent2);color:white;padding:10px 14px;border-radius:12px;border-bottom-right-radius:4px;max-width:85%;font-size:.9rem";
+  ud.innerText=input.value;box.appendChild(ud);input.value='';box.scrollTop=box.scrollHeight;
+  const td=document.createElement('div');td.style.cssText="align-self:flex-start;background:white;padding:10px 14px;border-radius:12px;border-bottom-left-radius:4px;border:1px solid var(--border);max-width:85%;font-size:.9rem;color:var(--textLight);font-style:italic";td.innerText="Typing...";td.id="typingTemp";box.appendChild(td);box.scrollTop=box.scrollHeight;
+  setTimeout(()=>{
+    document.getElementById("typingTemp")?.remove();
+    let reply="I can help with that! Use the navigation or log in to access the dashboard.",btn="";
+    if(text.includes('pric')){reply="We have a free Starter plan, Pro at £25/mo, and Team plans from £79/mo.";btn=`<button class="btnAction" style="margin-top:9px;font-size:.82rem;padding:7px 13px" onclick="navigateTo('pricing');toggleFloatingChat()">View Pricing</button>`;}
+    else if(text.includes('course')||text.includes('learn')){reply="We have dozens of training modules! Want to see them?";btn=`<button class="btnAction" style="margin-top:9px;font-size:.82rem;padding:7px 13px" onclick="navigateTo('dashboard');toggleFloatingChat()">Go to Courses</button>`;}
+    else if(text.includes('simulat')||text.includes('interview')||text.includes('practic')){reply="The Interview Simulator lets you practise real scenarios with your AI Coach!";btn=`<button class="btnAction" style="margin-top:9px;font-size:.82rem;padding:7px 13px" onclick="navigateTo('dashboard');switchDashboardView('simulatorView',document.getElementById('navSim'));toggleFloatingChat()">Launch Simulator</button>`;}
+    else if(text.includes('cv')||text.includes('resume')){reply="The CV Diagnostic Tool scans your CV and suggests improvements instantly.";btn=`<button class="btnAction" style="margin-top:9px;font-size:.82rem;padding:7px 13px" onclick="navigateTo('dashboard');switchDashboardView('cvView',document.getElementById('navCv'));toggleFloatingChat()">Open CV Tool</button>`;}
+    else if(text.includes('vark')||text.includes('learn')){reply="VARK stands for Visual, Aural, Read/Write, Kinesthetic — 4 learning styles. Take the quiz in your dashboard!";btn=`<button class="btnAction" style="margin-top:9px;font-size:.82rem;padding:7px 13px" onclick="navigateTo('dashboard');switchDashboardView('varkView',document.getElementById('navVark'));toggleFloatingChat()">Take VARK Assessment</button>`;}
+    const ad=document.createElement('div');ad.style.cssText="align-self:flex-start;background:white;padding:10px 14px;border-radius:12px;border-bottom-left-radius:4px;border:1px solid var(--border);max-width:85%;font-size:.9rem";
+    ad.innerHTML=`${reply}<br/>${btn}`;box.appendChild(ad);box.scrollTop=box.scrollHeight;
+  },900);
+}
+
+// ============ NAVIGATION ============
+const PUBLIC_PAGES=['home','howitworks','pricing','about','contact','privacy','auth','onboarding'];
+function navigateTo(page){
+  document.getElementById('publicContainer').style.display='none';
+  document.getElementById('dashboardContainer').style.display='none';
+  document.querySelectorAll('.navLinks a').forEach(a=>a.classList.remove('active'));
+  if(PUBLIC_PAGES.includes(page)){
+    document.getElementById('publicContainer').style.display='block';
+    PUBLIC_PAGES.forEach(p=>{const el=document.getElementById(p+'Page');if(el)el.style.display='none';});
+    const tp=document.getElementById(page+'Page');
+    if(tp){tp.style.display='block';tp.classList.remove('animated-view');void tp.offsetWidth;tp.classList.add('animated-view');}
+    const nl=document.querySelector('.nav-'+page);if(nl)nl.classList.add('active');
+  } else if(page==='dashboard'){
+    document.getElementById('floatingChatWindow').style.display='none';
+    document.getElementById('dashboardContainer').style.display='grid';
+    if(!userAssessedVark){switchDashboardView('varkView',document.getElementById('navVark'));}
+    else{switchDashboardView('planView',document.getElementById('navPlan'));}
+    setTimeout(()=>{document.getElementById('scoreFill').style.width='72%';document.getElementById('confFill').style.width='45%';},300);
+  }
+}
+
+// ============ AUTH ============
+function switchAuthTab(tab){
+  const isLogin=tab==='login';
+  ['tabLogin','tabSignup'].forEach((id,i)=>{
+    document.getElementById(id).classList.toggle('active',i===0===isLogin);
+    document.getElementById(id).setAttribute('aria-selected',i===0===isLogin);
+  });
+  document.getElementById('loginFormSection').classList.toggle('active',isLogin);
+  document.getElementById('signupFormSection').classList.toggle('active',!isLogin);
+}
+function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function validatePassword(p){return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(p);}
+function performSignup(e){
+  e.preventDefault();
+  const em=document.getElementById('signupEmail').value,pw=document.getElementById('signupPassword').value,err=document.getElementById('signupError');
+  if(!validateEmail(em)){err.innerText="Please enter a valid email address.";err.style.display="block";return;}
+  if(!validatePassword(pw)){err.innerText="Password must be at least 8 characters with 1 uppercase letter and 1 number.";err.style.display="block";return;}
+  err.style.display="none";
+  document.getElementById('authNavBtn').style.display='none';document.getElementById('dashboardNavBtn').style.display='block';document.getElementById('userProfileControls').style.display='flex';
+  navigateTo('onboarding');
+}
+function submitOnboarding(e){
+  e.preventDefault();
+  const name=document.getElementById('profName').value;
+  document.getElementById('navProfileName').innerText=name;
+  document.getElementById('navProfileAvatar').innerText=name.substring(0,2).toUpperCase();
+  navigateTo('dashboard');
+}
+function previewAvatar(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=ev=>{document.getElementById('navProfileAvatar').innerHTML=`<img src="${ev.target.result}" alt="Profile photo">`;};r.readAsDataURL(f);}}
+function performContact(e){e.preventDefault();if(!validateEmail(document.getElementById('contactEmail').value)){alert("Please enter a valid email address.");return;}alert('Your message has been sent to our support team!');e.target.reset();}
+function performLogin(){
+  document.getElementById('authNavBtn').style.display='none';document.getElementById('dashboardNavBtn').style.display='block';document.getElementById('userProfileControls').style.display='flex';
+  navigateTo('dashboard');
+}
+function logOut(){
+  document.getElementById('authNavBtn').style.display='block';document.getElementById('dashboardNavBtn').style.display='none';document.getElementById('userProfileControls').style.display='none';
+  userAssessedVark=null;selectedVarkKey=null;navigateTo('home');
+}
+
+// ============ DASHBOARD VIEWS ============
+function switchDashboardView(viewId,element){
+  stopSpeech();
+  if(!userAssessedVark&&viewId!=='varkView'){
+    alert('Please complete the VARK Learning Style Assessment first.');viewId='varkView';element=document.getElementById('navVark');
+  }
+  document.querySelectorAll('.dashView').forEach(v=>v.style.display='none');
+  const view=document.getElementById(viewId);
+  if(view){
+    view.style.display='flex';
+    const sa=view.querySelector('.viewScrollArea');
+    if(sa&&viewId!=='simulatorView'){
+      const od=sa.style.display;sa.style.display='none';
+      let sk=document.getElementById('globalSkeleton');
+      if(!sk){sk=document.createElement('div');sk.id='globalSkeleton';sk.style.cssText='padding:32px;flex:1;width:100%';sk.innerHTML='<div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text" style="width:80%"></div><div class="skeleton skeleton-card" style="margin-top:28px"></div><div class="skeleton skeleton-card"></div>';}
+      view.insertBefore(sk,sa);sk.style.display='block';
+      setTimeout(()=>{sk.style.display='none';sa.style.display=od||'block';sa.classList.add('animated-view');if(viewId==='analyticsView')triggerAnalyticsAnimation();},550);
+    } else {view.classList.remove('animated-view');void view.offsetWidth;view.classList.add('animated-view');}
+  }
+  document.querySelectorAll('.dashLink').forEach(l=>l.classList.remove('active'));
+  if(element)element.classList.add('active');
+}
+
+// ============ MESSAGING ============
+function sendDM(){
+  const inp=document.getElementById('dmInput'),txt=inp.value;if(!txt.trim())return;
+  const box=document.getElementById('dmBox'),msg=document.createElement('div');
+  msg.className='message user';msg.innerHTML=`<div class="messageBubble">${txt}</div>`;box.appendChild(msg);inp.value='';box.scrollTop=box.scrollHeight;
+  setTimeout(()=>{const r=document.createElement('div');r.className='message contact';r.innerHTML=`<div class="messageBubble">Sounds perfect! I am free tomorrow at 2 PM. We can run through it then.</div>`;box.appendChild(r);box.scrollTop=box.scrollHeight;},1800);
+}
+function sendMessage(){
+  const inp=document.getElementById('userInput'),txt=inp.value;if(!txt.trim())return;
+  const box=document.getElementById('chatBox'),msg=document.createElement('div');
+  msg.className='message user';msg.innerHTML=`<div class="messageBubble">${txt}</div>`;box.appendChild(msg);inp.value='';box.scrollTop=box.scrollHeight;
+  setTimeout(()=>{const r=document.createElement('div');r.className='message ai';r.innerHTML=`<div class="messageBubble">Great! I will update your profile with that. This should boost your match score. Keep up the good work!</div>`;box.appendChild(r);box.scrollTop=box.scrollHeight;},1400);
+}
+
+// ============ JOBS / CV ============
+function applyForJob(jobId,title,company){
+  const card=document.getElementById(jobId),btn=card.querySelector('.applyBtn');
+  btn.innerHTML="<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg> Applied";
+  btn.disabled=true;btn.style.background="var(--success)";btn.style.boxShadow="none";
+  const list=document.getElementById('appliedJobsList'),date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),nc=document.createElement('div');
+  nc.className='jobCard animated-view';nc.innerHTML=`<div class="jobCardHeader"><div><h3 style="margin:0 0 4px;font-size:1.2rem">${title}</h3><p style="margin:0;color:var(--textLight)">${company} • Full Time</p><p style="margin-top:4px;font-weight:600">Applied: ${date}</p></div><div><span style="background:#e0e7ff;color:#4338ca;padding:6px 14px;border-radius:20px;font-weight:700;font-size:.83rem">Submitted</span></div></div><div style="margin-top:9px"><button class="btnSecondary" onclick="switchDashboardView('chatView',document.getElementById('navChat'))">Follow up with Coach</button></div>`;
+  list.insertBefore(nc,list.firstChild);
+}
+function runDiagnostics(){
+  const zone=document.querySelector('.uploadZone');zone.style.display='none';
+  const sk=document.createElement('div');
+  sk.innerHTML='<div class="skeleton skeleton-title" style="margin:0 auto 26px;width:48%"></div><div class="skeleton" style="width:115px;height:115px;border-radius:50%;margin:0 auto 26px"></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px"><div class="skeleton skeleton-card" style="height:90px"></div><div class="skeleton skeleton-card" style="height:90px"></div><div class="skeleton skeleton-card" style="height:90px"></div></div>';
+  document.getElementById('cvView').querySelector('.viewScrollArea').appendChild(sk);
+  setTimeout(()=>{sk.remove();document.getElementById('diagnosticResults').style.display='block';document.getElementById('diagnosticResults').classList.add('animated-view');zone.style.display='block';},1400);
+}
+
+// ============ INIT ============
+window.onload=function(){
+  loadAccessibilityPrefs();
+  navigateTo('home');
+  loadCoursePlan('assertiveness');
+};
+</script>
+</body>
+</html>
