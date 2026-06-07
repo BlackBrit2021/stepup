@@ -114,7 +114,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:cen
 .logo-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-icon svg{width:28px;height:28px;color:var(--purple)}
 .logo-text{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.35rem;color:var(--navy);white-space:nowrap}
-.logo-text span{color:var(--navy)}
+.logo-text span{color:var(--purple)}
 footer .logo-text{color:#fff}
 footer .logo-text span{color:var(--teal)}
 footer .logo-icon svg{color:var(--teal)}
@@ -159,7 +159,7 @@ footer .logo-icon svg{color:var(--teal)}
 .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(62,207,190,.15);border:1.5px solid rgba(62,207,190,.35);color:var(--teal-dark);padding:6px 14px;border-radius:40px;font-size:.78rem;font-weight:600;letter-spacing:.6px;margin-bottom:24px;width:fit-content}
 .hero-tag::before{content:'';width:7px;height:7px;background:var(--teal);border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.hero h1{font-size:clamp(3rem,6vw,5.2rem);font-weight:900;max-width:640px;background:linear-gradient(135deg,#5B4FE9 0%,#7C3AED 40%,#3ECFBE 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.hero h1{font-size:clamp(2.4rem,4.5vw,4.2rem);font-weight:900;max-width:580px;background:linear-gradient(135deg,#5B4FE9 0%,#7C3AED 40%,#3ECFBE 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.12}
 .hero h1 em{font-style:normal;-webkit-text-fill-color:transparent}
 .hero-sub{font-size:1.26rem;color:var(--muted);max-width:580px;margin:22px 0 40px;line-height:1.78}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
@@ -460,6 +460,58 @@ footer p{font-size:.82rem;color:rgba(255,255,255,.7);font-weight:500}
 .rdash-action-btn.ghost:hover{border-color:var(--purple);color:var(--purple)}
 @media(max-width:640px){.rdash-body{grid-template-columns:1fr}.rdash-sidebar{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid #E8EFF6}.rdash-cards{grid-template-columns:1fr 1fr}}
 
+
+/* ─── PHOTO GALLERY ──────────────────────────────────────── */
+.photo-gallery{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:220px 200px;
+  gap:14px;
+  margin-bottom:56px;
+}
+.pg-large{grid-column:span 2;grid-row:span 2}
+.pg-wide{grid-column:span 2}
+.pg-small{}
+.pg-large,.pg-wide,.pg-small{
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  cursor:default;
+}
+.pg-large img,.pg-wide img,.pg-small img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.pg-large:hover img,.pg-wide:hover img,.pg-small:hover img{transform:scale(1.07)}
+.pg-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(15,25,35,.72) 0%,transparent 55%);
+  opacity:0;
+  transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:16px;
+}
+.pg-large:hover .pg-overlay,
+.pg-wide:hover .pg-overlay,
+.pg-small:hover .pg-overlay{opacity:1}
+.pg-overlay span{
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:.85rem;
+  font-weight:800;
+  letter-spacing:.3px;
+}
+@media(max-width:900px){
+  .photo-gallery{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .pg-large{grid-column:span 2;height:240px}
+  .pg-wide{grid-column:span 2;height:180px}
+  .pg-small{height:160px}
+}
+@media(max-width:480px){
+  .photo-gallery{grid-template-columns:1fr;grid-template-rows:auto}
+  .pg-large,.pg-wide,.pg-small{grid-column:span 1;height:200px}
+}
 /* ─── NEET EXPLAINER ──────────────────────────────────────── */
 .neet-explainer{background:var(--white);border:1.5px solid #D4EBF5;border-radius:16px;padding:24px 28px;margin:20px 0 0;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
 .neet-acronym{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;min-width:220px;flex-shrink:0}
@@ -469,6 +521,7 @@ footer p{font-size:.82rem;color:rgba(255,255,255,.7);font-weight:500}
 .neet-desc strong{color:var(--ink)}
 @media(max-width:768px){.numbers-row{grid-template-columns:1fr!important;gap:16px}.contact-wrap{grid-template-columns:1fr}.about-hero{grid-template-columns:1fr}.stake-grid{grid-template-columns:repeat(2,1fr)}.gov-grid{grid-template-columns:repeat(2,1fr)}.phases{grid-template-columns:1fr}.rdash-cards{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.neet-explainer{flex-direction:column;gap:16px}}
+
 /* ─── ABOUT SECTION ──────────────────────────────────────── */
 .about-hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-bottom:72px}
 .about-mission{padding:36px;background:linear-gradient(135deg,#5B4FE9 0%,#7C3AED 55%,#3ECFBE 100%);border-radius:20px;color:#fff;position:relative;overflow:hidden}
@@ -487,26 +540,22 @@ footer p{font-size:.82rem;color:rgba(255,255,255,.7);font-weight:500}
 
 
 /* team stats row */
-.about-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:48px 0}
-.astat{background:var(--white);border:2px solid #E8EFF6;border-radius:20px;padding:28px 18px;text-align:center;transition:all .35s cubic-bezier(.16,1,.3,1)}
+.about-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:48px 0;align-items:start;width:100%}
+.astat{background:var(--white);border:2px solid #E8EFF6;border-radius:20px;padding:28px 18px;text-align:center;transition:all .35s cubic-bezier(.16,1,.3,1);height:auto}
 .astat:hover{border-color:var(--teal);transform:translateY(-7px);box-shadow:0 18px 44px rgba(62,207,190,.18)}
 .astat-num{font-family:'Nunito',sans-serif;font-size:3.2rem;font-weight:900;background:linear-gradient(135deg,#5B4FE9,#3ECFBE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block}
 .astat p{font-size:.95rem;color:var(--muted);margin-top:8px;line-height:1.45}
 
-/* testimonial strip */
-.testimonial-strip{margin:48px 0;overflow:hidden;position:relative}
-.testimonial-track{display:flex;gap:20px;animation:scrollTestimonials 28s linear infinite}
-.testimonial-track:hover{animation-play-state:paused}
-@keyframes scrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.testimonial-card{flex-shrink:0;width:300px;background:var(--white);border:1.5px solid #D4EBF5;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px}
-.t-quote{font-size:.96rem;color:var(--body-text);line-height:1.68;font-style:italic}
-.t-author{display:flex;align-items:center;gap:10px}
-.t-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.t-name{font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:800;color:var(--ink)}
-.t-role{font-size:.75rem;color:var(--muted)}
-.t-stars{color:#F59E0B;font-size:.85rem;letter-spacing:1px}
-.testimonial-fade-l{position:absolute;left:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,var(--bg-light),transparent);z-index:2;pointer-events:none}
-.testimonial-fade-r{position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to left,var(--bg-light),transparent);z-index:2;pointer-events:none}
+}
+
+
+
+
+
+
+
+
+
 
 /* timeline */
 .timeline{position:relative;padding-left:32px;margin:32px 0}
@@ -550,9 +599,7 @@ nav a.nav-active::after{width:100%}
 .anim-delay-4{animation-delay:.4s!important}
 
 /* hero photo shimmer on load */
-.hero-photo{background:linear-gradient(90deg,#e8f3ff 25%,#d5eaff 50%,#e8f3ff 75%);background-size:200% 100%;animation:shimmerLoad 1.5s ease infinite}
-.hero-photo.loaded{animation:none;background:none}
-@keyframes shimmerLoad{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.hero-photo{background:transparent}
 
 /* number card pulse on hover */
 .num-block::before{content:'';position:absolute;inset:0;border-radius:20px;background:radial-gradient(ellipse at top left,rgba(62,207,190,.08),transparent 70%);opacity:0;transition:opacity .3s}
@@ -641,7 +688,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     <!-- LOGIN -->
     <div id="pane-login">
       <h2>Welcome back</h2>
-      <p class="modal-sub">Log in to your StepUp account</p>
+      <p class="modal-sub">Log in to your StepUp Programme account</p>
       <div class="form-group">
         <label for="li-email">Email address</label>
         <input type="email" id="li-email" placeholder="you@example.com" autocomplete="email">
@@ -757,11 +804,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 
 <!-- ══ NAV ════════════════════════════════════════════════════ -->
 <nav role="navigation" aria-label="Main navigation">
-  <a href="#" class="logo" aria-label="StepUp home">
+  <a href="#" class="logo" aria-label="StepUp Programme home">
     <div class="logo-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
     </div>
-    <span class="logo-text">Step<span>Up</span></span>
+    <span class="logo-text">StepUp <span>Programme</span></span>
   </a>
 
   <ul class="nav-links" role="list">
@@ -889,28 +936,360 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     <!-- Right: photo grid -->
     <div class="hero-photos" aria-hidden="true">
       <div class="hero-photo" id="hp1">
-        <img id="hp1-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=85&auto=format&fit=crop&crop=center" alt="Young woman aged 20 with phone" loading="eager">
+        <div id="hp1-img" style="width:100%;height:100%;position:relative;background:linear-gradient(145deg,#EBF4FF 0%,#DDE8FF 50%,#E8F8FF 100%);overflow:hidden;border-radius:inherit">
+  <!-- Ambient blobs -->
+  <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,233,.15) 0%,transparent 70%)"></div>
+  <div style="position:absolute;bottom:-30px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(31,169,155,.12) 0%,transparent 70%)"></div>
+  <!-- Floating badge top-right -->
+  <div style="position:absolute;top:14px;right:14px;background:#fff;border-radius:10px;padding:6px 10px;box-shadow:0 4px 16px rgba(91,79,233,.18);display:flex;align-items:center;gap:5px;z-index:10">
+    <div style="width:7px;height:7px;border-radius:50%;background:#10B981"></div>
+    <span style="font-size:9px;font-weight:700;color:#374151;font-family:sans-serif">Live Dashboard</span>
+  </div>
+  <!-- Browser card -->
+  <div style="position:absolute;top:18px;left:14px;right:14px;bottom:14px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(91,79,233,.2),0 2px 8px rgba(0,0,0,.06);overflow:hidden">
+    <!-- Browser bar -->
+    <div style="height:34px;background:#F8F9FC;border-bottom:1.5px solid #EEF2FF;display:flex;align-items:center;padding:0 14px;gap:7px">
+      <div style="display:flex;gap:5px">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FEBC2E"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28C840"></div>
+      </div>
+      <div style="flex:1;height:18px;background:#EEF2FF;border-radius:5px;display:flex;align-items:center;padding:0 9px;gap:5px;max-width:180px">
+        <div style="width:7px;height:7px;border-radius:50%;background:#1FA99B"></div>
+        <div style="width:70px;height:5px;background:#CBD5E1;border-radius:2px"></div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <div style="width:22px;height:18px;background:#EEF2FF;border-radius:4px"></div>
+        <div style="width:22px;height:18px;background:#EEF2FF;border-radius:4px"></div>
+      </div>
+    </div>
+    <!-- App layout -->
+    <div style="display:grid;grid-template-columns:64px 1fr;height:calc(100% - 34px)">
+      <!-- Sidebar -->
+      <div style="background:#0F1923;padding:10px 8px;display:flex;flex-direction:column;gap:6px">
+        <!-- Logo -->
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#5B4FE9,#1FA99B);margin:0 auto 8px;display:flex;align-items:center;justify-content:center">
+          <div style="width:18px;height:16px;border:2px solid rgba(255,255,255,.9);border-radius:3px;position:relative">
+            <div style="position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:10px;height:6px;background:rgba(255,255,255,.9);border-radius:1px"></div>
+          </div>
+        </div>
+        <!-- Nav items -->
+        <div style="height:34px;border-radius:9px;background:linear-gradient(135deg,#1FA99B,#17918A);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(31,169,155,.35)">
+          <div style="width:16px;height:12px;border:2px solid rgba(255,255,255,.9);border-radius:3px"></div>
+        </div>
+        <div style="height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)">
+          <div style="width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.25)"></div>
+        </div>
+        <div style="height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)">
+          <div style="width:16px;height:11px;border:2px solid rgba(255,255,255,.25);border-radius:2px"></div>
+        </div>
+        <div style="height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)">
+          <div style="width:14px;height:14px;border:2px solid rgba(255,255,255,.25);border-radius:4px;position:relative"><div style="position:absolute;top:2px;left:2px;right:2px;height:2px;background:rgba(255,255,255,.25)"></div><div style="position:absolute;top:6px;left:2px;right:2px;height:2px;background:rgba(255,255,255,.25)"></div></div>
+        </div>
+        <div style="margin-top:auto;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#5B4FE9,#7C3AED);margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:center">
+          <span style="font-size:10px;font-weight:800;color:#fff;font-family:sans-serif">AJ</span>
+        </div>
+      </div>
+      <!-- Main content -->
+      <div style="background:#F8F9FC;padding:12px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div>
+            <div style="font-size:11px;font-weight:800;color:#0F1923;font-family:sans-serif">My Dashboard</div>
+            <div style="font-size:8px;color:#9CA3AF;font-family:sans-serif">Week 4 of 12 · AI Job Search</div>
+          </div>
+          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5B4FE9,#7C3AED)"></div>
+        </div>
+        <!-- KPI row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px">
+          <div style="background:#fff;border-radius:10px;padding:9px 8px;border:1.5px solid #EEF2FF;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="font-size:17px;font-weight:900;color:#1FA99B;font-family:sans-serif;line-height:1;margin-bottom:2px">72%</div>
+            <div style="font-size:7px;color:#9CA3AF;font-family:sans-serif;margin-bottom:5px">CV Match</div>
+            <div style="height:4px;background:#E8EFF6;border-radius:2px;overflow:hidden"><div style="height:100%;width:72%;background:linear-gradient(90deg,#F59E0B,#FBBF24);border-radius:2px"></div></div>
+          </div>
+          <div style="background:#fff;border-radius:10px;padding:9px 8px;border:1.5px solid #EEF2FF;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="font-size:17px;font-weight:900;color:#5B4FE9;font-family:sans-serif;line-height:1;margin-bottom:2px">4/12</div>
+            <div style="font-size:7px;color:#9CA3AF;font-family:sans-serif;margin-bottom:5px">Weeks Done</div>
+            <div style="height:4px;background:#E8EFF6;border-radius:2px;overflow:hidden"><div style="height:100%;width:33%;background:linear-gradient(90deg,#5B4FE9,#7C3AED);border-radius:2px"></div></div>
+          </div>
+          <div style="background:#fff;border-radius:10px;padding:9px 8px;border:1.5px solid #EEF2FF;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="font-size:17px;font-weight:900;color:#F59E0B;font-family:sans-serif;line-height:1;margin-bottom:2px">3</div>
+            <div style="font-size:7px;color:#9CA3AF;font-family:sans-serif;margin-bottom:5px">Applications</div>
+            <div style="display:flex;gap:2px;margin-top:3px"><div style="width:8px;height:4px;background:#F59E0B;border-radius:1px"></div><div style="width:6px;height:4px;background:#F59E0B;border-radius:1px;opacity:.5"></div><div style="width:4px;height:4px;background:#E8EFF6;border-radius:1px"></div></div>
+          </div>
+        </div>
+        <!-- Module list -->
+        <div style="background:#fff;border-radius:10px;border:1.5px solid #EEF2FF;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+          <div style="padding:7px 10px;border-bottom:1.5px solid #F3F4F8;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:8px;font-weight:700;color:#374151;font-family:sans-serif">Modules</div>
+            <div style="font-size:7px;color:#1FA99B;font-weight:700;font-family:sans-serif">View all →</div>
+          </div>
+          <div style="padding:7px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F9FAFB">
+            <div style="width:16px;height:16px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid #10B981">
+              <div style="width:5px;height:4px;border-left:1.5px solid #10B981;border-bottom:1.5px solid #10B981;transform:rotate(-45deg) translate(1px,-1px)"></div>
+            </div>
+            <div style="flex:1"><div style="width:80px;height:5px;background:#CBD5E1;border-radius:2px;margin-bottom:2px"></div><div style="width:55px;height:4px;background:#E8EFF6;border-radius:2px"></div></div>
+            <div style="background:#DCFCE7;padding:2px 7px;border-radius:8px;font-size:7px;font-weight:700;color:#16A34A;font-family:sans-serif">Done ✓</div>
+          </div>
+          <div style="padding:7px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F9FAFB;background:linear-gradient(90deg,#F5F0FF,#fff)">
+            <div style="width:16px;height:16px;border-radius:50%;background:#EDE9FE;flex-shrink:0;border:1.5px solid #7C3AED;display:flex;align-items:center;justify-content:center">
+              <div style="width:5px;height:5px;border-radius:50%;background:#7C3AED"></div>
+            </div>
+            <div style="flex:1"><div style="width:100px;height:5px;background:linear-gradient(90deg,#7C3AED,#5B4FE9);border-radius:2px;opacity:.5;margin-bottom:2px"></div><div style="width:65px;height:4px;background:#EDE9FE;border-radius:2px"></div></div>
+            <div style="background:#EDE9FE;padding:2px 7px;border-radius:8px;font-size:7px;font-weight:700;color:#7C3AED;font-family:sans-serif">Active</div>
+          </div>
+          <div style="padding:7px 10px;display:flex;align-items:center;gap:8px">
+            <div style="width:16px;height:16px;border-radius:50%;border:1.5px dashed #CBD5E1;flex-shrink:0"></div>
+            <div style="flex:1"><div style="width:70px;height:5px;background:#E8EFF6;border-radius:2px;margin-bottom:2px"></div><div style="width:45px;height:4px;background:#F3F4F8;border-radius:2px"></div></div>
+            <div style="background:#F3F4F8;padding:2px 7px;border-radius:8px;font-size:7px;color:#9CA3AF;font-family:sans-serif">Soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="hero-photo-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
           AI Skills
         </div>
       </div>
       <div class="hero-photo" id="hp2">
-        <img id="hp2-img" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=85&auto=format&fit=crop&crop=faces,top" alt="Young man studying with laptop outdoors" loading="eager">
+        <div id="hp2-img" style="width:100%;height:100%;position:relative;background:linear-gradient(145deg,#F5F0FF 0%,#EBF4FF 60%,#F0FDF4 100%);overflow:hidden;border-radius:inherit">
+  <div style="position:absolute;top:-30px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.12) 0%,transparent 70%)"></div>
+  <div style="position:absolute;bottom:-20px;right:-20px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(31,169,155,.1) 0%,transparent 70%)"></div>
+  <!-- Floating notification -->
+  <div style="position:absolute;top:12px;right:12px;background:#fff;border-radius:10px;padding:7px 10px;box-shadow:0 4px 16px rgba(91,79,233,.18);display:flex;align-items:center;gap:6px;z-index:10;max-width:130px">
+    <div style="width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#5B4FE9,#7C3AED);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8)"></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:700;color:#0F1923;font-family:sans-serif">New insight!</div>
+      <div style="font-size:7px;color:#9CA3AF;font-family:sans-serif">CV score +8%</div>
+    </div>
+  </div>
+  <!-- Phone mockup -->
+  <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);width:152px;bottom:12px;background:#fff;border-radius:22px;box-shadow:0 12px 40px rgba(91,79,233,.25),0 2px 8px rgba(0,0,0,.08);overflow:hidden;border:3px solid #1A2636">
+    <!-- Notch -->
+    <div style="height:24px;background:#0F1923;display:flex;align-items:center;justify-content:center;position:relative">
+      <div style="width:50px;height:14px;background:#1A2636;border-radius:0 0 10px 10px;position:absolute;top:0;left:50%;transform:translateX(-50%)"></div>
+      <div style="display:flex;gap:4px;position:absolute;right:12px">
+        <div style="width:12px;height:6px;background:rgba(255,255,255,.3);border-radius:2px;border:1px solid rgba(255,255,255,.2)"></div>
+        <div style="font-size:7px;color:rgba(255,255,255,.5);font-family:sans-serif">9:41</div>
+      </div>
+    </div>
+    <!-- Chat header -->
+    <div style="height:42px;background:linear-gradient(135deg,#5B4FE9 0%,#7C3AED 100%);display:flex;align-items:center;padding:0 10px;gap:8px">
+      <div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3)">
+        <div style="width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8)"></div>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:800;color:#fff;font-family:sans-serif">StepUp AI Coach</div>
+        <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:50%;background:#4ADE80"></div><div style="font-size:6px;color:rgba(255,255,255,.8);font-family:sans-serif">Online · 24/7</div></div>
+      </div>
+      <div style="margin-left:auto;font-size:14px;color:rgba(255,255,255,.7)">⋯</div>
+    </div>
+    <!-- Messages area -->
+    <div style="flex:1;padding:8px;display:flex;flex-direction:column;gap:8px;background:#F8F9FC;overflow:hidden;height:calc(100% - 102px)">
+      <!-- AI msg 1 -->
+      <div style="display:flex;gap:5px;align-items:flex-start">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#1FA99B,#5B4FE9);flex-shrink:0;display:flex;align-items:center;justify-content:center">
+          <span style="font-size:7px;font-weight:800;color:#fff;font-family:sans-serif">AI</span>
+        </div>
+        <div style="background:#fff;border-radius:12px 12px 12px 3px;padding:7px 9px;box-shadow:0 2px 8px rgba(0,0,0,.08);max-width:108px">
+          <div style="width:82px;height:4px;background:#E8EFF6;border-radius:2px;margin-bottom:3px"></div>
+          <div style="width:65px;height:4px;background:#E8EFF6;border-radius:2px;margin-bottom:3px"></div>
+          <div style="width:74px;height:4px;background:#EDE9FE;border-radius:2px"></div>
+        </div>
+      </div>
+      <!-- User msg -->
+      <div style="display:flex;justify-content:flex-end">
+        <div style="background:linear-gradient(135deg,#5B4FE9,#7C3AED);border-radius:12px 12px 3px 12px;padding:7px 9px;box-shadow:0 2px 8px rgba(91,79,233,.25);max-width:100px">
+          <div style="width:68px;height:4px;background:rgba(255,255,255,.45);border-radius:2px;margin-bottom:3px"></div>
+          <div style="width:50px;height:4px;background:rgba(255,255,255,.35);border-radius:2px"></div>
+        </div>
+      </div>
+      <!-- AI msg 2 with tip chip -->
+      <div style="display:flex;gap:5px;align-items:flex-start">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#1FA99B,#5B4FE9);flex-shrink:0;display:flex;align-items:center;justify-content:center">
+          <span style="font-size:7px;font-weight:800;color:#fff;font-family:sans-serif">AI</span>
+        </div>
+        <div style="background:#fff;border-radius:12px 12px 12px 3px;padding:7px 9px;box-shadow:0 2px 8px rgba(0,0,0,.08);max-width:108px">
+          <div style="width:90px;height:4px;background:#E8EFF6;border-radius:2px;margin-bottom:3px"></div>
+          <div style="width:72px;height:4px;background:#E8EFF6;border-radius:2px;margin-bottom:5px"></div>
+          <div style="background:#DCFCE7;padding:3px 7px;border-radius:6px;display:inline-block">
+            <div style="font-size:6px;font-weight:700;color:#16A34A;font-family:sans-serif">CV score: 72% → 80%</div>
+          </div>
+        </div>
+      </div>
+      <!-- User msg 2 -->
+      <div style="display:flex;justify-content:flex-end">
+        <div style="background:linear-gradient(135deg,#5B4FE9,#7C3AED);border-radius:12px 12px 3px 12px;padding:7px 9px;max-width:90px">
+          <div style="width:58px;height:4px;background:rgba(255,255,255,.4);border-radius:2px;margin-bottom:3px"></div>
+          <div style="width:42px;height:4px;background:rgba(255,255,255,.3);border-radius:2px"></div>
+        </div>
+      </div>
+      <!-- Typing dots -->
+      <div style="display:flex;gap:5px;align-items:center">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#1FA99B,#5B4FE9);flex-shrink:0"></div>
+        <div style="background:#fff;border-radius:12px;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:flex;gap:3px;align-items:center">
+          <div style="width:5px;height:5px;border-radius:50%;background:#CBD5E1"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#9CA3AF"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#CBD5E1"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Input bar -->
+    <div style="height:36px;background:#fff;border-top:1px solid #F3F4F8;display:flex;align-items:center;padding:0 8px;gap:6px">
+      <div style="flex:1;height:24px;background:#F3F4F8;border-radius:12px;padding:0 10px;display:flex;align-items:center;gap:5px">
+        <div style="width:55px;height:4px;background:#CBD5E1;border-radius:2px"></div>
+      </div>
+      <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5B4FE9,#7C3AED);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(91,79,233,.3)">
+        <div style="width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:8px solid #fff;margin-left:2px"></div>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="hero-photo-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Confidence
         </div>
       </div>
       <div class="hero-photo" id="hp3">
-        <img id="hp3-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=85&auto=format&fit=crop&crop=center" alt="Diverse young people socialising" loading="eager">
+        <div id="hp3-img" style="width:100%;height:100%;position:relative;background:linear-gradient(145deg,#E8FDF8 0%,#EFF6FF 60%,#F5F0FF 100%);overflow:hidden;border-radius:inherit">
+  <div style="position:absolute;top:-20px;right:-20px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(31,169,155,.12) 0%,transparent 70%)"></div>
+  <div style="position:absolute;bottom:-10px;left:-10px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,233,.1) 0%,transparent 70%)"></div>
+  <!-- Floating score badge -->
+  <div style="position:absolute;top:14px;left:14px;background:linear-gradient(135deg,#F59E0B,#FBBF24);border-radius:10px;padding:6px 10px;box-shadow:0 4px 14px rgba(245,158,11,.35);z-index:10">
+    <div style="font-size:16px;font-weight:900;color:#fff;font-family:sans-serif;line-height:1">72%</div>
+    <div style="font-size:7px;color:rgba(255,255,255,.85);font-family:sans-serif">Job Match</div>
+  </div>
+  <!-- Shadow cards behind -->
+  <div style="position:absolute;top:36px;left:26px;right:26px;bottom:26px;background:#EDE9FE;border-radius:18px;transform:rotate(3deg);box-shadow:0 4px 14px rgba(124,58,237,.12)"></div>
+  <div style="position:absolute;top:30px;left:20px;right:20px;bottom:20px;background:#DBEAFE;border-radius:18px;transform:rotate(-2deg);box-shadow:0 4px 14px rgba(59,130,246,.1)"></div>
+  <!-- Main card -->
+  <div style="position:absolute;top:24px;left:14px;right:14px;bottom:14px;background:#fff;border-radius:18px;box-shadow:0 12px 36px rgba(31,169,155,.18),0 2px 8px rgba(0,0,0,.06);overflow:hidden;border:1.5px solid #E8F8F5">
+    <!-- Gradient header -->
+    <div style="height:50px;background:linear-gradient(135deg,#1FA99B 0%,#17918A 50%,#5B4FE9 100%);display:flex;align-items:center;padding:0 14px;justify-content:space-between">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#fff;font-family:sans-serif;margin-bottom:1px">AI CV Builder</div>
+        <div style="font-size:7px;color:rgba(255,255,255,.8);font-family:sans-serif">3 suggestions ready</div>
+      </div>
+      <div style="background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border-radius:8px;padding:5px 10px;border:1px solid rgba(255,255,255,.25)">
+        <div style="font-size:8px;font-weight:700;color:#fff;font-family:sans-serif">Optimise ✦</div>
+      </div>
+    </div>
+    <!-- CV body -->
+    <div style="padding:12px 14px">
+      <!-- Name block -->
+      <div style="margin-bottom:10px">
+        <div style="width:130px;height:9px;background:#0F1923;border-radius:3px;margin-bottom:4px"></div>
+        <div style="width:100px;height:5px;background:#CBD5E1;border-radius:2px;margin-bottom:3px"></div>
+        <div style="display:flex;gap:6px">
+          <div style="width:65px;height:4px;background:#1FA99B;border-radius:2px;opacity:.4"></div>
+          <div style="width:55px;height:4px;background:#5B4FE9;border-radius:2px;opacity:.3"></div>
+        </div>
+      </div>
+      <!-- Divider -->
+      <div style="height:1.5px;background:linear-gradient(90deg,#1FA99B,#5B4FE9,transparent);margin-bottom:10px;opacity:.3"></div>
+      <!-- Skills -->
+      <div style="font-size:7px;font-weight:800;color:#374151;font-family:sans-serif;letter-spacing:.5px;margin-bottom:6px">SKILLS · AI ENHANCED</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+        <div style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);padding:4px 8px;border-radius:10px;font-size:7px;font-weight:700;color:#7C3AED;font-family:sans-serif;border:1px solid rgba(124,58,237,.2)">Prompt Engineering</div>
+        <div style="background:linear-gradient(135deg,#DCFCE7,#BBF7D0);padding:4px 8px;border-radius:10px;font-size:7px;font-weight:700;color:#16A34A;font-family:sans-serif;border:1px solid rgba(22,163,74,.2)">AI Tools ✓</div>
+        <div style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);padding:4px 8px;border-radius:10px;font-size:7px;font-weight:700;color:#2563EB;font-family:sans-serif;border:1px solid rgba(37,99,235,.2)">Digital Literacy</div>
+        <div style="background:#F9FAFB;padding:4px 8px;border-radius:10px;font-size:7px;color:#9CA3AF;font-family:sans-serif;border:1.5px dashed #CBD5E1">+ Add more</div>
+      </div>
+      <!-- Score bar card -->
+      <div style="background:linear-gradient(135deg,#F8F9FC,#F3F0FF);border-radius:10px;padding:10px 12px;border:1.5px solid #EEF2FF">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:8px;font-weight:700;color:#374151;font-family:sans-serif">Job Match Score</div>
+          <div style="font-size:14px;font-weight:900;color:#F59E0B;font-family:sans-serif">72%</div>
+        </div>
+        <div style="height:7px;background:#E8EFF6;border-radius:4px;overflow:hidden;margin-bottom:5px">
+          <div style="height:100%;width:72%;background:linear-gradient(90deg,#F59E0B,#FBBF24);border-radius:4px;position:relative">
+            <div style="position:absolute;right:-1px;top:-1px;width:9px;height:9px;border-radius:50%;background:#F59E0B;border:2px solid #fff;box-shadow:0 1px 4px rgba(245,158,11,.4)"></div>
+          </div>
+        </div>
+        <div style="font-size:6px;color:#9CA3AF;font-family:sans-serif">💡 Add "data analysis" to reach 85%</div>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="hero-photo-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           Mentorship
         </div>
       </div>
       <div class="hero-photo" id="hp4">
-        <img id="hp4-img" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=85&auto=format&fit=crop&crop=faces,center" alt="Young people working on laptops together" loading="eager">
+        <div id="hp4-img" style="width:100%;height:100%;position:relative;background:linear-gradient(145deg,#EFF6FF 0%,#F5F0FF 60%,#ECFDF5 100%);overflow:hidden;border-radius:inherit">
+  <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,233,.08) 0%,transparent 70%)"></div>
+  <!-- Floating confetti dots -->
+  <div style="position:absolute;top:16px;left:20px;width:8px;height:8px;border-radius:50%;background:#F59E0B;opacity:.7"></div>
+  <div style="position:absolute;top:26px;left:38px;width:5px;height:5px;border-radius:50%;background:#1FA99B;opacity:.6"></div>
+  <div style="position:absolute;top:20px;right:30px;width:7px;height:7px;border-radius:50%;background:#7C3AED;opacity:.5"></div>
+  <div style="position:absolute;top:36px;right:18px;width:4px;height:4px;border-radius:50%;background:#EF4444;opacity:.6"></div>
+  <!-- Main card -->
+  <div style="position:absolute;top:14px;left:12px;right:12px;bottom:12px;background:#fff;border-radius:18px;box-shadow:0 12px 40px rgba(91,79,233,.18),0 2px 8px rgba(0,0,0,.06);overflow:hidden;border:1.5px solid #EEF2FF">
+    <!-- Trophy banner -->
+    <div style="height:60px;background:linear-gradient(135deg,#5B4FE9 0%,#7C3AED 50%,#1FA99B 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;overflow:hidden">
+      <!-- Shine effect -->
+      <div style="position:absolute;top:-20px;left:-20px;right:-20px;height:60px;background:rgba(255,255,255,.07);transform:rotate(-6deg)"></div>
+      <div style="font-size:8px;font-weight:800;color:rgba(255,255,255,.75);font-family:sans-serif;letter-spacing:2.5px;margin-bottom:2px">PROGRAMME COMPLETE</div>
+      <div style="font-size:13px;font-weight:900;color:#fff;font-family:sans-serif">You are AI-Ready! 🎉</div>
+    </div>
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:#F3F4F8;margin:10px 12px;border-radius:12px;overflow:hidden">
+      <div style="background:#fff;padding:9px 6px;text-align:center;border-right:1px solid #F3F4F8">
+        <div style="font-size:18px;font-weight:900;color:#1FA99B;font-family:sans-serif;line-height:1">12</div>
+        <div style="font-size:6px;color:#9CA3AF;font-family:sans-serif;margin-top:2px">Weeks</div>
+      </div>
+      <div style="background:#fff;padding:9px 6px;text-align:center;border-right:1px solid #F3F4F8">
+        <div style="font-size:18px;font-weight:900;color:#5B4FE9;font-family:sans-serif;line-height:1">80%</div>
+        <div style="font-size:6px;color:#9CA3AF;font-family:sans-serif;margin-top:2px">Progress</div>
+      </div>
+      <div style="background:#fff;padding:9px 6px;text-align:center">
+        <div style="font-size:18px;font-weight:900;color:#F59E0B;font-family:sans-serif;line-height:1">A+</div>
+        <div style="font-size:6px;color:#9CA3AF;font-family:sans-serif;margin-top:2px">AI Ready</div>
+      </div>
+    </div>
+    <!-- Next steps -->
+    <div style="padding:0 12px;display:flex;flex-direction:column;gap:6px">
+      <div style="font-size:7px;font-weight:800;color:#374151;font-family:sans-serif;letter-spacing:.5px;margin-bottom:1px">YOUR NEXT STEPS</div>
+      <!-- Step 1 -->
+      <div style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border-radius:10px;border:1px solid rgba(16,185,129,.2)">
+        <div style="width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#10B981,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.3)">
+          <div style="width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:7px solid #fff;margin-left:2px"></div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:9px;font-weight:800;color:#16A34A;font-family:sans-serif;margin-bottom:1px">Paid Internship Offer</div>
+          <div style="font-size:7px;color:#4ADE80;font-family:sans-serif">TechCorp London · AI Assistant</div>
+        </div>
+        <div style="font-size:12px">→</div>
+      </div>
+      <!-- Step 2 -->
+      <div style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:10px;border:1px solid rgba(59,130,246,.2)">
+        <div style="width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#3B82F6,#2563EB);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(59,130,246,.3)">
+          <div style="width:12px;height:9px;border:1.5px solid rgba(255,255,255,.9);border-radius:2px"></div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:9px;font-weight:800;color:#1D4ED8;font-family:sans-serif;margin-bottom:1px">University Application</div>
+          <div style="font-size:7px;color:#60A5FA;font-family:sans-serif">Loughborough · BSc Computing</div>
+        </div>
+        <div style="font-size:12px">→</div>
+      </div>
+      <!-- Step 3 -->
+      <div style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border-radius:10px;border:1px solid rgba(245,158,11,.2)">
+        <div style="width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#F59E0B,#D97706);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(245,158,11,.3)">
+          <span style="font-size:13px">★</span>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:9px;font-weight:800;color:#D97706;font-family:sans-serif;margin-bottom:1px">Startup Hub Support</div>
+          <div style="font-size:7px;color:#FBB040;font-family:sans-serif">Digital Accelerator Programme</div>
+        </div>
+        <div style="font-size:12px">→</div>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="hero-photo-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
           Employment
@@ -1071,7 +1450,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 <!-- ══ STAKEHOLDERS ════════════════════════════════════════════ -->
 <section class="sec sec-white fade-up" id="stakeholders" aria-labelledby="stake-h">
   <div class="section-tag">Stakeholders</div>
-  <h2 class="section-title" id="stake-h">Who makes StepUp work?</h2>
+  <h2 class="section-title" id="stake-h">Who makes StepUp Programme work?</h2>
   <p class="section-sub">A multi-partner ecosystem built around the needs of NEET young people.</p>
   <div class="stake-grid">
     <div class="stake">
@@ -1109,7 +1488,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 
 <!-- ══ ABOUT ══════════════════════════════════════════════════ -->
 <section class="sec sec-light fade-up" id="about" aria-labelledby="about-h">
-  <div class="section-tag">About StepUp</div>
+  <div class="section-tag">About StepUp Programme</div>
   <h2 class="section-title" id="about-h">Built by people who believe every young person deserves a fair start</h2>
   <p class="section-sub">StepUp was born from a simple truth: the AI revolution is happening with or without NEET young people. We exist to make sure it happens <em>with</em> them.</p>
   <div class="neet-explainer">
@@ -1173,159 +1552,26 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
   </div>
 
   <!-- Testimonials auto-scroll -->
-  <div class="section-tag" style="margin-bottom:20px">Voices from the Programme</div>
-  <div class="testimonial-strip">
-    <div class="testimonial-fade-l"></div>
-    <div class="testimonial-fade-r"></div>
-    <div class="testimonial-track">
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I never thought I'd be able to use AI for anything. After StepUp I rewrote my whole CV with ChatGPT and got three interviews in a week."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Amara">
-          <div><div class="t-name">Amara, 21</div><div class="t-role">London · Cohort 1</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"The mentor sessions were everything. Having someone from uni who looked like me made it feel possible, not scary."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Tariq">
-          <div><div class="t-name">Tariq, 19</div><div class="t-role">Birmingham · Cohort 2</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I was NEET for two years with anxiety. StepUp gave me the confidence to apply again — I'm now in a paid internship."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Fatima">
-          <div><div class="t-name">Fatima, 22</div><div class="t-role">Manchester · Cohort 1</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"The AI job search module changed everything. I didn't know what ATS meant before. Now I beat them consistently."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Kwame">
-          <div><div class="t-name">Kwame, 23</div><div class="t-role">Leeds · Cohort 2</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"As a Muslim woman I was worried about fit. From day one, StepUp made me feel completely welcome and seen."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1611516818722-b40caa191940?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Zara">
-          <div><div class="t-name">Zara, 20</div><div class="t-role">Sheffield · Cohort 3</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I came in not knowing how to use a spreadsheet. I left with Excel automation skills my employer couldn't believe."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Marcus">
-          <div><div class="t-name">Marcus, 24</div><div class="t-role">Bristol · Cohort 1</div></div>
-        </div>
-      </div>
-      <!-- Duplicate for seamless loop -->
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I never thought I'd be able to use AI for anything. After StepUp I rewrote my whole CV with ChatGPT and got three interviews in a week."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Amara">
-          <div><div class="t-name">Amara, 21</div><div class="t-role">London · Cohort 1</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"The mentor sessions were everything. Having someone from uni who looked like me made it feel possible, not scary."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Tariq">
-          <div><div class="t-name">Tariq, 19</div><div class="t-role">Birmingham · Cohort 2</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I was NEET for two years with anxiety. StepUp gave me the confidence to apply again — I'm now in a paid internship."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Fatima">
-          <div><div class="t-name">Fatima, 22</div><div class="t-role">Manchester · Cohort 1</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"The AI job search module changed everything. I didn't know what ATS meant before. Now I beat them consistently."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Kwame">
-          <div><div class="t-name">Kwame, 23</div><div class="t-role">Leeds · Cohort 2</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"As a Muslim woman I was worried about fit. From day one, StepUp made me feel completely welcome and seen."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1611516818722-b40caa191940?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Zara">
-          <div><div class="t-name">Zara, 20</div><div class="t-role">Sheffield · Cohort 3</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"I came in not knowing how to use a spreadsheet. I left with Excel automation skills my employer couldn't believe."</p>
-        <div class="t-author">
-          <img class="t-avatar" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=80&q=80&auto=format&fit=crop&crop=faces" alt="Marcus">
-          <div><div class="t-name">Marcus, 24</div><div class="t-role">Bristol · Cohort 1</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Timeline -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:56px">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:56px">
     <div>
       <div class="section-tag" style="margin-bottom:16px">Our Story</div>
       <h3 style="font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--ink);margin-bottom:24px">Where we came from</h3>
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-year">2026 — The Beginning</div>
-          <h4>The Idea</h4>
-          <p>MA Artificial Intelligence students at Loughborough University identified a critical gap — the same AI tools transforming industry were leaving NEET young people even further behind. StepUp was born.</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-year">2026 — Taking Shape</div>
-          <h4>Co-Design Begins</h4>
-          <p>Working alongside NEET young people, DWP, Good Things Foundation, and Loughborough University to co-produce a programme that genuinely fits real lives — not just theory.</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-year">2026 — Proof of Concept</div>
-          <h4>Pilot Cohort</h4>
-          <p>The first cohort completes the 12-week AI employability bootcamp. 80% progress to paid internships, further study, or employment within three months.</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-year">2026 → Onwards</div>
-          <h4>National Rollout</h4>
-          <p>Expanding through 360+ Youth Hubs with government backing under the Youth Guarantee. Every cohort brings us closer to closing the AI skills gap for good.</p>
-        </div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2026 — The Beginning</div><h4>The Idea</h4><p>MA Artificial Intelligence students at Loughborough University identified a critical gap — the same AI tools transforming industry were leaving NEET young people even further behind. StepUp Programme was born.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2026 — Taking Shape</div><h4>Co-Design Begins</h4><p>Working alongside NEET young people, DWP, Good Things Foundation, and Loughborough University to co-produce a programme that genuinely fits real lives — not just theory.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2026 — Proof of Concept</div><h4>Pilot Cohort</h4><p>The first cohort completes the 12-week AI employability bootcamp. 80% progress to paid internships, further study, or employment within three months.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2026 → Onwards</div><h4>National Rollout</h4><p>Expanding through 360+ Youth Hubs with government backing under the Youth Guarantee. Every cohort brings us closer to closing the AI skills gap for good.</p></div>
       </div>
     </div>
     <div>
       <div class="section-tag" style="margin-bottom:16px">Why It Matters</div>
       <h3 style="font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--ink);margin-bottom:20px">The problem with most AI training</h3>
       <div style="display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(239,68,68,.05);border:1.5px solid rgba(239,68,68,.15);border-radius:12px">
-          <svg style="width:20px;height:20px;color:#EF4444;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          <div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">Assumes you have a device and internet</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">1.7M households in the UK don't.</p></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(239,68,68,.05);border:1.5px solid rgba(239,68,68,.15);border-radius:12px">
-          <svg style="width:20px;height:20px;color:#EF4444;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          <div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">Ignores mental health and confidence</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">73% of NEET young people face anxiety around recruitment.</p></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.2);border-radius:12px">
-          <svg style="width:20px;height:20px;color:#10B981;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">StepUp starts before the skills</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">Devices. Data. Confidence. Support. Then AI skills.</p></div>
-        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(239,68,68,.05);border:1.5px solid rgba(239,68,68,.15);border-radius:12px"><svg style="width:20px;height:20px;color:#EF4444;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">Assumes you have a device and internet</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">1.7M households in the UK do not.</p></div></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(239,68,68,.05);border:1.5px solid rgba(239,68,68,.15);border-radius:12px"><svg style="width:20px;height:20px;color:#EF4444;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">Ignores mental health and confidence</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">73% of NEET young people face anxiety around recruitment.</p></div></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.2);border-radius:12px"><svg style="width:20px;height:20px;color:#10B981;flex-shrink:0;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><div><strong style="font-family:'Nunito',sans-serif;font-size:.9rem;color:#374151">StepUp Programme starts before the skills</strong><p style="font-size:.82rem;color:var(--muted);margin-top:3px">Devices. Data. Confidence. Support. Then AI skills.</p></div></div>
       </div>
     </div>
   </div>
@@ -1334,205 +1580,60 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 <!-- ══ CONTACT ════════════════════════════════════════════════ -->
 <section class="sec sec-light fade-up" id="contact" aria-labelledby="contact-h">
   <div class="contact-wrap">
-    <!-- Left: info -->
     <div class="contact-left">
       <div class="section-tag">Get Involved</div>
       <h2 class="section-title" id="contact-h" style="margin-top:10px">Ready to help young people step up?</h2>
-      <p>Whether you're a government partner, employer, university, digital hub or mentor — there's a role for you in StepUp. Reach out and let's build something meaningful together.</p>
+      <p style="color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:28px">Whether you are a government partner, employer, university, digital hub or mentor — there is a role for you in StepUp Programme. Reach out and let us build something meaningful together.</p>
       <div class="contact-info-list">
-        <a href="mailto:support@stepup.ai" class="contact-info-item">
-          <div class="ci-icon" style="background:#EFF6FF">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div class="ci-text">
-            <strong>Email Us</strong>
-            <span>support@stepup.ai</span>
-          </div>
+        <a href="mailto:info@stepupprogramme.com" class="contact-info-item">
+          <div class="ci-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="ci-text"><strong>Email Us</strong><span>info@stepupprogramme.com</span></div>
         </a>
         <div class="contact-info-item">
-          <div class="ci-icon" style="background:#F5F0FF">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div class="ci-text">
-            <strong>Headquarters</strong>
-            <span>London, United Kingdom</span>
-          </div>
+          <div class="ci-icon" style="background:#F5F0FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="ci-text"><strong>Headquarters</strong><span>Loughborough, United Kingdom</span></div>
         </div>
         <button class="contact-info-item" onclick="openModal('signup')" style="border:none;cursor:pointer;text-align:left;background:var(--white);font-family:'DM Sans',sans-serif">
-          <div class="ci-icon" style="background:#ECFDF5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-          </div>
-          <div class="ci-text">
-            <strong>Join the Programme</strong>
-            <span>Create a free account today</span>
-          </div>
+          <div class="ci-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+          <div class="ci-text"><strong>Join the Programme</strong><span>Create a free account today</span></div>
         </button>
       </div>
     </div>
-    <!-- Right: form -->
     <div class="contact-form-card">
       <h3>Send us a message</h3>
       <p class="fc-sub">We typically respond within 1–2 working days.</p>
       <div id="contact-form">
         <div class="cf-row">
-          <div class="cf-group">
-            <label for="cf-fname">First name</label>
-            <input type="text" id="cf-fname" placeholder="Jane">
-          </div>
-          <div class="cf-group">
-            <label for="cf-lname">Last name</label>
-            <input type="text" id="cf-lname" placeholder="Smith">
-          </div>
+          <div class="cf-group"><label for="cf-fname">First name</label><input type="text" id="cf-fname" placeholder="Jane"></div>
+          <div class="cf-group"><label for="cf-lname">Last name</label><input type="text" id="cf-lname" placeholder="Smith"></div>
         </div>
-        <div class="cf-group">
-          <label for="cf-email">Email address</label>
-          <input type="email" id="cf-email" placeholder="jane@example.com">
-        </div>
+        <div class="cf-group"><label for="cf-email">Email address</label><input type="email" id="cf-email" placeholder="jane@example.com"></div>
         <div class="cf-group">
           <label for="cf-role">I am a…</label>
           <select id="cf-role">
             <option value="">Select your role</option>
-            <option>Young Person (NEET)</option>
-            <option>Employer / SME</option>
-            <option>University / College</option>
-            <option>Government / DWP Partner</option>
-            <option>Digital Hub</option>
-            <option>Mentor / Volunteer</option>
-            <option>Press / Media</option>
-            <option>Other</option>
+            <option>Young Person (NEET)</option><option>Employer / SME</option>
+            <option>University / College</option><option>Government / DWP Partner</option>
+            <option>Digital Hub</option><option>Mentor / Volunteer</option>
+            <option>Press / Media</option><option>Other</option>
           </select>
         </div>
-        <div class="cf-group">
-          <label for="cf-msg">Your message</label>
-          <textarea id="cf-msg" placeholder="Tell us how you'd like to get involved…"></textarea>
-        </div>
-        <button class="cf-submit" onclick="submitContactForm()">
-          Send Message
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
+        <div class="cf-group"><label for="cf-msg">Your message</label><textarea id="cf-msg" placeholder="Tell us how you would like to get involved…"></textarea></div>
+        <button class="cf-submit" onclick="submitContactForm()">Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
       </div>
-      <div class="cf-sent" id="cf-sent">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#10B981;margin-bottom:8px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><br>
-        Message sent! We'll be in touch soon.
-      </div>
+      <div class="cf-sent" id="cf-sent"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" style="margin-bottom:8px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><br>Message sent! We will be in touch soon.</div>
     </div>
   </div>
 </section>
 
-<!-- ══ DASHBOARD MODAL ═══════════════════════════════════════ -->
-<div class="dash-backdrop" id="dash-modal" role="dialog" aria-modal="true" aria-label="Your StepUp Dashboard">
-  <div class="dash-modal">
-    <!-- Header -->
-    <div class="dash-header">
-      <div class="dash-header-left">
-        <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <h3>StepUp Dashboard</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="dash-user-chip" id="dash-user-chip">JD</span>
-        <button class="dash-close" onclick="closeDashboard()" aria-label="Close dashboard">&times;</button>
-      </div>
-    </div>
-    <!-- Body -->
-    <div class="dash-body">
-      <!-- Sidebar -->
-      <div class="dash-sidebar">
-        <button class="dash-nav-item active" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>VARK
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Modules
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Analytics
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Coach
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Peers
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Jobs
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Tracking
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>CV Tool
-        </button>
-        <button class="dash-nav-item" onclick="switchDashTab(this,'tab-modules')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Simulator
-        </button>
-        <div class="dash-sidebar-spacer"></div>
-        <!-- CV Match Score -->
-        <div class="dash-stat-card">
-          <h5>CV MATCH SCORE</h5>
-          <div class="dash-progress"><div class="dash-progress-fill" id="cv-fill" style="width:0%;background:linear-gradient(90deg,#F59E0B,#FBBF24)"></div></div>
-          <div class="dash-stat-val" style="color:#F59E0B">72%</div>
-        </div>
-        <!-- Digital Confidence -->
-        <div class="dash-stat-card purple-border" style="margin-top:8px">
-          <h5>DIGITAL CONFIDENCE</h5>
-          <div class="dash-progress"><div class="dash-progress-fill" id="conf-fill" style="width:0%;background:linear-gradient(90deg,#5B4FE9,#7C3AED)"></div></div>
-          <div class="dash-stat-val" style="color:var(--navy)">Intermediate</div>
-          <div class="dash-stat-sub">Week 4 of 12 completed</div>
-        </div>
-      </div>
-      <!-- Main content -->
-      <div class="dash-content" id="tab-modules">
-        <!-- Welcome banner -->
-        <div class="dash-welcome">
-          <div class="dw-tag">✦ Week 4 of 12</div>
-          <h4 id="dash-welcome-name">Welcome back!</h4>
-          <p>You're making great progress. Keep going — your next module is ready.</p>
-        </div>
-        <!-- Module cards -->
-        <h4>Your Training Modules</h4>
-        <div class="dash-module-grid">
-          <div class="dash-module">
-            <div class="dm-week">Weeks 1–3</div>
-            <h5>Build the Foundation</h5>
-            <span class="dm-status dm-done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Completed</span>
-          </div>
-          <div class="dash-module">
-            <div class="dm-week">Weeks 4–6</div>
-            <h5>Use AI for Job Search</h5>
-            <span class="dm-status dm-active">● In Progress</span>
-          </div>
-          <div class="dash-module">
-            <div class="dm-week">Weeks 7–9</div>
-            <h5>Build Application Confidence</h5>
-            <span class="dm-status dm-upcoming">Upcoming</span>
-          </div>
-          <div class="dash-module">
-            <div class="dm-week">Weeks 10–12</div>
-            <h5>Progress & Next Steps</h5>
-            <span class="dm-status dm-upcoming">Upcoming</span>
-          </div>
-        </div>
-        <!-- AI Coach message -->
-        <h4>Your AI Coach</h4>
-        <div class="dash-coach-box">
-          <div class="dash-coach-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg></div>
-          <div class="dash-coach-msg">
-            <strong>StepUp Coach</strong>
-            Hi! I noticed you're working on AI-supported job searching. Your CV match is at 72% — let's add some keywords around "prompt engineering" and "digital tools" to boost it. Want to start now?
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</main>
 
 <!-- ══ ROLE DASHBOARDS ════════════════════════════════════════ -->
 <div class="rdash-backdrop" id="rdash-modal" role="dialog" aria-modal="true">
   <div class="rdash-modal">
     <div class="rdash-header">
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        </div>
+        <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
         <h3 id="rdash-title">Dashboard</h3>
         <span class="rdash-role-pill" id="rdash-role-pill"></span>
       </div>
@@ -1547,22 +1648,94 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     </div>
   </div>
 </div>
-</main>
+
+<!-- ══ AUTH MODAL ════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="auth-modal" role="dialog" aria-modal="true" aria-label="Account">
+  <div class="modal" role="document">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    <div class="modal-tabs" role="tablist">
+      <button class="modal-tab active" id="tab-login" role="tab" onclick="switchTab('login')">Log In</button>
+      <button class="modal-tab" id="tab-signup" role="tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="pane-login">
+      <h2>Welcome back</h2>
+      <p class="modal-sub">Log in to your StepUp Programme account</p>
+      <div class="form-group"><label for="li-email">Email address</label><input type="email" id="li-email" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label for="li-pass">Password</label>
+        <div class="pw-wrap"><input type="password" id="li-pass" placeholder="Your password" autocomplete="current-password">
+          <button class="pw-eye" type="button" onclick="togglePw('li-pass',this)" aria-label="Show password" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <a class="forgot-link" onclick="showForgotPassword()">Forgot password?</a>
+      <p class="form-err" id="li-err"></p>
+      <button class="btn-full" onclick="doLogin()">Log In</button>
+      <div class="modal-switch">Don't have an account? <a onclick="switchTab('signup')">Sign up free</a></div>
+    </div>
+
+    <!-- SIGNUP Step 1 -->
+    <div id="pane-signup" style="display:none">
+      <div id="su-step1">
+        <h2>Create account</h2>
+        <p class="modal-sub">First, tell us who you are</p>
+        <div class="role-grid" id="role-grid">
+          <button class="role-btn" data-role="student" onclick="selectRole(this)"><div class="role-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><span class="role-name">Young Person</span><span class="role-desc">NEET, 16–24, seeking AI &amp; employment skills</span></button>
+          <button class="role-btn" data-role="mentor" onclick="selectRole(this)"><div class="role-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="role-name">Mentor</span><span class="role-desc">University student supporting participants</span></button>
+          <button class="role-btn" data-role="employer" onclick="selectRole(this)"><div class="role-icon" style="background:#FFF7ED"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><span class="role-name">Employer</span><span class="role-desc">SME offering internships or placements</span></button>
+          <button class="role-btn" data-role="coach" onclick="selectRole(this)"><div class="role-icon" style="background:#F5F0FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="role-name">DWP Coach</span><span class="role-desc">Job Centre or DWP employment advisor</span></button>
+          <button class="role-btn" data-role="hub" onclick="selectRole(this)"><div class="role-icon" style="background:#FFF0F0"><svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="role-name">Digital Hub</span><span class="role-desc">Community centre or Good Things partner</span></button>
+        </div>
+        <p class="form-err" id="role-err"></p>
+        <button class="btn-full" onclick="goStep2()" style="margin-top:4px">Continue →</button>
+        <div class="modal-switch">Already have an account? <a onclick="switchTab('login')">Log in</a></div>
+      </div>
+      <div id="su-step2" style="display:none">
+        <button onclick="goStep1()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom:12px;padding:0;display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back</button>
+        <h2 id="su-step2-title">Your details</h2>
+        <p class="modal-sub" id="su-step2-sub">Fill in your information to get started</p>
+        <div class="su-role-badge" id="su-role-badge"></div>
+        <div class="form-group"><label for="su-name">Full name</label><input type="text" id="su-name" placeholder="Jane Smith" autocomplete="name"></div>
+        <div class="form-group"><label for="su-email">Email address</label><input type="email" id="su-email" placeholder="you@example.com" autocomplete="email"></div>
+        <div class="form-group"><label for="su-location">Location (city or postcode)</label><input type="text" id="su-location" placeholder="e.g. Manchester, M1 1AA" autocomplete="address-level2"></div>
+        <div class="form-group" id="su-org-group" style="display:none"><label for="su-org">Organisation name</label><input type="text" id="su-org" placeholder="e.g. NHS, Tesco, Loughborough University"></div>
+        <div class="form-group"><label for="su-pass">Password</label>
+          <div class="pw-wrap"><input type="password" id="su-pass" placeholder="Min. 8 characters" autocomplete="new-password">
+            <button class="pw-eye" type="button" onclick="togglePw('su-pass',this)" aria-label="Show password" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+        </div>
+        <p class="form-err" id="su-err"></p>
+        <button class="btn-full" onclick="doSignup()">Create Account</button>
+        <div class="modal-switch">Already have an account? <a onclick="switchTab('login')">Log in</a></div>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div id="pane-forgot" style="display:none">
+      <h2>Reset password</h2>
+      <p class="modal-sub">Enter your email and we will send you a reset link.</p>
+      <div class="form-group"><label for="fp-email">Email address</label><input type="email" id="fp-email" placeholder="you@example.com" autocomplete="email"></div>
+      <p class="form-err" id="fp-err"></p>
+      <div id="fp-sent" style="display:none;background:#ECFDF5;border-radius:10px;padding:14px;text-align:center;font-size:.88rem;color:#16A34A;font-weight:600;margin-bottom:10px">✓ Reset link sent — check your inbox!</div>
+      <button class="btn-full" onclick="doForgot()" id="fp-btn">Send Reset Link</button>
+      <div class="modal-switch"><a onclick="switchTab('login'">← Back to Log In</a></div>
+    </div>
+  </div>
+</div>
 
 <!-- ══ FOOTER ════════════════════════════════════════════════ -->
 <footer>
   <div class="f-left">
-    <a href="#" class="logo" aria-label="StepUp home">
+    <a href="#" class="logo" aria-label="StepUp Programme home">
       <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-      <span class="logo-text">Step<span>Up</span></span>
+      <span class="logo-text" style="color:#fff;font-size:1.1rem">StepUp <span style="color:var(--teal)">Programme</span></span>
     </a>
   </div>
-  <p>© 2026 StepUp. All rights reserved. · One step at a time.</p>
+  <p>&copy; 2026 StepUp Programme. All rights reserved. &middot; One step at a time.</p>
 </footer>
 
 <script>
-
-/* ══ GLOBAL STATE — must be declared before any function uses them ══ */
+/* ══ GLOBAL STATE ══════════════════════════════════════════ */
 let currentUser = null;
 let selectedRole = null;
 const roleLabels = {
@@ -1570,746 +1743,418 @@ const roleLabels = {
   employer: 'Employer', coach: 'DWP Coach', hub: 'Digital Hub'
 };
 const roleIcons = {
-  student: '🎓', mentor: '🤝', employer: '🏢', coach: '💼', hub: '🏠'
+  student: 'YP', mentor: 'M', employer: 'E', coach: 'DWP', hub: 'Hub'
 };
-/* ── SCROLL ANIMATIONS ──────────────────────────────────── */
-const io = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }), {threshold:.08});
-document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-/* ── MOBILE MENU ─────────────────────────────────────────── */
-function toggleMenu(){
-  const ham=document.getElementById('ham'), mob=document.getElementById('mob-menu');
-  const open=mob.classList.toggle('open');
-  ham.classList.toggle('open',open);
-  ham.setAttribute('aria-expanded',open);
-}
-function closeMenu(){ document.getElementById('mob-menu').classList.remove('open'); const h=document.getElementById('ham'); h.classList.remove('open'); h.setAttribute('aria-expanded','false'); }
-
-/* ── AUTH STATE ──────────────────────────────────────────── */
-function openModal(tab='login'){
-  document.getElementById('auth-modal').classList.add('open');
-  switchTab(tab);
-  document.getElementById('li-err').classList.remove('show');
-  document.getElementById('su-err').classList.remove('show');
-  setTimeout(()=>{ const f=document.getElementById(tab==='login'?'li-email':'su-name'); if(f) f.focus(); },100);
-}
-function closeModal(){ document.getElementById('auth-modal').classList.remove('open'); }
-document.getElementById('auth-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); closeUserMenu(); closeA11y(); } });
-
-function switchTab(t){
-  document.getElementById('pane-login').style.display = t==='login'?'block':'none';
-  document.getElementById('pane-signup').style.display = t==='signup'?'block':'none';
-  const fp = document.getElementById('pane-forgot'); if(fp) fp.style.display='none';
-  document.getElementById('tab-login').classList.toggle('active',t==='login');
-  document.getElementById('tab-signup').classList.toggle('active',t==='signup');
+/* ── CORE AUTH FUNCTIONS ─────────────────────────────────── */
+function loginUser(user) {
+  currentUser = user;
+  closeModal();
+  var out = document.getElementById('nav-auth-out');
+  var inn = document.getElementById('nav-auth-in');
+  var mout = document.getElementById('mob-auth-out');
+  var min_ = document.getElementById('mob-auth-in');
+  var av   = document.getElementById('user-avatar');
+  var ud   = document.getElementById('ud-name');
+  if(out) out.style.display='none';
+  if(inn) inn.style.display='block';
+  if(mout) mout.style.display='none';
+  if(min_) min_.style.display='flex';
+  if(av)   av.textContent=user.initials||'?';
+  if(ud)   ud.textContent=user.name+(user.location?' · '+user.location:'')+'  ('+(roleLabels[user.role]||'Member')+')';
 }
 
-function doLogin(){
-  const email=document.getElementById('li-email').value.trim();
-  const pass=document.getElementById('li-pass').value;
-  const err=document.getElementById('li-err');
+function doLogin() {
+  var email = document.getElementById('li-email').value.trim();
+  var pass  = document.getElementById('li-pass').value;
+  var err   = document.getElementById('li-err');
   if(!email||!pass){ err.textContent='Please fill in all fields.'; err.classList.add('show'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ err.textContent='Please enter a valid email.'; err.classList.add('show'); return; }
-  if(pass.length<8){ err.textContent='Password must be at least 8 characters.'; err.classList.add('show'); return; }
-  // Check stored user
-  const stored = JSON.parse(sessionStorage.getItem('su_user')||'null');
-  if(stored && stored.email===email && stored.pass===pass){
-    err.classList.remove('show');
-    loginUser(stored);
-  } else {
-    err.textContent='Incorrect email or password.'; err.classList.add('show');
-  }
+  var stored = JSON.parse(sessionStorage.getItem('su_user')||'null');
+  if(stored && stored.email===email && stored.pass===pass){ err.classList.remove('show'); loginUser(stored); return; }
+  if(pass.length<8){ err.textContent='Invalid email or password.'; err.classList.add('show'); return; }
+  var user={name:email.split('@')[0],email:email,pass:pass,role:'student',location:'',org:'',initials:email[0].toUpperCase()};
+  sessionStorage.setItem('su_user',JSON.stringify(user));
+  err.classList.remove('show'); loginUser(user);
 }
 
-/* doSignup — see consolidated block below */
-
-/* loginUser — see consolidated block below */
+function doSignup() {
+  var name  = (document.getElementById('su-name')||{}).value||'';
+  var email = (document.getElementById('su-email')||{}).value||'';
+  var pass  = (document.getElementById('su-pass')||{}).value||'';
+  var loc   = (document.getElementById('su-location')||{}).value||'';
+  var org   = (document.getElementById('su-org')||{}).value||'';
+  var err   = document.getElementById('su-err');
+  name=name.trim(); email=email.trim(); pass=pass; loc=loc.trim(); org=org.trim();
+  if(!name||!email||!pass){ err.textContent='Please fill in all fields.'; err.classList.add('show'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ err.textContent='Please enter a valid email.'; err.classList.add('show'); return; }
+  if(pass.length<8){ err.textContent='Password must be at least 8 characters.'; err.classList.add('show'); return; }
+  err.classList.remove('show');
+  var user={name:name,email:email,pass:pass,role:selectedRole||'student',location:loc,org:org,initials:name.split(' ').filter(Boolean).map(function(w){return w[0].toUpperCase();}).join('').slice(0,2)||'?'};
+  sessionStorage.setItem('su_user',JSON.stringify(user));
+  loginUser(user);
+}
 
 function doLogout() {
-  currentUser = null;
-  closeUserMenu();
-  closeRDash();
-  ['nav-auth-out','mob-auth-out'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='flex'; });
-  ['nav-auth-in','mob-auth-in'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
-  ['li-email','li-pass','su-name','su-email','su-pass','su-location','su-org'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  // Reset signup steps
-  const s1=document.getElementById('su-step1'); if(s1) s1.style.display='block';
-  const s2=document.getElementById('su-step2'); if(s2) s2.style.display='none';
-  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+  currentUser=null; closeUserMenu(); closeRDash();
+  ['nav-auth-out','mob-auth-out'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='flex';});
+  ['nav-auth-in','mob-auth-in'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  ['li-email','li-pass','su-name','su-email','su-pass','su-location','su-org'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var s1=document.getElementById('su-step1'); if(s1)s1.style.display='block';
+  var s2=document.getElementById('su-step2'); if(s2)s2.style.display='none';
+  selectedRole=null; document.querySelectorAll('.role-btn').forEach(function(b){b.classList.remove('selected');});
 }
 
-/* ── USER DROPDOWN ───────────────────────────────────────── */
-function toggleUserMenu(){
-  const dd=document.getElementById('user-dropdown');
-  const av=document.getElementById('user-avatar');
-  const open=dd.classList.toggle('open');
-  av.setAttribute('aria-expanded',open);
-}
-function closeUserMenu(){ document.getElementById('user-dropdown').classList.remove('open'); }
-document.addEventListener('click',e=>{
-  const wrap=document.getElementById('nav-auth-in');
-  if(wrap && !wrap.contains(e.target)) closeUserMenu();
-});
-
-/* ── ACCESSIBILITY PANEL ─────────────────────────────────── */
-function toggleA11y(){
-  const p=document.getElementById('a11y-panel'), b=document.getElementById('a11y-btn');
-  const open=p.classList.toggle('open');
-  b.setAttribute('aria-expanded',open);
-}
-function closeA11y(){ document.getElementById('a11y-panel').classList.remove('open'); document.getElementById('a11y-btn').setAttribute('aria-expanded','false'); }
-document.addEventListener('click',e=>{
-  const wrap=document.getElementById('a11y-wrap');
-  if(!wrap.contains(e.target)) closeA11y();
-});
-
-
-const sizes=[.82,.9,1,1.1,1.2,1.35]; let szi=2;
-function changeSize(d){
-  szi=Math.max(0,Math.min(sizes.length-1,szi+d));
-  document.documentElement.style.setProperty('--font-scale',sizes[szi]);
-  document.getElementById('sz-lbl').textContent=Math.round(sizes[szi]*100)+'%';
-  saveA11y();
-}
-
-let reading=false, utt=null;
-function toggleRead(){
-  if(!('speechSynthesis' in window)){alert('Text-to-speech not supported in your browser.');return;}
-  const btn=document.getElementById('read-btn'), lbl=document.getElementById('read-lbl');
-  if(reading){ window.speechSynthesis.cancel(); reading=false; btn.classList.remove('reading'); lbl.textContent='Read Page Aloud'; return; }
-  let text='StepUp. One step at a time. ';
-  document.querySelectorAll('main h1,main h2,main h3,main h4,main p,main li').forEach(el=>{ text+=el.innerText+' '; });
-  utt=new SpeechSynthesisUtterance(text);
-  utt.rate=.95; utt.pitch=1;
-  const voices=window.speechSynthesis.getVoices();
-  const pref=voices.find(v=>v.name.includes('Google UK English Female')||v.name.includes('Samantha'))||voices.find(v=>v.lang==='en-GB');
-  if(pref) utt.voice=pref;
-  utt.onend=()=>{ reading=false; btn.classList.remove('reading'); lbl.textContent='Read Page Aloud'; };
-  window.speechSynthesis.speak(utt);
-  reading=true; btn.classList.add('reading'); lbl.textContent='Stop Reading';
-}
-
-function saveA11y(){
-  sessionStorage.setItem('su_a11y',JSON.stringify({szi}));
-}
+function openDashboard() { closeUserMenu(); openRDash(currentUser&&currentUser.role?currentUser.role:'student'); }
+function closeDashboard() { closeRDash(); }
+function switchDashTab(btn,tabId) { document.querySelectorAll('.dash-nav-item').forEach(function(b){b.classList.remove('active');}); if(btn)btn.classList.add('active'); }
+function saveA11y(){}
 function loadA11y(){
-  const s=JSON.parse(sessionStorage.getItem('su_a11y')||'null');
-  if(!s)return;
-  if(s.szi!=null){szi=s.szi;document.documentElement.style.setProperty('--font-scale',sizes[szi]);document.getElementById('sz-lbl').textContent=Math.round(sizes[szi]*100)+'%';}
+  var stored=sessionStorage.getItem('su_a11y');
+  if(stored){try{var d=JSON.parse(stored);if(d.sz!==undefined){szi=d.sz;document.documentElement.style.setProperty('--font-scale',sizes[szi]);if(document.getElementById('sz-lbl'))document.getElementById('sz-lbl').textContent=Math.round(sizes[szi]*100)+'%';}}catch(e){}}
 }
-loadA11y();
-if('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
 
-/* openDashboard/closeDashboard — see consolidated block below */
+/* ── MODAL ───────────────────────────────────────────────── */
+function openModal(tab) {
+  document.getElementById('auth-modal').style.display='flex';
+  document.body.style.overflow='hidden';
+  switchTab(tab||'login');
+}
+function closeModal() {
+  document.getElementById('auth-modal').style.display='none';
+  document.body.style.overflow='';
+}
+function switchTab(t) {
+  var pl=document.getElementById('pane-login');
+  var ps=document.getElementById('pane-signup');
+  var pf=document.getElementById('pane-forgot');
+  if(pl)pl.style.display=t==='login'?'block':'none';
+  if(ps)ps.style.display=t==='signup'?'block':'none';
+  if(pf)pf.style.display='none';
+  var s1=document.getElementById('su-step1');if(s1)s1.style.display='block';
+  var s2=document.getElementById('su-step2');if(s2)s2.style.display='none';
+  selectedRole=null; document.querySelectorAll('.role-btn').forEach(function(b){b.classList.remove('selected');});
+  var tl=document.getElementById('tab-login');var ts=document.getElementById('tab-signup');
+  if(tl)tl.classList.toggle('active',t==='login');
+  if(ts)ts.classList.toggle('active',t==='signup');
+}
 
-function submitContactForm(){
-  const fname=document.getElementById('cf-fname').value.trim();
-  const email=document.getElementById('cf-email').value.trim();
-  const msg=document.getElementById('cf-msg').value.trim();
-  if(!fname||!email||!msg){ alert('Please fill in your name, email and message.'); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ alert('Please enter a valid email address.'); return; }
+/* ── NAV ─────────────────────────────────────────────────── */
+function toggleMenu() {
+  document.getElementById('mob-menu').classList.toggle('open');
+  document.getElementById('ham').classList.toggle('open');
+}
+function closeMenu() {
+  var m=document.getElementById('mob-menu');var h=document.getElementById('ham');
+  if(m)m.classList.remove('open');if(h)h.classList.remove('open');
+}
+function toggleUserMenu() {
+  var d=document.getElementById('user-dropdown');
+  if(d)d.classList.toggle('open');
+}
+function closeUserMenu() {
+  var d=document.getElementById('user-dropdown');if(d)d.classList.remove('open');
+}
+
+/* ── ACCESSIBILITY ───────────────────────────────────────── */
+var szi=2;
+var sizes=[0.82,0.88,1,1.1,1.2,1.35];
+function toggleA11y() {
+  var p=document.getElementById('a11y-panel');
+  if(p)p.classList.toggle('open');
+}
+function closeA11y() {
+  var p=document.getElementById('a11y-panel');if(p)p.classList.remove('open');
+}
+function changeSize(dir) {
+  szi=Math.max(0,Math.min(5,szi+dir));
+  document.documentElement.style.setProperty('--font-scale',sizes[szi]);
+  var lbl=document.getElementById('sz-lbl');
+  if(lbl)lbl.textContent=Math.round(sizes[szi]*100)+'%';
+  sessionStorage.setItem('su_a11y',JSON.stringify({sz:szi}));
+}
+var reading=false;
+function toggleRead() {
+  var btn=document.getElementById('read-btn');
+  var lbl=document.getElementById('read-lbl');
+  if(!reading){
+    var utt=new SpeechSynthesisUtterance(document.body.innerText.slice(0,2000));
+    utt.rate=0.9; utt.lang='en-GB';
+    window.speechSynthesis.speak(utt);
+    reading=true;
+    if(btn)btn.classList.add('reading');
+    if(lbl)lbl.textContent='Stop Reading';
+  } else {
+    window.speechSynthesis.cancel();
+    reading=false;
+    if(btn)btn.classList.remove('reading');
+    if(lbl)lbl.textContent='Read Page Aloud';
+  }
+}
+function resetA11y() {
+  szi=2;
+  document.documentElement.style.setProperty('--font-scale',1);
+  var lbl=document.getElementById('sz-lbl');if(lbl)lbl.textContent='100%';
+  if(reading){window.speechSynthesis.cancel();reading=false;}
+  var btn=document.getElementById('read-btn');if(btn)btn.classList.remove('reading');
+  var rlbl=document.getElementById('read-lbl');if(rlbl)rlbl.textContent='Read Page Aloud';
+  sessionStorage.removeItem('su_a11y');
+}
+
+/* ── ROLE PICKER ─────────────────────────────────────────── */
+function selectRole(btn) {
+  document.querySelectorAll('.role-btn').forEach(function(b){b.classList.remove('selected');});
+  btn.classList.add('selected');
+  selectedRole=btn.dataset.role;
+  var re=document.getElementById('role-err');if(re)re.classList.remove('show');
+}
+function goStep2() {
+  if(!selectedRole){var e=document.getElementById('role-err');if(e){e.textContent='Please choose your role to continue.';e.classList.add('show');}return;}
+  var s1=document.getElementById('su-step1');var s2=document.getElementById('su-step2');
+  if(s1)s1.style.display='none';if(s2)s2.style.display='block';
+  var t=document.getElementById('su-step2-title');if(t)t.textContent=roleLabels[selectedRole]+' account';
+  var badge=document.getElementById('su-role-badge');if(badge)badge.innerHTML=roleIcons[selectedRole]+' '+roleLabels[selectedRole];
+  var og=document.getElementById('su-org-group');if(og)og.style.display=selectedRole==='student'?'none':'flex';
+  setTimeout(function(){var n=document.getElementById('su-name');if(n)n.focus();},50);
+}
+function goStep1() {
+  var s1=document.getElementById('su-step1');var s2=document.getElementById('su-step2');
+  if(s2)s2.style.display='none';if(s1)s1.style.display='block';
+}
+
+/* ── PASSWORD TOGGLE ─────────────────────────────────────── */
+function togglePw(inputId,btn) {
+  var input=document.getElementById(inputId);
+  var isHidden=input.type==='password';
+  input.type=isHidden?'text':'password';
+  btn.setAttribute('aria-label',isHidden?'Hide password':'Show password');
+  btn.innerHTML=isHidden
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+}
+
+/* ── FORGOT PASSWORD ─────────────────────────────────────── */
+function showForgotPassword() {
+  var pl=document.getElementById('pane-login');var ps=document.getElementById('pane-signup');var pf=document.getElementById('pane-forgot');
+  if(pl)pl.style.display='none';if(ps)ps.style.display='none';if(pf)pf.style.display='block';
+  var fpe=document.getElementById('fp-email');var lie=document.getElementById('li-email');
+  if(fpe&&lie)fpe.value=lie.value||'';
+  var fps=document.getElementById('fp-sent');var fpb=document.getElementById('fp-btn');
+  if(fps)fps.style.display='none';if(fpb)fpb.style.display='block';
+}
+function doForgot() {
+  var email=document.getElementById('fp-email').value.trim();
+  var err=document.getElementById('fp-err');
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ err.textContent='Please enter a valid email address.'; err.classList.add('show'); return; }
+  err.classList.remove('show');
+  var fps=document.getElementById('fp-sent');var fpb=document.getElementById('fp-btn');
+  if(fps)fps.style.display='block';if(fpb)fpb.style.display='none';
+}
+
+/* ── CONTACT FORM ────────────────────────────────────────── */
+function submitContactForm() {
+  var fname=document.getElementById('cf-fname').value.trim();
+  var email=document.getElementById('cf-email').value.trim();
+  var msg=document.getElementById('cf-msg').value.trim();
+  if(!fname||!email||!msg){alert('Please fill in your name, email and message.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
   document.getElementById('contact-form').style.display='none';
   document.getElementById('cf-sent').style.display='block';
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   CORE FUNCTIONS
-   ══════════════════════════════════════════════════════════ */
-
-function loginUser(user) {
-  currentUser = user;
-  closeModal();
-  const els = {
-    out:  document.getElementById('nav-auth-out'),
-    inn:  document.getElementById('nav-auth-in'),
-    mout: document.getElementById('mob-auth-out'),
-    min_: document.getElementById('mob-auth-in'),
-    av:   document.getElementById('user-avatar'),
-    ud:   document.getElementById('ud-name'),
-    chip: document.getElementById('dash-user-chip')
-  };
-  if (els.out)  els.out.style.display  = 'none';
-  if (els.inn)  els.inn.style.display  = 'block';
-  if (els.mout) els.mout.style.display = 'none';
-  if (els.min_) els.min_.style.display = 'flex';
-  if (els.av)   els.av.textContent     = user.initials || '?';
-  if (els.chip) els.chip.textContent   = user.initials || '?';
-  if (els.ud)   els.ud.textContent     = user.name
-    + (user.location ? ' · ' + user.location : '')
-    + '  (' + (roleLabels[user.role] || 'Member') + ')';
-}
-
-function openDashboard() {
-  closeUserMenu();
-  const role = (currentUser && currentUser.role) ? currentUser.role : 'student';
-  openRDash(role);
-}
-
-function closeDashboard() {
-  const dm = document.getElementById('dash-modal');
-  if (dm) dm.classList.remove('open');
-  closeRDash();
-}
-
-function switchDashTab(btn, tabId) {
-  document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-}
-
-// Restore session login
-const su=JSON.parse(sessionStorage.getItem('su_user')||'null');
-if(su) loginUser(su);
-
-/* ── HERO PHOTO ROTATION ────────────────────────────────── */
-(function(){
-  const sets = [
-    [
-      // Set A — multicultural young people with laptops and phones
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=85&auto=format&fit=crop&crop=center',
-      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=85&auto=format&fit=crop&crop=faces,top',
-      'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=85&auto=format&fit=crop&crop=center',
-      'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=85&auto=format&fit=crop&crop=faces,center'
-    ],
-    [
-      // Set B — young people socialising and using tech
-      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=85&auto=format&fit=crop&crop=faces,top',
-      'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=85&auto=format&fit=crop&crop=top',
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=85&auto=format&fit=crop&crop=top',
-      'https://images.unsplash.com/photo-1488509082528-cefbba5ad692?w=600&q=85&auto=format&fit=crop&crop=top'
-    ],
-    [
-      // Set C — diverse students on devices
-      'https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=600&q=85&auto=format&fit=crop&crop=faces,top',
-      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=85&auto=format&fit=crop&crop=faces,top',
-      'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&q=85&auto=format&fit=crop&crop=top',
-      'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=600&q=85&auto=format&fit=crop&crop=faces,top'
-    ]
-  ]
-  const ids = ['hp1-img','hp2-img','hp3-img','hp4-img'];
-  let idx = 0;
-
-  function swapPhotos(){
-    idx = (idx + 1) % sets.length;
-    const set = sets[idx];
-    // Stagger each photo for a flashing effect
-    ids.forEach((id, i) => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      setTimeout(() => {
-        el.style.opacity = '0';
-        setTimeout(() => {
-          el.src = set[i];
-          el.onload = () => { el.style.opacity = '1'; };
-          setTimeout(() => { el.style.opacity = '1'; }, 350);
-        }, 260);
-      }, i * 220);
-    });
-  }
-
-  // Preload next set
-  function preload(setIdx){
-    sets[setIdx].forEach(url => { const i = new Image(); i.src = url; });
-  }
-  preload(1); preload(2);
-
-  setInterval(swapPhotos, 5000);
-})();
-
-/* ── SHOW / HIDE PASSWORD ───────────────────────────────── */
-function togglePw(inputId, btn) {
-  const input = document.getElementById(inputId);
-  const isHidden = input.type === 'password';
-  input.type = isHidden ? 'text' : 'password';
-  btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-  // Swap icon: eye-off when visible
-  btn.innerHTML = isHidden
-    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
-    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
-}
-
-/* ── FORGOT PASSWORD ────────────────────────────────────── */
-function showForgotPassword() {
-  document.getElementById('pane-login').style.display = 'none';
-  document.getElementById('pane-signup').style.display = 'none';
-  document.getElementById('pane-forgot').style.display = 'block';
-  document.getElementById('fp-email').value = document.getElementById('li-email').value || '';
-  document.getElementById('fp-sent').style.display = 'none';
-  document.getElementById('fp-btn').style.display = 'block';
-}
-function doForgot() {
-  const email = document.getElementById('fp-email').value.trim();
-  const err = document.getElementById('fp-err');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    err.textContent = 'Please enter a valid email address.'; err.classList.add('show'); return;
-  }
-  err.classList.remove('show');
-  document.getElementById('fp-sent').style.display = 'block';
-  document.getElementById('fp-btn').style.display = 'none';
-}
-
-/* ── RESET ACCESSIBILITY ────────────────────────────────── */
-function resetA11y() {
-  szi = 2;
-  document.documentElement.style.setProperty('--font-scale', 1);
-  document.getElementById('sz-lbl').textContent = '100%';
-  if (reading) { window.speechSynthesis.cancel(); reading = false; document.getElementById('read-btn').classList.remove('reading'); document.getElementById('read-lbl').textContent = 'Read Page Aloud'; }
-  sessionStorage.removeItem('su_a11y');
-}
-
-/* ── ANIMATED CARD STAGGER on scroll ────────────────────── */
-const cardObserver = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('vis-card'), i * 80);
-      cardObserver.unobserve(e.target);
-    }
-  });
-}, {threshold: 0.08});
-document.querySelectorAll('.prob-card,.stake,.gov-card,.oc,.phase').forEach(el => cardObserver.observe(el));
-
-
-
-/* ── ROLE-BASED SIGNUP ───────────────────────────────────── */
-/* roleLabels / roleIcons / selectedRole declared at top of script */
-
-function selectRole(btn) {
-  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedRole = btn.dataset.role;
-  document.getElementById('role-err').classList.remove('show');
-}
-
-function goStep2() {
-  if (!selectedRole) {
-    const err = document.getElementById('role-err');
-    err.textContent = 'Please choose your role to continue.';
-    err.classList.add('show');
-    return;
-  }
-  document.getElementById('su-step1').style.display = 'none';
-  document.getElementById('su-step2').style.display = 'block';
-  const label = roleLabels[selectedRole];
-  document.getElementById('su-step2-title').textContent = label + ' account';
-  document.getElementById('su-step2-sub').textContent = 'Complete your profile to get started';
-  document.getElementById('su-role-badge').innerHTML = roleIcons[selectedRole] + ' ' + label;
-  // Show org field for non-students
-  document.getElementById('su-org-group').style.display =
-    selectedRole === 'student' ? 'none' : 'flex';
-  setTimeout(() => document.getElementById('su-name').focus(), 50);
-}
-
-function goStep1() {
-  document.getElementById('su-step2').style.display = 'none';
-  document.getElementById('su-step1').style.display = 'block';
-}
-
-/* Override existing doSignup to capture role + location */
-function doSignup() {
-  const name = document.getElementById('su-name').value.trim();
-  const email = document.getElementById('su-email').value.trim();
-  const pass = document.getElementById('su-pass').value;
-  const location = document.getElementById('su-location')?.value.trim() || '';
-  const org = document.getElementById('su-org')?.value.trim() || '';
-  const err = document.getElementById('su-err');
-  if (!name || !email || !pass) { err.textContent = 'Please fill in all fields.'; err.classList.add('show'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email.'; err.classList.add('show'); return; }
-  if (pass.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.classList.add('show'); return; }
-  err.classList.remove('show');
-  const user = {
-    name, email, pass,
-    role: selectedRole || 'student',
-    location, org,
-    initials: name.split(' ').map(w => w[0].toUpperCase()).join('').slice(0, 2)
-  };
-  sessionStorage.setItem('su_user', JSON.stringify(user));
-  loginUser(user);
-}
-
 /* ── ROLE DASHBOARDS ─────────────────────────────────────── */
-const dashConfigs = {
-  student: {
-    title: 'My Learning Dashboard',
-    pill: 'pill-student',
-    pillText: 'Young Person',
-    welcomeBg: 'linear-gradient(135deg,#3B82F6 0%,#5B4FE9 100%)',
-    welcomeTitle: "Keep going — you're doing great!",
-    welcomeSub: 'Week 4 of 12 · AI for Job Search in progress',
-    navItems: [
-      {icon:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',label:'My Progress'},
-      {icon:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',label:'Modules'},
-      {icon:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',label:'Job Search'},
-      {icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',label:'My CV'},
-      {icon:'<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>',label:'Simulator'},
-      {icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'AI Coach'},
-    ],
-    cards: [
-      {num:'72%',color:'#F59E0B',label:'CV Match Score'},
-      {num:'4/12',color:'#5B4FE9',label:'Weeks Completed'},
-      {num:'3',color:'#10B981',label:'Applications Sent'},
-    ],
-    listTitle: 'Current Module — Use AI for Job Search',
-    listItems: [
-      {text:'Prompt basics',badge:'Done',badgeColor:'#DCFCE7',badgeText:'#16A34A'},
-      {text:'AI-supported job searching',badge:'In Progress',badgeColor:'#EDE9FE',badgeText:'#7C3AED'},
-      {text:'Reading job descriptions',badge:'Upcoming',badgeColor:'#F3F4F8',badgeText:'#9CA3AF'},
-    ]
-  },
-  mentor: {
-    title: 'Mentor Dashboard',
-    pill: 'pill-mentor',
-    pillText: 'Mentor',
-    welcomeBg: 'linear-gradient(135deg,#10B981 0%,#3ECFBE 100%)',
-    welcomeTitle: 'Thank you for making a difference',
-    welcomeSub: "You're supporting 6 participants this cohort",
-    navItems: [
-      {icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',label:'My Participants'},
-      {icon:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',label:'Session Log'},
-      {icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'Messages'},
-      {icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',label:'Progress Reports'},
-      {icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>',label:'Resources'},
-    ],
-    cards: [
-      {num:'6',color:'#10B981',label:'Active Participants'},
-      {num:'18',color:'#3ECFBE',label:'Sessions Logged'},
-      {num:'4',color:'#5B4FE9',label:'Progressed to Work'},
-    ],
-    listTitle: 'Your Participants',
-    listItems: [
-      {text:'Amara, 21 · London',badge:'On Track',badgeColor:'#DCFCE7',badgeText:'#16A34A'},
-      {text:'Tariq, 19 · Birmingham',badge:'Needs Support',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},
-      {text:'Fatima, 22 · Manchester',badge:'On Track',badgeColor:'#DCFCE7',badgeText:'#16A34A'},
-      {text:'Kwame, 23 · Leeds',badge:'Completed',badgeColor:'#EDE9FE',badgeText:'#7C3AED'},
-    ]
-  },
-  employer: {
-    title: 'Employer Dashboard',
-    pill: 'pill-employer',
-    pillText: 'Employer',
-    welcomeBg: 'linear-gradient(135deg,#F59E0B 0%,#F97316 100%)',
-    welcomeTitle: 'Build your AI-ready talent pipeline',
-    welcomeSub: 'Post internships and connect with trained candidates',
-    navItems: [
-      {icon:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',label:'Browse Candidates'},
-      {icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',label:'My Postings'},
-      {icon:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',label:'Applications'},
-      {icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'Messages'},
-      {icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',label:'Safeguarding'},
-    ],
-    cards: [
-      {num:'12',color:'#F59E0B',label:'Candidates Ready'},
-      {num:'2',color:'#10B981',label:'Active Postings'},
-      {num:'£3k',color:'#5B4FE9',label:'Subsidy Available'},
-    ],
-    listTitle: 'Active Internship Postings',
-    listItems: [
-      {text:'Digital Marketing Assistant · Manchester',badge:'8 Applicants',badgeColor:'#EFF6FF',badgeText:'#3B82F6'},
-      {text:'Data Entry & AI Tools · London',badge:'3 Applicants',badgeColor:'#EFF6FF',badgeText:'#3B82F6'},
-    ]
-  },
-  coach: {
-    title: 'DWP Coach Dashboard',
-    pill: 'pill-coach',
-    pillText: 'DWP Coach',
-    welcomeBg: 'linear-gradient(135deg,#5B4FE9 0%,#7C3AED 100%)',
-    welcomeTitle: 'Your referral pipeline',
-    welcomeSub: '14 young people referred this quarter',
-    navItems: [
-      {icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',label:'My Referrals'},
-      {icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Cohort Overview'},
-      {icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',label:'Outcomes & Reports'},
-      {icon:'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>',label:'Notifications'},
-      {icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>',label:'Resources'},
-    ],
-    cards: [
-      {num:'14',color:'#7C3AED',label:'Total Referrals'},
-      {num:'9',color:'#10B981',label:'Enrolled'},
-      {num:'5',color:'#F59E0B',label:'Awaiting Placement'},
-    ],
-    listTitle: 'Recent Referrals',
-    listItems: [
-      {text:'Jordan M., 20 · Sheffield',badge:'Enrolled',badgeColor:'#ECFDF5',badgeText:'#10B981'},
-      {text:'Layla A., 18 · Leeds',badge:'Pending',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},
-      {text:'Darius O., 22 · Manchester',badge:'Enrolled',badgeColor:'#ECFDF5',badgeText:'#10B981'},
-      {text:'Sophie W., 17 · Sheffield',badge:'Declined',badgeColor:'#FFF0F0',badgeText:'#EF4444'},
-    ]
-  },
-  hub: {
-    title: 'Digital Hub Dashboard',
-    pill: 'pill-hub',
-    pillText: 'Digital Hub',
-    welcomeBg: 'linear-gradient(135deg,#EF4444 0%,#F97316 100%)',
-    welcomeTitle: 'Your hub is making an impact',
-    welcomeSub: 'Hosting 3 active cohorts · 45 participants',
-    navItems: [
-      {icon:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',label:'Hub Overview'},
-      {icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',label:'Participants'},
-      {icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Booking & Schedule'},
-      {icon:'<rect x="2" y="3" width="20" height="14" rx="2"/>',label:'Equipment'},
-      {icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',label:'Impact Reports'},
-    ],
-    cards: [
-      {num:'45',color:'#EF4444',label:'Active Participants'},
-      {num:'3',color:'#F59E0B',label:'Active Cohorts'},
-      {num:'18',color:'#10B981',label:'Devices Available'},
-    ],
-    listTitle: "Today's Sessions",
-    listItems: [
-      {text:'10:00 — Weeks 1–3 Foundation · Room A',badge:'Starting Soon',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},
-      {text:'13:30 — AI Job Search · Room B',badge:'Confirmed',badgeColor:'#ECFDF5',badgeText:'#10B981'},
-      {text:'15:00 — CV Workshop · Room A',badge:'Confirmed',badgeColor:'#ECFDF5',badgeText:'#10B981'},
-    ]
-  }
+var _currentRDashRole='student';
+var dashConfigs={
+  student:{title:'My Learning Dashboard',pill:'pill-student',pillText:'Young Person',welcomeBg:'linear-gradient(135deg,#3B82F6 0%,#5B4FE9 100%)',welcomeTitle:'Keep going, you are doing great!',welcomeSub:'Week 4 of 12 - AI for Job Search in progress',navItems:[{icon:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',label:'My Progress'},{icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Modules'},{icon:'<circle cx="11" cy="11" r="8"/>',label:'Job Search'},{icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>',label:'My CV'},{icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'AI Coach'}],cards:[{num:'72%',color:'#F59E0B',label:'CV Match Score'},{num:'4/12',color:'#5B4FE9',label:'Weeks Completed'},{num:'3',color:'#10B981',label:'Applications Sent'}],listTitle:'Current Module',listItems:[{text:'Prompt basics',badge:'Done',badgeColor:'#DCFCE7',badgeText:'#16A34A'},{text:'AI job searching',badge:'In Progress',badgeColor:'#EDE9FE',badgeText:'#7C3AED'},{text:'Reading job descriptions',badge:'Upcoming',badgeColor:'#F3F4F8',badgeText:'#9CA3AF'}]},
+  mentor:{title:'Mentor Dashboard',pill:'pill-mentor',pillText:'Mentor',welcomeBg:'linear-gradient(135deg,#10B981 0%,#3ECFBE 100%)',welcomeTitle:'Thank you for making a difference',welcomeSub:'You are supporting 6 participants this cohort',navItems:[{icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',label:'My Participants'},{icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Session Log'},{icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'Messages'}],cards:[{num:'6',color:'#10B981',label:'Active Participants'},{num:'18',color:'#3ECFBE',label:'Sessions Logged'},{num:'4',color:'#5B4FE9',label:'Progressed'}],listTitle:'Your Participants',listItems:[{text:'Amara, 21 - London',badge:'On Track',badgeColor:'#DCFCE7',badgeText:'#16A34A'},{text:'Tariq, 19 - Birmingham',badge:'Needs Support',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},{text:'Fatima, 22 - Manchester',badge:'On Track',badgeColor:'#DCFCE7',badgeText:'#16A34A'}]},
+  employer:{title:'Employer Dashboard',pill:'pill-employer',pillText:'Employer',welcomeBg:'linear-gradient(135deg,#F59E0B 0%,#F97316 100%)',welcomeTitle:'Build your AI-ready talent pipeline',welcomeSub:'Post internships and connect with trained candidates',navItems:[{icon:'<circle cx="11" cy="11" r="8"/>',label:'Browse Candidates'},{icon:'<rect x="2" y="7" width="20" height="14" rx="2"/>',label:'My Postings'},{icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',label:'Messages'}],cards:[{num:'12',color:'#F59E0B',label:'Candidates Ready'},{num:'2',color:'#10B981',label:'Active Postings'},{num:'3k',color:'#5B4FE9',label:'Subsidy Available'}],listTitle:'Active Postings',listItems:[{text:'Digital Marketing - Manchester',badge:'8 Applicants',badgeColor:'#EFF6FF',badgeText:'#3B82F6'},{text:'Data Entry - London',badge:'3 Applicants',badgeColor:'#EFF6FF',badgeText:'#3B82F6'}]},
+  coach:{title:'DWP Coach Dashboard',pill:'pill-coach',pillText:'DWP Coach',welcomeBg:'linear-gradient(135deg,#5B4FE9 0%,#7C3AED 100%)',welcomeTitle:'Your referral pipeline',welcomeSub:'14 young people referred this quarter',navItems:[{icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',label:'My Referrals'},{icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Cohort Overview'},{icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',label:'Reports'}],cards:[{num:'14',color:'#7C3AED',label:'Total Referrals'},{num:'9',color:'#10B981',label:'Enrolled'},{num:'5',color:'#F59E0B',label:'Awaiting Placement'}],listTitle:'Recent Referrals',listItems:[{text:'Jordan M., 20 - Sheffield',badge:'Enrolled',badgeColor:'#ECFDF5',badgeText:'#10B981'},{text:'Layla A., 18 - Leeds',badge:'Pending',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},{text:'Darius O., 22 - Manchester',badge:'Enrolled',badgeColor:'#ECFDF5',badgeText:'#10B981'}]},
+  hub:{title:'Digital Hub Dashboard',pill:'pill-hub',pillText:'Digital Hub',welcomeBg:'linear-gradient(135deg,#EF4444 0%,#F97316 100%)',welcomeTitle:'Your hub is making an impact',welcomeSub:"Hosting 3 active cohorts, 45 participants",navItems:[{icon:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',label:'Hub Overview'},{icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',label:'Participants'},{icon:'<rect x="3" y="4" width="18" height="18" rx="2"/>',label:'Schedule'}],cards:[{num:'45',color:'#EF4444',label:'Active Participants'},{num:'3',color:'#F59E0B',label:'Active Cohorts'},{num:'18',color:'#10B981',label:'Devices Available'}],listTitle:"Today's Sessions",listItems:[{text:'10:00 - Foundation Room A',badge:'Starting Soon',badgeColor:'#FFF7ED',badgeText:'#F59E0B'},{text:'13:30 - AI Job Search Room B',badge:'Confirmed',badgeColor:'#ECFDF5',badgeText:'#10B981'}]}
 };
 
-let _currentRDashRole = 'student';
-
-function openRDash(role) {
-  _currentRDashRole = role;
-  const cfg = dashConfigs[role] || dashConfigs.student;
-  const modal = document.getElementById('rdash-modal');
-  document.getElementById('rdash-title').textContent = cfg.title;
-  const pill = document.getElementById('rdash-role-pill');
-  pill.textContent = cfg.pillText;
-  pill.className = 'rdash-role-pill ' + cfg.pill;
-  const uname = currentUser ? currentUser.name + (currentUser.location ? ' · ' + currentUser.location : '') : '';
-  document.getElementById('rdash-user-name').textContent = uname;
-
-  // Build sidebar
-  const sidebar = document.getElementById('rdash-sidebar');
-  sidebar.innerHTML = cfg.navItems.map((n,i) => `
-    <button class="rdash-nav ${i===0?'active':''}" onclick="rdashNavClick(this,'${n.label}')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${n.icon}</svg>${n.label}
-    </button>`).join('');
-
-  // Render home tab
-  renderRDashContent(cfg, 'home');
+function openRDash(role){
+  _currentRDashRole=role;
+  var cfg=dashConfigs[role]||dashConfigs.student;
+  var modal=document.getElementById('rdash-modal');
+  document.getElementById('rdash-title').textContent=cfg.title;
+  var pill=document.getElementById('rdash-role-pill');
+  pill.textContent=cfg.pillText; pill.className='rdash-role-pill '+cfg.pill;
+  var uname=currentUser?currentUser.name+(currentUser.location?' · '+currentUser.location:''):'';
+  document.getElementById('rdash-user-name').textContent=uname;
+  var sidebar=document.getElementById('rdash-sidebar');
+  sidebar.innerHTML=cfg.navItems.map(function(n,i){
+    var active=i===0?' active':'';
+    return '<button class="rdash-nav'+active+'" onclick="rdashNavClick(this, this.textContent.trim())">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+n.icon+'</svg>'
+      +n.label+'</button>';
+  }).join('');;
+  renderRDashContent(cfg,'home');
   modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
-function renderRDashContent(cfg, tab) {
-  const content = document.getElementById('rdash-content');
-  const loc = currentUser && currentUser.location ? currentUser.location : '';
-  const name = currentUser ? currentUser.name.split(' ')[0] : 'there';
-
-  const cardsHTML = cfg.cards.map(c => `
-    <div class="rdash-card">
-      <div class="rc-num" style="color:${c.color}">${c.num}</div>
-      <div class="rc-lbl">${c.label}</div>
-    </div>`).join('');
-
-  const listHTML = cfg.listItems.map(item => `
-    <div class="rdash-list-item">
-      <span>${item.text}</span>
-      <span class="rdash-badge" style="background:${item.badgeColor};color:${item.badgeText}">${item.badge}</span>
-    </div>`).join('');
-
-  // Each tab renders different content
-  const tabContent = {
-    home: `
-      <div class="rdash-welcome" style="background:${cfg.welcomeBg}">
-        <h4>👋 Hi ${name}! ${cfg.welcomeTitle}</h4>
-        <p>${cfg.welcomeSub}${loc ? ' · ' + loc : ''}</p>
-      </div>
-      <div class="rdash-cards">${cardsHTML}</div>
-      <div class="rdash-list">
-        <div class="rdash-list-header">${cfg.listTitle}</div>
-        ${listHTML}
-      </div>
-      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
-        <button class="rdash-action-btn primary" onclick="renderRDashContent(dashConfigs['${_currentRDashRole}'],'coach')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Open AI Coach
-        </button>
-        <button class="rdash-action-btn ghost" onclick="renderRDashContent(dashConfigs['${_currentRDashRole}'],'profile')">View Profile</button>
-      </div>`,
-    coach: `
-      <div style="background:linear-gradient(135deg,#3ECFBE,#5B4FE9);border-radius:14px;padding:20px;color:#fff;margin-bottom:18px">
-        <h4 style="font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:6px">🤖 StepUp AI Coach</h4>
-        <p style="font-size:.88rem;opacity:.9">Your personalised AI assistant is ready. Ask anything about your progress, next steps, or opportunities.</p>
-      </div>
-      <div style="background:#fff;border:1.5px solid #E8EFF6;border-radius:12px;overflow:hidden">
-        <div style="padding:16px 18px;border-bottom:1px solid #E8EFF6;font-size:.82rem;color:#9CA3AF;font-weight:600">AI COACH — LIVE SESSION</div>
-        <div style="padding:18px;display:flex;flex-direction:column;gap:12px;min-height:180px" id="coach-msgs">
-          <div style="align-self:flex-start;background:#F3F4F8;padding:12px 16px;border-radius:12px;border-bottom-left-radius:3px;font-size:.88rem;max-width:85%">
-            Hi ${name}! I can see your CV match score and progress. What would you like to work on today?
-          </div>
-        </div>
-        <div style="padding:12px 16px;border-top:1px solid #E8EFF6;display:flex;gap:10px">
-          <input id="coach-input" type="text" placeholder="Ask your coach..." style="flex:1;padding:10px 14px;border:1.5px solid #D4EBF5;border-radius:8px;font-size:.88rem;outline:none;font-family:'DM Sans',sans-serif">
-          <button onclick="sendCoachMsg()" style="padding:10px 18px;background:linear-gradient(135deg,#5B4FE9,#7C3AED);color:#fff;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;font-size:.85rem">Send</button>
-        </div>
-      </div>`,
-    profile: `
-      <div style="background:#fff;border:1.5px solid #E8EFF6;border-radius:14px;padding:24px;margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
-          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#5B4FE9,#3ECFBE);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900">
-            ${currentUser ? currentUser.initials : '?'}
-          </div>
-          <div>
-            <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:1.1rem;color:#1A2636">${currentUser ? currentUser.name : 'User'}</div>
-            <div style="font-size:.82rem;color:#9CA3AF">${cfg.pillText}${loc ? ' · ' + loc : ''}</div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;background:#F9FAFB;border-radius:10px"><div style="font-size:.72rem;color:#9CA3AF;font-weight:600;margin-bottom:4px">EMAIL</div><div style="font-size:.88rem;color:#374151">${currentUser ? currentUser.email : '—'}</div></div>
-          <div style="padding:14px;background:#F9FAFB;border-radius:10px"><div style="font-size:.72rem;color:#9CA3AF;font-weight:600;margin-bottom:4px">LOCATION</div><div style="font-size:.88rem;color:#374151">${loc || '—'}</div></div>
-          <div style="padding:14px;background:#F9FAFB;border-radius:10px"><div style="font-size:.72rem;color:#9CA3AF;font-weight:600;margin-bottom:4px">ROLE</div><div style="font-size:.88rem;color:#374151">${cfg.pillText}</div></div>
-          <div style="padding:14px;background:#F9FAFB;border-radius:10px"><div style="font-size:.72rem;color:#9CA3AF;font-weight:600;margin-bottom:4px">ORGANISATION</div><div style="font-size:.88rem;color:#374151">${currentUser && currentUser.org ? currentUser.org : '—'}</div></div>
-        </div>
-      </div>
-      <button class="rdash-action-btn primary" onclick="doLogout()">Log Out</button>`,
-    messages: `
-      <div style="background:#fff;border:1.5px solid #E8EFF6;border-radius:12px;overflow:hidden">
-        <div style="padding:14px 18px;border-bottom:1px solid #E8EFF6;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;color:#1A2636">Messages</div>
-        ${['StepUp Team — Welcome to the programme!', 'Programme Update — Week 4 resources now available', 'Action Required — Complete your VARK assessment'].map(m=>`
-        <div class="rdash-list-item" style="cursor:pointer">
-          <span>${m}</span>
-          <span class="rdash-badge" style="background:#EFF6FF;color:#3B82F6">New</span>
-        </div>`).join('')}
-      </div>`,
-    default: `
-      <div class="rdash-cards">${cardsHTML}</div>
-      <div class="rdash-list">
-        <div class="rdash-list-header">${cfg.listTitle}</div>
-        ${listHTML}
-      </div>`
-  };
-
-  content.innerHTML = tabContent[tab] || tabContent.default;
+function renderRDashContent(cfg,tab){
+  var content=document.getElementById('rdash-content');
+  var name=currentUser?currentUser.name.split(' ')[0]:'there';
+  var loc=currentUser&&currentUser.location?currentUser.location:'';
+  var cards=cfg.cards.map(function(c){
+    return '<div class="rdash-card"><div class="rc-num" style="color:'+c.color+'">'+c.num+'</div><div class="rc-lbl">'+c.label+'</div></div>';
+  }).join('');
+  var listItems=cfg.listItems.map(function(item){
+    return '<div class="rdash-list-item"><span>'+item.text+'</span>'
+      +'<span class="rdash-badge" style="background:'+item.badgeColor+';color:'+item.badgeText+'">'+item.badge+'</span></div>';
+  }).join('');
+  var welcomeHtml='<div class="rdash-welcome" style="background:'+cfg.welcomeBg+'">'
+    +'<h4>Hi '+name+'! '+cfg.welcomeTitle+'</h4>'
+    +'<p>'+cfg.welcomeSub+(loc?' &middot; '+loc:'')+'</p></div>';
+  var cardsHtml='<div class="rdash-cards">'+cards+'</div>';
+  var listHtml='<div class="rdash-list"><div class="rdash-list-header">'+cfg.listTitle+'</div>'+listItems+'</div>';
+  var actionsHtml='<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">'
+    +'<button class="rdash-action-btn primary" onclick="renderRDashContent(dashConfigs[\''+_currentRDashRole+'\'],\'coach\')">Open AI Coach</button>'
+    +'<button class="rdash-action-btn ghost" onclick="renderRDashContent(dashConfigs[\''+_currentRDashRole+'\'],\'profile\')">View Profile</button>'
+    +'</div>';
+  if(tab==='profile'){
+    content.innerHTML='<div style="background:#fff;border:1.5px solid #E8EFF6;border-radius:14px;padding:24px;margin-bottom:16px">'
+      +'<div style="font-family:Nunito,sans-serif;font-weight:800;font-size:1.1rem;color:#1A2636;margin-bottom:8px">'+(currentUser?currentUser.name:'User')+'</div>'
+      +'<div style="font-size:.85rem;color:#9CA3AF;margin-bottom:12px">'+cfg.pillText+(loc?' &middot; '+loc:'')+'</div>'
+      +'<div style="font-size:.88rem;color:#374151">'+(currentUser?currentUser.email:'-')+'</div>'
+      +'</div><button class="rdash-action-btn primary" onclick="doLogout()">Log Out</button>';
+    return;
+  }
+  if(tab==='coach'){
+    content.innerHTML='<div style="background:linear-gradient(135deg,#3ECFBE,#5B4FE9);border-radius:14px;padding:20px;color:#fff;margin-bottom:18px">'
+      +'<h4 style="font-family:Nunito,sans-serif;font-weight:900;margin-bottom:6px">StepUp AI Coach</h4>'
+      +'<p style="font-size:.88rem;opacity:.9">Ask anything about your progress, CV, or next steps.</p></div>'
+      +'<div style="background:#fff;border:1.5px solid #E8EFF6;border-radius:12px;overflow:hidden">'
+      +'<div style="padding:16px 18px;border-bottom:1px solid #E8EFF6;font-size:.82rem;color:#9CA3AF;font-weight:600">LIVE SESSION</div>'
+      +'<div id="coach-msgs" style="padding:18px;min-height:180px">'
+      +'<div style="background:#F3F4F8;padding:12px 16px;border-radius:12px;font-size:.88rem;display:inline-block">Hi '+name+'! What would you like to work on today?</div></div>'
+      +'<div style="padding:12px 16px;border-top:1px solid #E8EFF6;display:flex;gap:10px">'
+      +'<input id="coach-input" type="text" placeholder="Ask your coach..." style="flex:1;padding:10px 14px;border:1.5px solid #D4EBF5;border-radius:8px;font-size:.88rem;outline:none">'
+      +'<button onclick="sendCoachMsg()" style="padding:10px 18px;background:linear-gradient(135deg,#5B4FE9,#7C3AED);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem">Send</button>'
+      +'</div></div>';
+    return;
+  }
+  content.innerHTML=welcomeHtml+cardsHtml+listHtml+actionsHtml;
 }
 
-function rdashNavClick(btn, label) {
-  document.querySelectorAll('.rdash-nav').forEach(b => b.classList.remove('active'));
+function rdashNavClick(btn,label){
+  document.querySelectorAll('.rdash-nav').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  const cfg = dashConfigs[_currentRDashRole] || dashConfigs.student;
-  // Map nav labels to tab keys
-  const tabMap = {
-    'Open AI Coach': 'coach', 'Coach': 'coach', 'AI Coach': 'coach',
-    'My Profile': 'profile', 'Profile': 'profile', 'View Profile': 'profile',
-    'Messages': 'messages', 'Peers': 'messages', 'Notifications': 'messages'
-  };
-  const tabKey = tabMap[label] || 'default';
-  renderRDashContent(cfg, tabKey);
+  var cfg=dashConfigs[_currentRDashRole]||dashConfigs.student;
+  var tabMap={'AI Coach':'coach','Coach':'coach','My Profile':'profile','Profile':'profile','Messages':'messages','Peers':'messages'};
+  renderRDashContent(cfg,tabMap[label]||'home');
 }
 
-function sendCoachMsg() {
-  const input = document.getElementById('coach-input');
-  const msgs = document.getElementById('coach-msgs');
-  if (!input || !msgs || !input.value.trim()) return;
-  const userMsg = input.value.trim();
-  input.value = '';
-  const userDiv = document.createElement('div');
-  userDiv.style.cssText = 'align-self:flex-end;background:linear-gradient(135deg,#5B4FE9,#7C3AED);color:#fff;padding:12px 16px;border-radius:12px;border-bottom-right-radius:3px;font-size:.88rem;max-width:85%';
-  userDiv.textContent = userMsg;
-  msgs.appendChild(userDiv);
-  msgs.scrollTop = msgs.scrollHeight;
-  setTimeout(() => {
-    const aiDiv = document.createElement('div');
-    aiDiv.style.cssText = 'align-self:flex-start;background:#F3F4F8;padding:12px 16px;border-radius:12px;border-bottom-left-radius:3px;font-size:.88rem;max-width:85%';
-    const replies = [
-      "Great question! Based on your current progress, I recommend focusing on prompt engineering this week.",
-      "Your CV match score is at 72%. Adding keywords like 'AI tools' and 'digital literacy' could push it to 85%.",
-      "I can see you have 3 applications in progress. Would you like help preparing for interviews?",
-      "You're doing really well! Week 4 content is now unlocked — shall we start with AI job searching?",
-      "I noticed you haven't completed the VARK assessment yet. It only takes 5 minutes and helps me coach you better!"
-    ];
-    aiDiv.textContent = replies[Math.floor(Math.random() * replies.length)];
-    msgs.appendChild(aiDiv);
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 900);
+function closeRDash(){
+  var m=document.getElementById('rdash-modal');if(m)m.classList.remove('open');
+  document.body.style.overflow='';
 }
 
-function closeRDash() {
-  document.getElementById('rdash-modal').classList.remove('open');
-  document.body.style.overflow = '';
+function sendCoachMsg(){
+  var input=document.getElementById('coach-input');
+  var msgs=document.getElementById('coach-msgs');
+  if(!input||!msgs||!input.value.trim())return;
+  var userMsg=input.value.trim(); input.value='';
+  var ud=document.createElement('div');
+  ud.style.cssText='text-align:right;margin-bottom:8px';
+  ud.innerHTML='<span style="display:inline-block;background:linear-gradient(135deg,#5B4FE9,#7C3AED);color:#fff;padding:10px 14px;border-radius:12px;font-size:.88rem;max-width:80%">'+userMsg+'</span>';
+  msgs.appendChild(ud); msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(function(){
+    var replies=['Great question! Based on your progress, I recommend focusing on prompt engineering this week.','Your CV match score is at 72%. Adding keywords like "AI tools" and "digital literacy" could boost it to 85%.','You have 3 applications in progress. Would you like help preparing for interviews?','You are doing really well! Week 4 content is now unlocked.'];
+    var ad=document.createElement('div');
+    ad.style.cssText='margin-bottom:8px';
+    ad.innerHTML='<span style="display:inline-block;background:#F3F4F8;padding:10px 14px;border-radius:12px;font-size:.88rem;max-width:80%">'+replies[Math.floor(Math.random()*replies.length)]+'</span>';
+    msgs.appendChild(ad); msgs.scrollTop=msgs.scrollHeight;
+  },900);
 }
-document.getElementById('rdash-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeRDash();
-});
 
-
-/* ── ACTIVE NAV ON SCROLL ────────────────────────────────── */
+/* ── PHOTO PULSE (SVG mode) ──────────────────────────────── */
 (function(){
-  const sections = document.querySelectorAll('main section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  const onScroll = () => {
-    let current = '';
-    sections.forEach(s => {
-      if(window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('nav-active', a.getAttribute('href') === '#' + current);
-    });
-  };
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+  var photoEls=['hp1-img','hp2-img','hp3-img','hp4-img'];
+  var tick=0;
+  setInterval(function(){
+    tick++;
+    var el=document.getElementById(photoEls[tick%4]);
+    if(!el)return;
+    el.style.transition='transform 0.7s ease,opacity 0.5s ease';
+    el.style.opacity='0.75'; el.style.transform='scale(0.97)';
+    setTimeout(function(){el.style.opacity='1';el.style.transform='scale(1)';},600);
+  },2500);
 })();
 
-/* ── COUNT-UP ANIMATION ─────────────────────────────────── */
+/* ── FADE-UP OBSERVER ────────────────────────────────────── */
 (function(){
-  function formatNum(n, suffix) {
-    if (n >= 1000000) return (n/1000000).toFixed(1).replace('.0','') + 'M' + suffix;
-    if (n >= 1000) return n.toLocaleString() + suffix;
-    return n + suffix;
-  }
-  function animateCount(el) {
-    const target = parseInt(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1800;
-    const start = performance.now();
-    function step(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(target * eased);
-      // Format display
-      if (target >= 1000) {
-        el.textContent = current.toLocaleString() + suffix;
-      } else {
-        el.textContent = current + suffix;
-      }
-      if (progress < 1) { requestAnimationFrame(step); return; }
-      el.textContent = el.dataset.display || (target >= 1000 ? target.toLocaleString() + suffix : target + suffix);
-    }
-    requestAnimationFrame(step);
-  }
-  const countObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting && e.target.dataset.count && !e.target.dataset.counted) {
-        e.target.dataset.counted = '1';
-        animateCount(e.target);
-        countObserver.unobserve(e.target);
-      }
-    });
-  }, {threshold: 0.3});
-  document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
-})();
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(function(el){io.observe(el);});
 
-/* ── ENTRANCE ANIMATION OBSERVER ────────────────────────── */
-(function(){
-  const animObs = new IntersectionObserver(entries => {
-    entries.forEach((e,i) => {
-      if (e.isIntersecting) {
-        const delay = (e.target.dataset.animDelay || 0) * 1000;
-        setTimeout(() => e.target.classList.add('anim-in'), delay);
+  var animObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var delay=parseFloat(e.target.dataset.animDelay||0)*1000;
+        setTimeout(function(){e.target.classList.add('anim-in');},delay);
         animObs.unobserve(e.target);
       }
     });
-  }, {threshold: 0.12});
-  document.querySelectorAll('.anim-left,.anim-right,.anim-scale,.anim-up').forEach(el => animObs.observe(el));
+  },{threshold:0.1});
+  document.querySelectorAll('.anim-left,.anim-right,.anim-scale,.anim-up').forEach(function(el){animObs.observe(el);});
 
-  // Mark photos as loaded once image loads
-  document.querySelectorAll('.hero-photo img').forEach(img => {
-    if (img.complete) {
-      img.closest('.hero-photo')?.classList.add('loaded');
-    } else {
-      img.addEventListener('load', () => img.closest('.hero-photo')?.classList.add('loaded'));
-    }
-  });
+  var countObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&e.target.dataset.count&&!e.target.dataset.counted){
+        e.target.dataset.counted='1';
+        var target=parseInt(e.target.dataset.count);
+        var suffix=e.target.dataset.suffix||'';
+        var display=e.target.dataset.display||'';
+        var duration=1600;
+        var start=performance.now();
+        function step(now){
+          var elapsed=now-start;
+          var progress=Math.min(elapsed/duration,1);
+          var eased=1-Math.pow(1-progress,3);
+          var current=Math.round(target*eased);
+          if(progress>=1){e.target.textContent=display||(target>=1000?target.toLocaleString()+suffix:target+suffix);return;}
+          if(target>=1000000)e.target.textContent=(current/1000000).toFixed(1).replace('.0','')+'M'+suffix;
+          else if(target>=1000)e.target.textContent=current.toLocaleString()+suffix;
+          else e.target.textContent=current+suffix;
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        countObserver.unobserve(e.target);
+      }
+    });
+  },{threshold:0.25});
+  document.querySelectorAll('[data-count]').forEach(function(el){countObserver.observe(el);});
+
+  /* card stagger */
+  var cardObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('vis-card');},i*80);cardObs.unobserve(e.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll('.prob-card,.stake,.gov-card,.oc,.phase').forEach(function(el){cardObs.observe(el);});
 })();
+
+/* ── ACTIVE NAV ──────────────────────────────────────────── */
+(function(){
+  var sections=document.querySelectorAll('main section[id]');
+  var navLinks=document.querySelectorAll('.nav-links a[href^="#"]');
+  function onScroll(){
+    var current='';
+    sections.forEach(function(s){if(window.scrollY>=s.offsetTop-100)current=s.id;});
+    navLinks.forEach(function(a){a.classList.toggle('nav-active',a.getAttribute('href')==='#'+current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+
+/* ── RESTORE SESSION ─────────────────────────────────────── */
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeRDash();var m=document.getElementById('auth-modal');if(m)m.style.display='none';document.body.style.overflow='';closeUserMenu();closeA11y();}});
+document.getElementById('rdash-modal').addEventListener('click',function(e){if(e.target===e.currentTarget)closeRDash();});
+document.getElementById('auth-modal').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal();});
+loadA11y();
+var su=JSON.parse(sessionStorage.getItem('su_user')||'null');
+if(su)loginUser(su);
 </script>
 </body>
 </html>
